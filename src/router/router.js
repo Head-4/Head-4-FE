@@ -4,7 +4,9 @@ import {lazy, Suspense} from "react";
 import {LoadingPage} from "../components/LoadingPage";
 
 const Layout = lazy(() => import("../layout/Layout"));
-const SignUp = lazy(() => import("../pages/SignUp/SignUp"));
+const Login = lazy(() => import("../pages/login/Login"));
+const KakaoLoading = lazy(() => import("../pages/login/components/KakaoLoading"));
+const Setting = lazy(() => import("../pages/setting/Setting"));
 
 export const router = createBrowserRouter([
         {
@@ -17,8 +19,19 @@ export const router = createBrowserRouter([
                     children: [
                         // {index: true, element: <Index/>},
                         {
-                            path: "signUp",
-                            element: <SignUp/>,
+                            path: "login",
+                            element: <Login/>,
+                        },
+                        {
+                            path: "kakao/callback",
+                            element: <KakaoLoading/>,
+                            // loader: tokenLoader,
+                        },
+                        {
+                            path: "setting",
+                            element: <Setting/>,
+                            // loader : settingLoader
+                            // action: settingAction,
                         },
                     ],
                 }
