@@ -26,5 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # Service worker cache
-precache-manifest*.js
-service-worker.js
+precache-manifest*.ts
+service-worker.ts
