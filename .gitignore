@@ -28,3 +28,5 @@ yarn-error.log*
 # Service worker cache
 precache-manifest*.ts
 service-worker.ts
+
+firebase-messaging-sw.js

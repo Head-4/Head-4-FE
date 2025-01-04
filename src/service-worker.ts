@@ -13,11 +13,6 @@ import {ExpirationPlugin} from 'workbox-expiration';
 import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching';
 import {registerRoute} from 'workbox-routing';
 import {StaleWhileRevalidate} from 'workbox-strategies';
-import {getMessaging, onBackgroundMessage} from "firebase/messaging/sw";
-import {messaging} from './utills/firebaseConfig';
-
-importScripts("https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js");
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -83,22 +78,3 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
-self.addEventListener("install", function (e) {
-    self.skipWaiting();
-});
-self.addEventListener("activate", function (e) {
-    console.log("fcm service worker가 실행되었습니다.");
-});
-
-onBackgroundMessage(messaging, (payload) => {
-    if (payload.notification) {
-        const notificationTitle = payload.notification.title || "알림 제목 없음";
-        const notificationOptions: NotificationOptions = {
-            body: payload.notification.body || "알림 내용 없음",
-            badge: 'https://bucket-geeks.s3.ap-northeast-2.amazonaws.com/logo.svg',
-            icon: 'https://bucket-geeks.s3.ap-northeast-2.amazonaws.com/logo.svg'
-        };
-
-        self.registration.showNotification(notificationTitle, notificationOptions);
-    }
-});
