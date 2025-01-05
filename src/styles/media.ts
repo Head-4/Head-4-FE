@@ -4,7 +4,7 @@ type DeviceType = "large" | "medium" | "small";
 
 const sizes: Record<DeviceType, number> = {
     large: 1024,
-    medium: 600,
+    medium: 768,
     small: 480,
 };
 
