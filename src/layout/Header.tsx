@@ -3,23 +3,39 @@ import styled from "styled-components";
 import {ReactComponent as BellIcon} from "../assets/Layout/Header/BellIcon.svg";
 import {ReactComponent as MenuIcon} from "../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../assets/Layout/Header/SearchIcon.svg";
+import {ReactComponent as BackIcon} from "../assets/Layout/Header/BackIcon.svg";
+import {useNavigate} from "react-router-dom";
 
 interface HeaderProps {
     pageRoute: string;
 }
 
 export default function Header({pageRoute}: HeaderProps) {
+    const navigate = useNavigate();
 
-    if (pageRoute !== "/") return null;
+    const BackClick = () => {
+        navigate(-1);
+    }
 
+    if (pageRoute === "/login") return null;
     return (
         <HeaderWrapper>
-            <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
-            <HeaderRight>
-                <SearchIcon/>
-                <BellIcon/>
-                <MenuIcon/>
-            </HeaderRight>
+            {pageRoute === '/' ?
+                <>
+                    <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
+                    <HeaderRight>
+                        <SearchIcon/>
+                        <BellIcon/>
+                        <MenuIcon/>
+                    </HeaderRight>
+                </>
+                :
+                <>
+                    <BackButton onClick={BackClick}>
+                        <BackIcon/>
+                    </BackButton>
+                </>
+            }
         </HeaderWrapper>
     );
 }
@@ -50,4 +66,8 @@ const HeaderH1 = styled.h1`
 const HeaderRight = styled.div`
     display: flex;
     column-gap: 12px;
+`;
+
+const BackButton = styled.button`
+    display: flex;
 `;

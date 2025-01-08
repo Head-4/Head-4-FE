@@ -12,16 +12,25 @@ export default function Layout() {
     return (
         <LayoutWrapper $pageRoute={pageRoute}>
             <Header pageRoute={pageRoute}/>
-            <Outlet/>
+            <LayoutMain>
+                <Outlet/>
+            </LayoutMain>
         </LayoutWrapper>
     );
 };
 
 const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     min-height: 100vh;
-    padding: 52px 20px 86px;
+    padding: 76px 20px 86px;
     background-color: ${({ $pageRoute }) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
 
     ${media.medium`
     `}
+`;
+
+const LayoutMain = styled.main`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 76px - 86px);
 `;

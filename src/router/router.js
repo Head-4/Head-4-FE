@@ -6,7 +6,7 @@ import {LoadingPage} from "../components/LoadingPage";
 const Layout = lazy(() => import("../layout/Layout"));
 const Login = lazy(() => import("../pages/login/Login"));
 const KakaoLoading = lazy(() => import("../pages/login/components/KakaoLoading"));
-const Setting = lazy(() => import("../pages/setting/Setting"));
+const UniversityEdit = lazy(() => import("../pages/university/UniversityEdit"));
 
 export const router = createBrowserRouter([
         {
@@ -28,11 +28,15 @@ export const router = createBrowserRouter([
                             // loader: tokenLoader,
                         },
                         {
-                            path: "setting",
-                            element: <Setting/>,
-                            // loader : settingLoader
-                            // action: settingAction,
+                            path: "register/university",
+                            element: <UniversityEdit/>,
                         },
+                        // {
+                        //     path: "setting",
+                        //     element: <Setting/>,
+                        //     // loader : settingLoader
+                        //     // action: settingAction,
+                        // },
                     ],
                 }
             ],

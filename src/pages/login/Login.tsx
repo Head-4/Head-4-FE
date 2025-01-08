@@ -10,7 +10,7 @@ export default function Login() {
     }
 
     return (
-        <LoginWrapper>
+        <>
             <LoginSection>
                 <LoginH1>어쩌고 저쩌고</LoginH1>
                 <LoginH2>카카오로 바로 시작해 보세요</LoginH2>
@@ -20,20 +20,13 @@ export default function Login() {
                 <KakaoIcon/>
                 <KakaoLogin>카카오 로그인</KakaoLogin>
             </LoginButton>
-        </LoginWrapper>
+        </>
     );
 };
 
-const LoginWrapper = styled.main`
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-between;
-    height: calc(100vh - 52px - 86px);
-`;
-
 const LoginSection = styled.section`
     color: #F7F7F7;
+    text-align: center;
 `;
 
 const LoginH1 = styled.h1`
