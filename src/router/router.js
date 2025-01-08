@@ -7,6 +7,7 @@ const Layout = lazy(() => import("../layout/Layout"));
 const Login = lazy(() => import("../pages/login/Login"));
 const KakaoLoading = lazy(() => import("../pages/login/components/KakaoLoading"));
 const UniversityEdit = lazy(() => import("../pages/university/UniversityEdit"));
+const KeyWordEdit = lazy(() => import("../pages/keyword/KeyWordEdit"));
 
 export const router = createBrowserRouter([
         {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
                         {
                             path: "register/university",
                             element: <UniversityEdit/>,
+                        },
+                        {
+                            path: "register/keyword",
+                            element: <KeyWordEdit/>,
                         },
                         // {
                         //     path: "setting",
