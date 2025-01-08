@@ -16,7 +16,7 @@ export default function KakaoLoading() {
             const {accessToken, refreshToken} = result;
 
             alert('로그인 되었습니다.');
-            // navigate('/setting');
+            navigate('/register');
         } catch (error) {
             console.log(error);
         }

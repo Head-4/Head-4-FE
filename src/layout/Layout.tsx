@@ -1,22 +1,27 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {media} from "../styles/media";
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import Header from "./Header";
 
 export default function Layout() {
+    const location = useLocation();
+
+    const pageRoute = location.pathname;
+
     return (
-        <LayoutWrapper>
-            <Header/>
+        <LayoutWrapper $pageRoute={pageRoute}>
+            <Header pageRoute={pageRoute}/>
             <Outlet/>
         </LayoutWrapper>
     );
 };
 
-const LayoutWrapper = styled.div`
+const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     min-height: 100vh;
-    padding: 3.25rem 1.25rem 0;
-    
+    padding: 52px 20px 86px;
+    background-color: ${({ $pageRoute }) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
+
     ${media.medium`
     `}
 `;

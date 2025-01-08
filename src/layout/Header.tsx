@@ -4,7 +4,14 @@ import {ReactComponent as BellIcon} from "../assets/Layout/Header/BellIcon.svg";
 import {ReactComponent as MenuIcon} from "../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../assets/Layout/Header/SearchIcon.svg";
 
-export default function Header() {
+interface HeaderProps {
+    pageRoute: string;
+}
+
+export default function Header({pageRoute}: HeaderProps) {
+
+    if (pageRoute !== "/") return null;
+
     return (
         <HeaderWrapper>
             <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
@@ -23,7 +30,7 @@ const HeaderWrapper = styled.header`
     left: 0;
     padding: 0 20px;
     width: 100%;
-    height: 3.25rem;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: space-between;
