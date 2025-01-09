@@ -29,17 +29,20 @@ export default function GlobalButton({isActive}: GlobalButtonProps) {
         }
     };
 
+    const buttonName: { [key: string]: string } = {
+        "/register/university": "다음",
+        "/register/keyword": "다음",
+        "/register/complete": "확인",
+        "/faq": "건의하기",
+    };
+
     return (
         <GlobalButtonWrapper
             onClick={clickButton}
             $isActive={isActive}
             disabled={!isActive}
         >
-            {pathName === '/register/complete' ?
-                "확인"
-                :
-                "다음"
-            }
+            {buttonName[pathName]}
         </GlobalButtonWrapper>
     );
 }

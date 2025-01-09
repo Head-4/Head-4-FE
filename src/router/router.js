@@ -10,7 +10,8 @@ const UniversityEdit = lazy(() => import("../pages/university/UniversityEdit"));
 const KeyWordEdit = lazy(() => import("../pages/keyword/KeyWordEdit"));
 const CompletePage = lazy(() => import("../pages/utilPages/CompletePage"));
 const Main = lazy(() => import("../pages/main/Main"));
-const Notice = lazy(() => import("../pages/notification/Notification"));
+const Notification = lazy(() => import("../pages/notification/Notification"));
+const Faq = lazy(() => import("../pages/faq/Faq"));
 
 export const router = createBrowserRouter([
         {
@@ -44,8 +45,12 @@ export const router = createBrowserRouter([
                             element: <CompletePage/>,
                         },
                         {
-                            path: "notice",
-                            element: <Notice/>,
+                            path: "notification",
+                            element: <Notification/>,
+                        },
+                        {
+                            path: "faq",
+                            element: <Faq/>,
                         },
                         // {
                         //     path: "setting",

@@ -50,7 +50,7 @@ export default function Aside({toggleAside, isAsideOpen}: AsideProps) {
                             </AsideLink>
                         </li>
                         <li>
-                            <AsideLink to=''>
+                            <AsideLink to='/faq' onClick={toggleAside}>
                                 <MessageIcon/>
                                 <AsideSetting>건의하기</AsideSetting>
                                 <ExpandIcon/>

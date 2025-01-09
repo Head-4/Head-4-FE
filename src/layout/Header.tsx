@@ -26,6 +26,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
 
     const headerName: { [key: string]: string } = {
         "/notice": "알림",
+        "/faq":"건의하기",
     };
 
     if (noHeaderList.includes(pageRoute)) return null;
@@ -36,7 +37,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
                     <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
                     <HeaderRight>
                         <SearchIcon/>
-                        <Link to='/notice'>
+                        <Link to='/notification'>
                             <AfterRedPoint $isNew={true}>
                                 <BellIcon/>
                             </AfterRedPoint>
