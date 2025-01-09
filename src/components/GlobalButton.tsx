@@ -1,17 +1,33 @@
 import React from 'react';
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface GlobalButtonProps {
     isActive: boolean
 }
 
 export default function GlobalButton({isActive}: GlobalButtonProps) {
+    const location = useLocation();
     const navigate = useNavigate();
 
+    const pathName = location.pathname;
+
     const clickButton = () => {
-        navigate('/register/keyword');
-    }
+        switch (pathName) {
+            case '/register/university':
+                navigate('/register/keyword');
+                break;
+            case '/register/keyword':
+                navigate('/register/complete');
+                break;
+            case '/register/complete':
+                navigate('/');
+                break;
+            default:
+                navigate('/');
+                break;
+        }
+    };
 
     return (
         <GlobalButtonWrapper
@@ -19,7 +35,11 @@ export default function GlobalButton({isActive}: GlobalButtonProps) {
             $isActive={isActive}
             disabled={!isActive}
         >
-            다음
+            {pathName === '/register/complete' ?
+                "확인"
+                :
+                "다음"
+            }
         </GlobalButtonWrapper>
     );
 }

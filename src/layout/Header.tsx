@@ -17,7 +17,12 @@ export default function Header({pageRoute}: HeaderProps) {
         navigate(-1);
     }
 
-    if (pageRoute === "/login") return null;
+    const noHeaderList = [
+        "/login",
+        "/register/complete",
+    ];
+
+    if (noHeaderList.includes(pageRoute)) return null;
     return (
         <HeaderWrapper>
             {pageRoute === '/' ?

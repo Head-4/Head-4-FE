@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import GlobalButton from "../../components/GlobalButton";
 import Row from "../../styles/Common/Row";
-import {ReactComponent as AddIcon} from "../../assets/KeyWord/AddIcon.svg";
 import KeyWord from "./components/KeyWord";
+import {ReactComponent as AddIcon} from "../../assets/KeyWord/AddIcon.svg";
 
 interface keyWord {
     id: number;

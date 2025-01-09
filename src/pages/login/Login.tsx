@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {ReactComponent as KakaoIcon} from "../../assets/Login/KakaoIcon.svg";
-import {ReactComponent as LoginLogo} from "../../assets/Login/LoginLogo.svg";
+import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
 
 export default function Login() {
     const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
@@ -14,7 +14,7 @@ export default function Login() {
             <LoginSection>
                 <LoginH1>어쩌고 저쩌고</LoginH1>
                 <LoginH2>카카오로 바로 시작해 보세요</LoginH2>
-                <LoginLogo/>
+                <MainLogo/>
             </LoginSection>
             <LoginButton onClick={clickKakaoLogin}>
                 <KakaoIcon/>
