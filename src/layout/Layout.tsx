@@ -3,15 +3,21 @@ import styled from "styled-components";
 import {media} from "../styles/media";
 import {Outlet, useLocation} from "react-router-dom";
 import Header from "./Header";
+import Aside from "./Aside";
 
 export default function Layout() {
     const location = useLocation();
-
     const pageRoute = location.pathname;
+    const [isAsideOpen, setIsAsideOpen] = useState<boolean>(false);
+
+    const toggleAside = () => {
+        setIsAsideOpen((prev) => !prev);
+    };
 
     return (
         <LayoutWrapper $pageRoute={pageRoute}>
-            <Header pageRoute={pageRoute}/>
+            <Header pageRoute={pageRoute} toggleAside={toggleAside}/>
+            <Aside toggleAside={toggleAside} isAsideOpen={isAsideOpen}/>
             <LayoutMain>
                 <Outlet/>
             </LayoutMain>
@@ -20,12 +26,11 @@ export default function Layout() {
 };
 
 const LayoutWrapper = styled.div<{ $pageRoute: string }>`
+    position: relative;
     min-height: 100vh;
     padding: 52px 20px 86px;
-    background-color: ${({ $pageRoute }) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
-
-    ${media.medium`
-    `}
+    background-color: ${({$pageRoute}) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
+    overflow-x: hidden;
 `;
 
 const LayoutMain = styled.main`

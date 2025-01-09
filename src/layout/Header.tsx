@@ -8,10 +8,11 @@ import {Link, useNavigate} from "react-router-dom";
 
 interface HeaderProps {
     pageRoute: string;
+    toggleAside: () => void;
 }
 
 // isNew 조건 API 설정하기
-export default function Header({pageRoute}: HeaderProps) {
+export default function Header({pageRoute, toggleAside}: HeaderProps) {
     const navigate = useNavigate();
 
     const BackClick = () => {
@@ -40,7 +41,9 @@ export default function Header({pageRoute}: HeaderProps) {
                                 <BellIcon/>
                             </AfterRedPoint>
                         </Link>
-                        <MenuIcon/>
+                        <MenuButton onClick={toggleAside}>
+                            <MenuIcon/>
+                        </MenuButton>
                     </HeaderRight>
                 </>
                 :
@@ -103,4 +106,8 @@ const AfterRedPoint = styled.div<{ $isNew: boolean }>`
         border-radius: 50%;
         display: ${({$isNew}) => ($isNew ? 'block' : 'none')};
     }
+`;
+
+const MenuButton = styled.button`
+    display: flex;
 `;
