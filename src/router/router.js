@@ -9,6 +9,7 @@ const KakaoLoading = lazy(() => import("../pages/login/components/KakaoLoading")
 const UniversityEdit = lazy(() => import("../pages/university/UniversityEdit"));
 const KeyWordEdit = lazy(() => import("../pages/keyword/KeyWordEdit"));
 const CompletePage = lazy(() => import("../pages/utilPages/CompletePage"));
+const Main = lazy(() => import("../pages/main/Main"));
 
 export const router = createBrowserRouter([
         {
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
                 {
                     errorElement: <ErrorPage/>,
                     children: [
-                        // {index: true, element: <Index/>},
+                        {index: true, element: <Main/>},
                         {
                             path: "login",
                             element: <Login/>,

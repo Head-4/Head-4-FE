@@ -41,7 +41,7 @@ export default function KeyWordEdit() {
 
     return (
         <>
-            <section>
+            <KeywordSection>
                 <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>
                 <Row $gap={12} $verticalAlign="center">
                     <KeyWordInput
@@ -72,11 +72,15 @@ export default function KeyWordEdit() {
                         />
                     )}
                 </KeyWordWrapper>
-            </section>
+            </KeywordSection>
             <GlobalButton isActive={true}/>
         </>
     );
 }
+const KeywordSection = styled.section`
+    margin-top: 24px;
+`;
+
 
 const KeyWordH1 = styled.h1`
     font-size: 24px;

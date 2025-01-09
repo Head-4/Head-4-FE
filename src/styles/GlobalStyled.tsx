@@ -15,18 +15,12 @@ export const GlobalStyled = createGlobalStyle`
         line-height: 1.5;
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
-        height: 100%;
     }
 
     body {
         font-family: "Pretendard Variable", system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
         background-color: #FAFAFA;
         line-height: 1.5;
-        height: 100%;
-    }
-
-    #root {
-        height: 100%;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -44,14 +38,23 @@ export const GlobalStyled = createGlobalStyle`
     }
 
     input, textarea, select {
+        font-family: inherit;
         border: none;
         outline: none;
         padding: 0;
     }
 
     button {
+        font-family: inherit;
         border: none;
         background: none;
         cursor: pointer;
+    }
+
+    a {
+        font-family: inherit;
+        text-decoration: none;  
+        color: inherit;         
+        outline: none;          
     }
 `;

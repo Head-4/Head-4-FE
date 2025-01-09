@@ -61,7 +61,7 @@ export default function UniversityEdit() {
 
     return (
         <>
-            <section>
+            <UniversitySection>
                 <UniversityH1>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH1>
                 <div ref={inputRef}>
                     <UnivInput type="text"
@@ -78,11 +78,15 @@ export default function UniversityEdit() {
                             highlightText={highlightText}/>
                     )}
                 </div>
-            </section>
+            </UniversitySection>
             <GlobalButton isActive={buttonActive}/>
         </>
     );
 }
+
+const UniversitySection = styled.section`
+    margin-top: 24px;
+`;
 
 const UniversityH1 = styled.h1`
     font-size: 24px;

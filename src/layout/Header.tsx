@@ -56,6 +56,7 @@ const HeaderWrapper = styled.header`
     align-items: center;
     justify-content: space-between;
     column-gap: 14px;
+    background-color: #FAFAFA;
 `;
 
 const HeaderH1 = styled.h1`

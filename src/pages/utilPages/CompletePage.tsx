@@ -17,6 +17,7 @@ export default function CompletePage() {
 }
 
 const CompleteSection = styled.section`
+    margin-top: 68px;
     text-align: center;
 `;
 

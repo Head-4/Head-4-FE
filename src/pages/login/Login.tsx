@@ -25,6 +25,7 @@ export default function Login() {
 };
 
 const LoginSection = styled.section`
+    margin-top: 60px;
     color: #F7F7F7;
     text-align: center;
 `;
