@@ -11,17 +11,17 @@ interface NoticeProps {
     notice: NoticeType
 }
 
-export default function Notice({notice}: NoticeProps) {
+export default function MainNotice({notice}: NoticeProps) {
     return (
-        <NoticeLi>
+        <MainNoticeLi>
             <a href="">
-                <NoticeTitle>{notice.title}</NoticeTitle>
-                <NoticeDate>{notice.date}</NoticeDate>
+                <MainNoticeTitle>{notice.title}</MainNoticeTitle>
+                <MainNoticeDate>{notice.date}</MainNoticeDate>
             </a>
-        </NoticeLi>
+        </MainNoticeLi>
     );
 }
-const NoticeLi = styled.li`
+const MainNoticeLi = styled.li`
     margin-bottom: 12px;
     padding: 16px 20px;
     border-radius: 12px;
@@ -32,13 +32,13 @@ const NoticeLi = styled.li`
     }
 `;
 
-const NoticeTitle = styled.div`
+const MainNoticeTitle = styled.div`
     color: ${({theme}) => theme.colors.mainFont};
     font-weight: 600;
     margin-bottom: 4px;
 `;
 
-const NoticeDate = styled.div`
+const MainNoticeDate = styled.div`
     color: #B7B7B7;
     font-size: 14px;
     font-weight: 500;

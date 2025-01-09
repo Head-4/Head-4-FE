@@ -4,7 +4,7 @@ import {ReactComponent as BellIcon} from "../assets/Layout/Header/BellIcon.svg";
 import {ReactComponent as MenuIcon} from "../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../assets/Layout/Header/SearchIcon.svg";
 import {ReactComponent as BackIcon} from "../assets/Layout/Header/BackIcon.svg";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 interface HeaderProps {
     pageRoute: string;
@@ -17,10 +17,14 @@ export default function Header({pageRoute}: HeaderProps) {
         navigate(-1);
     }
 
-    const noHeaderList = [
+    const noHeaderList: string[] = [
         "/login",
         "/register/complete",
     ];
+
+    const headerName: { [key: string]: string } = {
+        "/notice": "알림",
+    };
 
     if (noHeaderList.includes(pageRoute)) return null;
     return (
@@ -30,7 +34,9 @@ export default function Header({pageRoute}: HeaderProps) {
                     <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
                     <HeaderRight>
                         <SearchIcon/>
-                        <BellIcon/>
+                        <StyledLink to='/notice'>
+                            <BellIcon/>
+                        </StyledLink>
                         <MenuIcon/>
                     </HeaderRight>
                 </>
@@ -39,6 +45,7 @@ export default function Header({pageRoute}: HeaderProps) {
                     <BackButton onClick={BackClick}>
                         <BackIcon/>
                     </BackButton>
+                    <HeaderH1>{headerName[pageRoute]}</HeaderH1>
                 </>
             }
         </HeaderWrapper>
@@ -75,5 +82,9 @@ const HeaderRight = styled.div`
 `;
 
 const BackButton = styled.button`
+    display: flex;
+`;
+
+const StyledLink = styled(Link)`
     display: flex;
 `;

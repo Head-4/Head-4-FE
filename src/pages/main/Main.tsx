@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import NavKeyWord from "./components/NavKeyWord";
-import Notice from "./components/Notice";
+import MainNotice from "./components/MainNotice";
 
 interface keyWord {
     id: number;
@@ -58,14 +58,14 @@ export default function Main() {
                 {NoticeList.length === 0 ?
                     <NoNoticeData>곧 새로운 공지를<br/>가져올게요!</NoNoticeData>
                     :
-                    <NoticeUl>
+                    <MainNoticeUl>
                         {NoticeList.map((notice) =>
-                            <Notice
+                            <MainNotice
                                 key={notice.url}
                                 notice={notice}
                             />
                         )}
-                    </NoticeUl>
+                    </MainNoticeUl>
                 }
             </MainSection>
         </>
@@ -88,7 +88,7 @@ const MainSection = styled.section`
     flex: 1;
 `;
 
-const NoticeUl = styled.ul``;
+const MainNoticeUl = styled.ul``;
 
 const NoNoticeData = styled.div`
     color: #B2B2B2;
