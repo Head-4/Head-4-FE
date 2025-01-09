@@ -36,7 +36,7 @@ export default function Aside({toggleAside, isAsideOpen}: AsideProps) {
                 <AsideBottomSection>
                     <ul>
                         <li>
-                            <AsideLink to=''>
+                            <AsideLink to='/setting/university' onClick={toggleAside}>
                                 <UniversityIcon/>
                                 <AsideSetting>학교 설정</AsideSetting>
                                 <ExpandIcon/>

@@ -52,12 +52,10 @@ export const router = createBrowserRouter([
                             path: "faq",
                             element: <Faq/>,
                         },
-                        // {
-                        //     path: "setting",
-                        //     element: <Setting/>,
-                        //     // loader : settingLoader
-                        //     // action: settingAction,
-                        // },
+                        {
+                            path: "setting/university",
+                            element: <UniversityEdit/>,
+                        },
                     ],
                 }
             ],

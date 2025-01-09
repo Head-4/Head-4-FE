@@ -12,6 +12,8 @@ export default function UniversityEdit() {
     const [hasText, setHasText] = useState<boolean>(false);
     const [options, setOptions] = useState<string[]>(universityList);
     const [buttonActive, setButtonActive] = useState<boolean>(false);
+    // 로그인 되어있는지 확인
+    const isLogin = true;
 
     useEffect(() => {
         if (university === '') {
@@ -62,7 +64,14 @@ export default function UniversityEdit() {
     return (
         <>
             <UniversitySection>
-                <UniversityH1>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH1>
+                {isLogin ?
+                    <UniversityCurrent>
+                        <span>현재 학교</span>
+                        <span>상명대학교 천안캠퍼스</span>
+                    </UniversityCurrent>
+                    :
+                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
+                }
                 <div ref={inputRef}>
                     <UnivInput type="text"
                                list="search-university"
@@ -79,7 +88,7 @@ export default function UniversityEdit() {
                     )}
                 </div>
             </UniversitySection>
-            <GlobalButton isActive={buttonActive}/>
+            <GlobalButton isActive={buttonActive} inputReset={()=>{setUniversity('')}}/>
         </>
     );
 }
@@ -88,7 +97,20 @@ const UniversitySection = styled.section`
     margin-top: 24px;
 `;
 
-const UniversityH1 = styled.h1`
+const UniversityCurrent = styled.h2`
+    color: #8F8F8F;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+
+    span:last-of-type {
+        margin-left: 12px;
+        font-weight: 600;
+        color: ${({theme}) => theme.colors.primary};
+    }
+`;
+
+const UniversityH2 = styled.h2`
     font-size: 24px;
     font-weight: 700;
     color: ${({theme}) => theme.colors.mainFont};

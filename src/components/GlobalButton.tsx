@@ -3,10 +3,11 @@ import styled from "styled-components";
 import {useLocation, useNavigate} from "react-router-dom";
 
 interface GlobalButtonProps {
-    isActive: boolean
+    isActive: boolean;
+    inputReset?: () => void;
 }
 
-export default function GlobalButton({isActive}: GlobalButtonProps) {
+export default function GlobalButton({isActive, inputReset}: GlobalButtonProps) {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -16,6 +17,9 @@ export default function GlobalButton({isActive}: GlobalButtonProps) {
         switch (pathName) {
             case '/register/university':
                 navigate('/register/keyword');
+                break;
+            case '/setting/university':
+                if (inputReset) inputReset();
                 break;
             case '/register/keyword':
                 navigate('/register/complete');
@@ -31,6 +35,7 @@ export default function GlobalButton({isActive}: GlobalButtonProps) {
 
     const buttonName: { [key: string]: string } = {
         "/register/university": "다음",
+        "/setting/university": "저장",
         "/register/keyword": "다음",
         "/register/complete": "확인",
         "/faq": "건의하기",
