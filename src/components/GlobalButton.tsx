@@ -5,9 +5,10 @@ import {useLocation, useNavigate} from "react-router-dom";
 interface GlobalButtonProps {
     isActive: boolean;
     inputReset?: () => void;
+    isSuccess?: (isSuccess: boolean) => void;
 }
 
-export default function GlobalButton({isActive, inputReset}: GlobalButtonProps) {
+export default function GlobalButton({isActive, inputReset, isSuccess}: GlobalButtonProps) {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,6 +20,8 @@ export default function GlobalButton({isActive, inputReset}: GlobalButtonProps) 
                 navigate('/register/keyword');
                 break;
             case '/setting/university':
+                // API 요청 결과 넣기
+                if (isSuccess) isSuccess(true);
                 if (inputReset) inputReset();
                 break;
             case '/register/keyword':

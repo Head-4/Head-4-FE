@@ -30,7 +30,7 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     min-height: 100vh;
     padding: 52px 20px 86px;
     background-color: ${({$pageRoute}) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
-    overflow-x: hidden;
+    overflow: hidden;
 `;
 
 const LayoutMain = styled.main`
