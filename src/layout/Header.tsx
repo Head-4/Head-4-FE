@@ -10,6 +10,7 @@ interface HeaderProps {
     pageRoute: string;
 }
 
+// isNew 조건 API 설정하기
 export default function Header({pageRoute}: HeaderProps) {
     const navigate = useNavigate();
 
@@ -34,9 +35,11 @@ export default function Header({pageRoute}: HeaderProps) {
                     <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
                     <HeaderRight>
                         <SearchIcon/>
-                        <StyledLink to='/notice'>
-                            <BellIcon/>
-                        </StyledLink>
+                        <Link to='/notice'>
+                            <AfterRedPoint $isNew={true}>
+                                <BellIcon/>
+                            </AfterRedPoint>
+                        </Link>
                         <MenuIcon/>
                     </HeaderRight>
                 </>
@@ -85,6 +88,19 @@ const BackButton = styled.button`
     display: flex;
 `;
 
-const StyledLink = styled(Link)`
+const AfterRedPoint = styled.div<{ $isNew: boolean }>`
     display: flex;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 4px;
+        background-color: #BD0000;
+        border-radius: 50%;
+        display: ${({$isNew}) => ($isNew ? 'block' : 'none')};
+    }
 `;
