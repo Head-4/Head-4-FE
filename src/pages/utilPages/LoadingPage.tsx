@@ -1,7 +1,19 @@
+import styled from "styled-components";
+
 export const LoadingPage = () => {
     return (
-        <div>
-            대충 로딩중
-        </div>
+        <LoadingWrapper>
+            <div>
+                로딩중 이미지
+            </div>
+        </LoadingWrapper>
     );
 };
+
+
+const LoadingWrapper = styled.main`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+`;
