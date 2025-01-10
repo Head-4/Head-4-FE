@@ -87,6 +87,12 @@ const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     padding: 0 20px;
     transform: ${({$isAsideOpen}) => $isAsideOpen ? 'translateX(0%)' : 'translateX(100%)'};
     transition: transform 0.3s ease-in-out;
+
+    @media (min-width: 500px) {
+        transform: ${({$isAsideOpen}) => $isAsideOpen ? 'translateX(0%)' : 'translateX(100vw)'};
+        width: 400px;
+        right: calc(50vw - 250px);
+    }
 `;
 
 const AsideTopSection = styled.section`
