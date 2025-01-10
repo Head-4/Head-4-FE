@@ -73,6 +73,12 @@ const HeaderWrapper = styled.header`
     justify-content: space-between;
     column-gap: 14px;
     background-color: #FAFAFA;
+
+    @media (min-width: 500px) {
+        transform: translateX(-50%);
+        left: 50%;
+        width: 500px;
+    }
 `;
 
 const HeaderH1 = styled.h1`

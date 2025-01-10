@@ -78,7 +78,7 @@ const Overlay = styled.div`
 
 const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     width: 80%;

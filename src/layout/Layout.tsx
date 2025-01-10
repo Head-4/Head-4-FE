@@ -17,10 +17,10 @@ export default function Layout() {
     return (
         <LayoutWrapper $pageRoute={pageRoute}>
             <Header pageRoute={pageRoute} toggleAside={toggleAside}/>
-            <Aside toggleAside={toggleAside} isAsideOpen={isAsideOpen}/>
             <LayoutMain>
                 <Outlet/>
             </LayoutMain>
+            <Aside toggleAside={toggleAside} isAsideOpen={isAsideOpen}/>
         </LayoutWrapper>
     );
 };
@@ -30,7 +30,6 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     min-height: 100vh;
     padding: 52px 20px 86px;
     background-color: ${({$pageRoute}) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
-    overflow: hidden;
 `;
 
 const LayoutMain = styled.main`

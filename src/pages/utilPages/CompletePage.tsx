@@ -9,7 +9,7 @@ export default function CompletePage() {
             <CompleteSection>
                 <CompleteH1>환영합니다!</CompleteH1>
                 <CompleteH2>이제 필요한 공지만<br/>빠르게 받아볼 수 있어요</CompleteH2>
-                <MainLogo/>
+                <MainLogo style={{width: '100%'}}/>
             </CompleteSection>
             <GlobalButton isActive={true}/>
         </>

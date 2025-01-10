@@ -14,7 +14,7 @@ export default function Success({isSuccess}: SuccessProps) {
 }
 
 const SuccessWrapper = styled.div<{ $isSuccess: boolean }>`
-    position: absolute;
+    position: fixed;
     left: 50%;
     bottom: 0;
     transition: transform 0.3s ease-in-out;
@@ -28,4 +28,10 @@ const SuccessWrapper = styled.div<{ $isSuccess: boolean }>`
     background-color: #F0FAF2;
     border-radius: 12px;
     text-align: center;
+
+    @media (min-width: 500px) {
+        left: 50%;
+        transform: translate(-50%, ${({$isSuccess}) => $isSuccess ? '-162px' : '100%'});
+        width: calc(500px - 40px);
+    }
 `;

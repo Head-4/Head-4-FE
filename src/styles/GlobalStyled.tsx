@@ -23,6 +23,25 @@ export const GlobalStyled = createGlobalStyle`
         line-height: 1.5;
     }
 
+    @media (min-width: 500px) {
+        #root {
+            width: 500px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        #root {
+            width: 100vw;
+        }
+    }
+
+    #root {
+        box-shadow: rgba(100, 100, 111, 0.5) 0 7px 29px 0;
+        margin: 0 auto;
+        min-height: 100vh;
+        position: relative;
+    }
+
     h1, h2, h3, h4, h5, h6 {
         font-size: inherit;
         font-weight: inherit;
@@ -53,8 +72,8 @@ export const GlobalStyled = createGlobalStyle`
 
     a {
         font-family: inherit;
-        text-decoration: none;  
-        color: inherit;         
-        outline: none;          
+        text-decoration: none;
+        color: inherit;
+        outline: none;
     }
 `;

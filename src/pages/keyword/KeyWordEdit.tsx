@@ -123,7 +123,7 @@ const KeyWordH1 = styled.h1`
 `;
 
 const KeyWordInput = styled.input<{ $isMax: boolean }>`
-    flex: 1;
+    width: calc(100% - 55px);
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #E9E9E9;

@@ -14,7 +14,7 @@ export default function Login() {
             <LoginSection>
                 <LoginH1>어쩌고 저쩌고</LoginH1>
                 <LoginH2>카카오로 바로 시작해 보세요</LoginH2>
-                <MainLogo/>
+                <MainLogo style={{width: '100%'}}/>
             </LoginSection>
             <LoginButton onClick={clickKakaoLogin}>
                 <KakaoIcon/>
