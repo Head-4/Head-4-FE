@@ -81,16 +81,15 @@ const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     position: fixed;
     top: 0;
     right: 0;
-    width: 80%;
+    width: ${({$isAsideOpen}) => $isAsideOpen ? '80%' : '0'};
     background-color: #FAFAFA;
     height: 100vh;
-    padding: 0 20px;
-    transform: ${({$isAsideOpen}) => $isAsideOpen ? 'translateX(0%)' : 'translateX(100%)'};
-    transition: transform 0.3s ease-in-out;
+    padding: ${({$isAsideOpen}) => $isAsideOpen ? '0 20px' : '0'};
+    transition: all 0.2s ease-in-out;
+    opacity: ${({$isAsideOpen}) => $isAsideOpen ? '1' : '0'};
 
     @media (min-width: 500px) {
-        transform: ${({$isAsideOpen}) => $isAsideOpen ? 'translateX(0%)' : 'translateX(100vw)'};
-        width: 400px;
+        width: ${({$isAsideOpen}) => $isAsideOpen ? '400px' : '0'};
         right: calc(50vw - 250px);
     }
 `;
@@ -135,6 +134,9 @@ const AsideLink = styled(Link)`
 const AsideSetting = styled.div`
     color: ${({theme}) => theme.colors.mainFont};
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     flex: 1;
 `;
 
