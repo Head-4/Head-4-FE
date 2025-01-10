@@ -26,6 +26,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
 
     const headerName: { [key: string]: string } = {
         "/setting/university": "학교 설정",
+        "/setting/keyword": "키워드 설정",
         "/notice": "알림",
         "/faq": "건의하기",
     };

@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import GlobalButton from "../../components/GlobalButton";
 import Row from "../../styles/Common/Row";
 import KeyWord from "./components/KeyWord";
 import {ReactComponent as AddIcon} from "../../assets/KeyWord/AddIcon.svg";
+import Success from "../../components/Success";
 
 interface keyWord {
     id: number;
@@ -16,9 +17,31 @@ export default function KeyWordEdit() {
         {id: 1, content: '장학'},
         {id: 2, content: '학점'},
     ]);
+    const prevKeyWordList = useRef<keyWord[]>(keyWordList);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    // 로그인 되어있는지 확인
+    const isLogin = true;
 
-    const isActive: boolean = keyWord.length > 0;
+    useEffect(() => {
+        if (prevKeyWordList.current !== keyWordList) {
+            prevKeyWordList.current = keyWordList;
+            setIsEdit(true);
+        }
+    }, [keyWordList]);
+
+    useEffect(() => {
+        if (isSuccess) {
+            const timer = setTimeout(() => {
+                setIsSuccess(false);
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isSuccess]);
+
+    const isAddActive: boolean = keyWord.length > 0;
     const isMax: boolean = keyWordList.length === 5;
 
     const addKeyWordClick = () => {
@@ -39,10 +62,19 @@ export default function KeyWordEdit() {
         setKeyWordList(keyWordList.filter((it) => it.id !== id));
     };
 
+    const showSuccess = (isSuccess: boolean) => {
+        setIsEdit(false);
+        setIsSuccess(isSuccess);
+    }
+
     return (
         <>
             <KeywordSection>
-                <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>
+                {isLogin ?
+                    <></>
+                    :
+                    <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>
+                }
                 <Row $gap={12} $verticalAlign="center">
                     <KeyWordInput
                         value={keyWord}
@@ -55,8 +87,8 @@ export default function KeyWordEdit() {
                     />
                     <AddButton
                         onClick={addKeyWordClick}
-                        disabled={!isActive}
-                        $isActive={isActive}
+                        disabled={!isAddActive}
+                        $isAddActive={isAddActive}
                     >
                         <AddIcon/>
                         <AddLabel>추가하기</AddLabel>
@@ -73,7 +105,8 @@ export default function KeyWordEdit() {
                     )}
                 </KeyWordWrapper>
             </KeywordSection>
-            <GlobalButton isActive={true}/>
+            <Success isSuccess={isSuccess}/>
+            <GlobalButton isActive={isEdit} isSuccess={showSuccess}/>
         </>
     );
 }
@@ -107,8 +140,8 @@ const KeyWordInput = styled.input<{ $isMax: boolean }>`
     }
 `;
 
-const AddButton = styled.button<{ $isActive: boolean }>`
-    color: ${({$isActive}) => $isActive ? ({theme}) => theme.colors.primary : '#DBDBDB'};
+const AddButton = styled.button<{ $isAddActive: boolean }>`
+    color: ${({$isAddActive}) => $isAddActive ? ({theme}) => theme.colors.primary : '#DBDBDB'};
 `;
 
 const AddLabel = styled.div`

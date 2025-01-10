@@ -43,7 +43,7 @@ export default function Aside({toggleAside, isAsideOpen}: AsideProps) {
                             </AsideLink>
                         </li>
                         <li>
-                            <AsideLink to=''>
+                            <AsideLink to='/setting/keyword' onClick={toggleAside}>
                                 <KeywordIcon/>
                                 <AsideSetting>키워드 설정</AsideSetting>
                                 <ExpandIcon/>

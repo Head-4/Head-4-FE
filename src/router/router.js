@@ -56,6 +56,10 @@ export const router = createBrowserRouter([
                             path: "setting/university",
                             element: <UniversityEdit/>,
                         },
+                        {
+                            path: "setting/keyword",
+                            element: <KeyWordEdit/>,
+                        },
                     ],
                 }
             ],

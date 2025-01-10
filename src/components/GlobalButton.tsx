@@ -27,6 +27,10 @@ export default function GlobalButton({isActive, inputReset, isSuccess}: GlobalBu
             case '/register/keyword':
                 navigate('/register/complete');
                 break;
+            case '/setting/keyword':
+                // API 요청 결과 넣기
+                if (isSuccess) isSuccess(true);
+                break;
             case '/register/complete':
                 navigate('/');
                 break;
@@ -40,6 +44,7 @@ export default function GlobalButton({isActive, inputReset, isSuccess}: GlobalBu
         "/register/university": "다음",
         "/setting/university": "저장",
         "/register/keyword": "다음",
+        "/setting/keyword": "저장",
         "/register/complete": "확인",
         "/faq": "건의하기",
     };
