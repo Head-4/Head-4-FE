@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalButton from "../../components/GlobalButton";
 import DropDown from "./components/DropDown";
 import Success from "../../components/Success";
+import {getChoseong} from "es-hangul";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
@@ -32,7 +33,7 @@ export default function UniversityEdit() {
             setHasText(false);
             setOptions([]);
         } else {
-            setOptions(universityList.filter((it) => it.includes(university)));
+            setOptions(universityList.filter((it) => getChoseong(it).includes(getChoseong(university))));
             setButtonActive(universityList.some((it) => it === university));
         }
     }, [university]);
