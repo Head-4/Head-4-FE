@@ -27,7 +27,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
     const headerName: { [key: string]: string } = {
         "/setting/university": "학교 설정",
         "/setting/keyword": "키워드 설정",
-        "/notice": "알림",
+        "/notification": "알림",
         "/faq": "건의하기",
     };
 
@@ -38,7 +38,11 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
                 <>
                     <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
                     <HeaderRight>
-                        <SearchIcon/>
+                        <Link to='/search'>
+                            <FlexDiv>
+                                <SearchIcon/>
+                            </FlexDiv>
+                        </Link>
                         <Link to='/notification'>
                             <AfterRedPoint $isNew={true}>
                                 <BellIcon/>
@@ -72,7 +76,7 @@ const HeaderWrapper = styled.header`
     align-items: center;
     justify-content: space-between;
     column-gap: 14px;
-    background-color: #FAFAFA;
+    background-color: transparent;
 
     @media (min-width: 500px) {
         transform: translateX(-50%);
@@ -118,5 +122,9 @@ const AfterRedPoint = styled.div<{ $isNew: boolean }>`
 `;
 
 const MenuButton = styled.button`
+    display: flex;
+`;
+
+const FlexDiv = styled.div`
     display: flex;
 `;

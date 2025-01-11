@@ -25,6 +25,11 @@ const DropDownUl = styled.ul`
     border-top: none;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
+
+    li:last-child {
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
     
     &::after {
         content: '';
@@ -40,7 +45,12 @@ const DropDownUl = styled.ul`
 
 const DropDownLi = styled.li`
     color: ${({theme}) => theme.colors.mainFont};
+    background-color: ${({theme}) => theme.colors.backgroundWhite};
     padding: 20px;
     font-size: 18px;
     font-weight: 500;
+    
+    &:active{
+        background-color: rgba(233, 233, 233, 0.25);;
+    }
 `;

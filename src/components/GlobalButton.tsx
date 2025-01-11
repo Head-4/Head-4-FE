@@ -42,8 +42,8 @@ export default function GlobalButton({isActive, inputReset, isSuccess}: GlobalBu
 
     const buttonName: { [key: string]: string } = {
         "/register/university": "다음",
-        "/setting/university": "저장",
         "/register/keyword": "다음",
+        "/setting/university": "저장",
         "/setting/keyword": "저장",
         "/register/complete": "확인",
         "/faq": "건의하기",
@@ -65,6 +65,6 @@ const GlobalButtonWrapper = styled.button<{ $isActive: boolean }>`
     font-size: 18px;
     color: ${({$isActive}) => $isActive ? '#FAFAFA' : '#B7B7B7'};
     border-radius: 12px;
-    background-color: ${({$isActive}) => $isActive ? ({theme}) => theme.colors.primary : ''};
+    background-color: ${({$isActive, theme}) => $isActive ? theme.colors.primary : '#F7F7F7'};
     padding: 18px 0;
 `;

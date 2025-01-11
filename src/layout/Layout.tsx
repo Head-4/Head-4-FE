@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {media} from "../styles/media";
 import {Outlet, useLocation} from "react-router-dom";
 import Header from "./Header";
 import Aside from "./Aside";
@@ -29,7 +28,12 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     position: relative;
     min-height: 100vh;
     padding: 52px 20px 86px;
-    background-color: ${({$pageRoute}) => ($pageRoute === "/login" ? ({theme}) => theme.colors.primary : "transparent")};
+    background-color: ${({$pageRoute, theme}) =>
+            $pageRoute === "/login"
+                    ? theme.colors.primary
+                    : $pageRoute === "/"
+                            ? "#FAFAFA"
+                            : "transparent"};
 `;
 
 const LayoutMain = styled.main`

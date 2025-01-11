@@ -12,6 +12,7 @@ const CompletePage = lazy(() => import("../pages/utilPages/CompletePage"));
 const Main = lazy(() => import("../pages/main/Main"));
 const Notification = lazy(() => import("../pages/notification/Notification"));
 const Faq = lazy(() => import("../pages/faq/Faq"));
+const Search = lazy(() => import("../pages/search/Search"));
 
 export const router = createBrowserRouter([
         {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
                         {
                             path: "notification",
                             element: <Notification/>,
+                        },
+                        {
+                            path: "search",
+                            element: <Search/>,
                         },
                         {
                             path: "faq",

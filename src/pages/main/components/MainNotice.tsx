@@ -26,6 +26,7 @@ const MainNoticeLi = styled.li`
     padding: 16px 20px;
     border-radius: 12px;
     border: 1px solid #FAFAFA;
+    background-color: ${({theme}) => theme.colors.backgroundWhite};
 
     &:active {
         border: 1px solid ${({theme}) => theme.colors.primary};

@@ -81,12 +81,11 @@ const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     position: fixed;
     top: 0;
     right: 0;
-    width: ${({$isAsideOpen}) => $isAsideOpen ? '80%' : '0'};
-    background-color: #FAFAFA;
+    background-color: ${({theme}) => theme.colors.backgroundWhite};
     height: 100vh;
-    padding: ${({$isAsideOpen}) => $isAsideOpen ? '0 20px' : '0'};
-    transition: all 0.2s ease-in-out;
+    width: ${({$isAsideOpen}) => $isAsideOpen ? '80%' : '0'};
     opacity: ${({$isAsideOpen}) => $isAsideOpen ? '1' : '0'};
+    transition: all 0.2s ease-in-out;
 
     @media (min-width: 500px) {
         width: ${({$isAsideOpen}) => $isAsideOpen ? '400px' : '0'};
@@ -100,6 +99,7 @@ const AsideTopSection = styled.section`
     column-gap: 8px;
     align-items: center;
     justify-content: space-between;
+    padding: 0 20px;
 `;
 
 const AsideUserName = styled.span`
@@ -122,12 +122,12 @@ const AsideBottomSection = styled.section`
 const AsideLink = styled(Link)`
     display: flex;
     column-gap: 12px;
-    padding: 16px 0;
+    padding: 16px 20px;
     align-items: center;
     color: #DDDDDD;
 
     &:active {
-        color: ${({theme}) => theme.colors.primary};
+        background-color: rgba(233, 233, 233, 0.25);
     }
 `;
 
@@ -142,6 +142,7 @@ const AsideSetting = styled.div`
 
 const LogOutButton = styled.button`
     position: absolute;
+    left: 20px;
     bottom: 140px;
     color: #A9A9A9;
     font-size: 12px;
