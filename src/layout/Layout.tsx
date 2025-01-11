@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Outlet, useLocation} from "react-router-dom";
 import {useAsideBar} from "../hooks/layout/useAsideBar";
-import Header from "./Header";
+import Header from "./Header/Header";
 import Aside from "./Aside";
 
 export default function Layout() {
