@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {Outlet, useLocation} from "react-router-dom";
 import {useAsideBar} from "../hooks/layout/useAsideBar";
 import Header from "./Header/Header";
-import Aside from "./Aside";
+import Aside from "./Aside/Aside";
 
 export default function Layout() {
     const location = useLocation();
@@ -24,12 +24,16 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     position: relative;
     min-height: 100vh;
     padding: 52px 20px 86px;
-    background-color: ${({$pageRoute, theme}) =>
-            $pageRoute === "/login"
-                    ? theme.colors.primary
-                    : $pageRoute === "/"
-                            ? "#FAFAFA"
-                            : "transparent"};
+    background-color: ${({$pageRoute, theme}) => {
+        switch ($pageRoute) {
+            case "/login":
+                return theme.colors.primary;
+            case "/":
+                return "#FAFAFA";
+            default:
+                return "transparent";
+        }
+    }};
 `;
 
 const LayoutMain = styled.main`
