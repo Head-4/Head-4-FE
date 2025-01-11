@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
 import styled from "styled-components";
 import {Outlet, useLocation} from "react-router-dom";
+import {useAsideBar} from "../hooks/layout/useAsideBar";
 import Header from "./Header";
 import Aside from "./Aside";
 
 export default function Layout() {
     const location = useLocation();
     const pageRoute = location.pathname;
-    const [isAsideOpen, setIsAsideOpen] = useState<boolean>(false);
-
-    const toggleAside = () => {
-        setIsAsideOpen((prev) => !prev);
-    };
+    const {isAsideOpen, toggleAside} = useAsideBar();
 
     return (
         <LayoutWrapper $pageRoute={pageRoute}>

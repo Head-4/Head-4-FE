@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import NavKeyWord from "./components/NavKeyWord";
-import MainNotice from "./components/MainNotice";
+import NoticeItem from "../../components/NoticeItem";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {useInView} from 'react-intersection-observer';
 
@@ -96,14 +96,14 @@ export default function Main() {
                     <MainNoticeUl>
                         {/*{data?.pages.map((page) =>*/}
                         {/*    page.items.map((notice) =>*/}
-                        {/*        <MainNotice*/}
+                        {/*        <NoticeItem*/}
                         {/*            key={notice.url}*/}
                         {/*            notice={notice}*/}
                         {/*        />*/}
                         {/*    )*/}
                         {/*)}*/}
                         {NoticeList.map((notice) =>
-                            <MainNotice
+                            <NoticeItem
                                 key={notice.url}
                                 notice={notice}
                             />

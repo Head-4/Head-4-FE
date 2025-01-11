@@ -4,24 +4,24 @@ import styled from "styled-components";
 interface NoticeType {
     title: string;
     date: string;
-    url:string;
+    url: string;
 }
 
 interface NoticeProps {
     notice: NoticeType
 }
 
-export default function MainNotice({notice}: NoticeProps) {
+export default function NoticeItem({notice}: NoticeProps) {
     return (
-        <MainNoticeLi>
+        <NoticeLi>
             <a href="">
-                <MainNoticeTitle>{notice.title}</MainNoticeTitle>
-                <MainNoticeDate>{notice.date}</MainNoticeDate>
+                <NoticeTitle>{notice.title}</NoticeTitle>
+                <NoticeDate>{notice.date}</NoticeDate>
             </a>
-        </MainNoticeLi>
+        </NoticeLi>
     );
 }
-const MainNoticeLi = styled.li`
+const NoticeLi = styled.li`
     margin-bottom: 12px;
     padding: 16px 20px;
     border-radius: 12px;
@@ -33,13 +33,13 @@ const MainNoticeLi = styled.li`
     }
 `;
 
-const MainNoticeTitle = styled.div`
+const NoticeTitle = styled.div`
     color: ${({theme}) => theme.colors.mainFont};
     font-weight: 600;
     margin-bottom: 4px;
 `;
 
-const MainNoticeDate = styled.div`
+const NoticeDate = styled.div`
     color: #B7B7B7;
     font-size: 14px;
     font-weight: 500;
