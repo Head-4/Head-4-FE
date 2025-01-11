@@ -2,8 +2,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import GlobalButton from "../../components/GlobalButton";
 import DropDown from "./components/DropDown";
-import Success from "../../components/Success";
+import AlertBox from "../../components/AlertBox";
 import {getChoseong} from "es-hangul";
+import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
@@ -14,19 +15,10 @@ export default function UniversityEdit() {
     const [hasText, setHasText] = useState<boolean>(false);
     const [options, setOptions] = useState<string[]>(universityList);
     const [buttonActive, setButtonActive] = useState<boolean>(false);
-    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const {isAlert, showAlert} = useAlertBox();
+
     // 로그인 되어있는지 확인
     const isLogin = true;
-
-    useEffect(() => {
-        if (isSuccess) {
-            const timer = setTimeout(() => {
-                setIsSuccess(false);
-            }, 2000);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isSuccess]);
 
     useEffect(() => {
         if (university === '') {
@@ -74,10 +66,6 @@ export default function UniversityEdit() {
 
     const showDropDown = options.length > 0 && hasText;
 
-    const showSuccess = (isSuccess: boolean) => {
-        setIsSuccess(isSuccess);
-    }
-
     return (
         <>
             <UniversitySection>
@@ -105,9 +93,9 @@ export default function UniversityEdit() {
                     )}
                 </div>
             </UniversitySection>
-            <Success isSuccess={isSuccess}/>
+            <AlertBox isAlert={isAlert} status="success"/>
             <GlobalButton
-                isSuccess={showSuccess}
+                showAlert={showAlert}
                 isActive={buttonActive}
                 inputReset={() => {
                     setUniversity('');

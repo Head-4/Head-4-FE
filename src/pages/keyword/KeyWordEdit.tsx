@@ -4,7 +4,8 @@ import GlobalButton from "../../components/GlobalButton";
 import Row from "../../styles/Common/Row";
 import KeyWord from "./components/KeyWord";
 import {ReactComponent as AddIcon} from "../../assets/KeyWord/AddIcon.svg";
-import Success from "../../components/Success";
+import AlertBox from "../../components/AlertBox";
+import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 
 interface keyWord {
     id: number;
@@ -17,29 +18,24 @@ export default function KeyWordEdit() {
         {id: 1, content: '장학'},
         {id: 2, content: '학점'},
     ]);
+    // 캐싱된 서버 데이터와 비교해서 바뀐게 있으면 BUTTON을 ON
     const prevKeyWordList = useRef<keyWord[]>(keyWordList);
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const {isAlert, showAlert} = useAlertBox();
+
     // 로그인 되어있는지 확인
     const isLogin = true;
 
+    // 여기는 서버데이터 받아오고 수정이 필요하다
     useEffect(() => {
         if (prevKeyWordList.current !== keyWordList) {
             prevKeyWordList.current = keyWordList;
             setIsEdit(true);
+        } else {
+            setIsEdit(false);
         }
-    }, [keyWordList]);
-
-    useEffect(() => {
-        if (isSuccess) {
-            const timer = setTimeout(() => {
-                setIsSuccess(false);
-            }, 2000);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isSuccess]);
+    }, [keyWordList, isAlert]);
 
     const isAddActive: boolean = keyWord.length > 0;
     const isMax: boolean = keyWordList.length === 5;
@@ -61,11 +57,6 @@ export default function KeyWordEdit() {
     const deleteKeyWordClick = (id: number) => {
         setKeyWordList(keyWordList.filter((it) => it.id !== id));
     };
-
-    const showSuccess = (isSuccess: boolean) => {
-        setIsEdit(false);
-        setIsSuccess(isSuccess);
-    }
 
     return (
         <>
@@ -105,8 +96,8 @@ export default function KeyWordEdit() {
                     )}
                 </KeyWordWrapper>
             </KeywordSection>
-            <Success isSuccess={isSuccess}/>
-            <GlobalButton isActive={isEdit} isSuccess={showSuccess}/>
+            <AlertBox isAlert={isAlert} status="failure"/>
+            <GlobalButton isActive={isEdit} showAlert={showAlert}/>
         </>
     );
 }
