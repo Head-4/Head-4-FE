@@ -30,8 +30,10 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
                 return theme.colors.primary;
             case "/":
                 return "#FAFAFA";
+            case "/search":
+                return "#FAFAFA";
             default:
-                return "transparent";
+                return "#FFFFFF;";
         }
     }};
 `;

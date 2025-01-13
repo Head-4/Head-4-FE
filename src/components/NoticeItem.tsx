@@ -8,14 +8,15 @@ interface NoticeType {
 }
 
 interface NoticeProps {
-    notice: NoticeType
+    notice: NoticeType;
+    highlightText?: (text: string) => React.ReactNode;
 }
 
-export default function NoticeItem({notice}: NoticeProps) {
+export default function NoticeItem({notice, highlightText = (text) => text}: NoticeProps) {
     return (
         <NoticeLi>
             <a href="">
-                <NoticeTitle>{notice.title}</NoticeTitle>
+                <NoticeTitle>{highlightText(notice.title)}</NoticeTitle>
                 <NoticeDate>{notice.date}</NoticeDate>
             </a>
         </NoticeLi>

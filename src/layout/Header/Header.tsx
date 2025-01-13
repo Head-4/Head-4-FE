@@ -23,7 +23,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
 
     if (noHeaderList.includes(pageRoute)) return null;
     return (
-        <HeaderWrapper>
+        <HeaderWrapper $pageRoute={pageRoute}>
             {pageRoute === '/' ?
                 <MainHeader toggleAside={toggleAside}/>
                 :
@@ -33,7 +33,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
     );
 }
 
-const HeaderWrapper = styled.header`
+const HeaderWrapper = styled.header<{ $pageRoute: string }>`
     position: fixed;
     top: 0;
     left: 0;
@@ -44,8 +44,9 @@ const HeaderWrapper = styled.header`
     align-items: center;
     justify-content: space-between;
     column-gap: 14px;
-    background-color: transparent;
-
+    background-color: ${({$pageRoute}) => $pageRoute === '/search' ? "#FFFFFF" : 'inherit'};
+    z-index: 500;
+    
     @media (min-width: 500px) {
         transform: translateX(-50%);
         left: 50%;

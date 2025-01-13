@@ -133,7 +133,7 @@ const UnivInput = styled.input<{ $showDropDown: boolean }>`
     width: 100%;
     padding: 20px;
     border-radius: ${({$showDropDown}) => $showDropDown ? '12px 12px 0 0' : '12px'};
-    border: 1px solid #E9E9E9;
+    border: 1px solid ${({theme})=>theme.colors.lightGray};
     border-bottom: ${({$showDropDown}) => $showDropDown ? 'none' : '1px solid #E9E9E9'};
     font-size: 18px;
     font-weight: 600;
