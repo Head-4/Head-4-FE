@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {highlightText} from "../utils/highlightText";
 
 interface NoticeType {
     title: string;
@@ -9,14 +10,14 @@ interface NoticeType {
 
 interface NoticeProps {
     notice: NoticeType;
-    highlightText?: (text: string) => React.ReactNode;
+    searchInput?: string
 }
 
-export default function NoticeItem({notice, highlightText = (text) => text}: NoticeProps) {
+export default function NoticeItem({notice, searchInput = ''}: NoticeProps) {
     return (
         <NoticeLi>
             <a href="">
-                <NoticeTitle>{highlightText(notice.title)}</NoticeTitle>
+                <NoticeTitle>{highlightText(notice.title, searchInput, 16)}</NoticeTitle>
                 <NoticeDate>{notice.date}</NoticeDate>
             </a>
         </NoticeLi>

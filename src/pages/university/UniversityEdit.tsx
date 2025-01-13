@@ -54,16 +54,6 @@ export default function UniversityEdit() {
         setHasText(false);
     };
 
-    const highlightText = (text: string) => {
-        if (!university) return text;
-        const parts = text.split(new RegExp(`(${university})`, 'gi'));
-        return parts.map((part, idx) =>
-            part.toLowerCase() === university.toLowerCase()
-                ? <HighlightSpan key={idx}>{part}</HighlightSpan>
-                : part
-        );
-    };
-
     const showDropDown = options.length > 0 && hasText;
 
     return (
@@ -89,7 +79,7 @@ export default function UniversityEdit() {
                         <DropDown
                             options={options}
                             DropDownClick={DropDownClick}
-                            highlightText={highlightText}/>
+                            searchInput={university}/>
                     )}
                 </div>
             </UniversitySection>

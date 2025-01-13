@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from "styled-components";
+import {highlightText} from "../../../utils/highlightText";
 
 interface DropDownProps {
     options: string[];
     DropDownClick: (clickedUniversity: string) => void;
-    highlightText: (text: string) => React.ReactNode;
+    searchInput: string;
 }
 
-export default function DropDown({options, DropDownClick, highlightText}: DropDownProps) {
+export default function DropDown({options, DropDownClick, searchInput = ''}: DropDownProps) {
     return (
         <DropDownUl>
             {options.map((university, idx) =>
                 <DropDownLi key={idx} onClick={() => DropDownClick(university)}>
-                    {highlightText(university)}
+                    {highlightText(university,searchInput,18)}
                 </DropDownLi>
             )}
         </DropDownUl>

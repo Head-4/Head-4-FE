@@ -35,21 +35,6 @@ export default function Search() {
         setSearchList(filteredList);
     };
 
-    const escapeRegExp = (string: string) => {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    };
-
-    const highlightText = (text: string) => {
-        if (!searchInput) return text;
-        const escapedInput = escapeRegExp(searchInput);
-        const parts = text.split(new RegExp(`(${escapedInput})`, 'gi'));
-        return parts.map((part, idx) =>
-            part.toLowerCase() === searchInput.toLowerCase()
-                ? <HighlightSpan key={idx}>{part}</HighlightSpan>
-                : part
-        );
-    };
-
     return (
         <>
             <SearchTopDiv>
@@ -73,9 +58,9 @@ export default function Search() {
                     <ul>
                         {searchList.map((notice) => (
                             <NoticeItem
+                                searchInput={searchInput}
                                 key={notice.url}
                                 notice={notice}
-                                highlightText={highlightText}
                             />
                         ))}
                     </ul>
