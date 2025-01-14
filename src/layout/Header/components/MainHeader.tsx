@@ -5,13 +5,12 @@ import {ReactComponent as BellIcon} from "../../../assets/Layout/Header/BellIcon
 import {ReactComponent as MenuIcon} from "../../../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/Layout/Header/SearchIcon.svg";
 import Row from "../../../styles/Common/Row";
-
-interface MainHeaderProps {
-    toggleAside: () => void;
-}
+import useAsideStore from "../../../store/AsideStore";
 
 // isNew : 새로온 알림 있는지 확인 API
-export default function MainHeader({toggleAside}: MainHeaderProps) {
+export default function MainHeader() {
+    const toggleAside  = useAsideStore((state) => state.toggleAside);
+
     return (
         <>
             <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>

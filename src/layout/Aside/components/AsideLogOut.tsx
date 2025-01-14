@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import useAsideStore from "../../../store/AsideStore";
 
-interface AsideLogOutProps {
-    toggleAside: () => void;
-}
-
-export default function AsideLogOut({toggleAside}: AsideLogOutProps) {
+export default function AsideLogOut() {
     const navigate = useNavigate();
+    const toggleAside  = useAsideStore((state) => state.toggleAside);
 
     const clickLogOut = () => {
         // 로그아웃 설정

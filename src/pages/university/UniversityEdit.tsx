@@ -1,14 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
-import GlobalButton from "../../components/GlobalButton";
 import DropDown from "./components/DropDown";
 import AlertBox from "../../components/AlertBox";
 import {getChoseong} from "es-hangul";
 import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
+import CommonButton from "../../components/CommonButton";
+import {useNavigate} from "react-router-dom";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
 export default function UniversityEdit() {
+    const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [university, setUniversity] = useState<string>('');
@@ -18,7 +20,7 @@ export default function UniversityEdit() {
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isLogin = true;
+    const isLogin = false;
 
     useEffect(() => {
         if (university === '') {
@@ -54,6 +56,17 @@ export default function UniversityEdit() {
         setHasText(false);
     };
 
+    // api 설정
+    const clickButton = () => {
+        if (isLogin) {
+            showAlert(true);
+            setUniversity('');
+            setButtonActive(false);
+        } else {
+            navigate('/register/keyword');
+        }
+    }
+
     const showDropDown = options.length > 0 && hasText;
 
     return (
@@ -84,13 +97,9 @@ export default function UniversityEdit() {
                 </div>
             </UniversitySection>
             <AlertBox isAlert={isAlert} status="success"/>
-            <GlobalButton
-                showAlert={showAlert}
-                isActive={buttonActive}
-                inputReset={() => {
-                    setUniversity('');
-                    setButtonActive(false);
-                }}/>
+            <CommonButton onClick={clickButton} isActive={buttonActive}>
+                {isLogin ? "저장" : "다음"}
+            </CommonButton>
         </>
     );
 }
@@ -123,7 +132,7 @@ const UnivInput = styled.input<{ $showDropDown: boolean }>`
     width: 100%;
     padding: 20px;
     border-radius: ${({$showDropDown}) => $showDropDown ? '12px 12px 0 0' : '12px'};
-    border: 1px solid ${({theme})=>theme.colors.lightGray};
+    border: 1px solid ${({theme}) => theme.colors.lightGray};
     border-bottom: ${({$showDropDown}) => $showDropDown ? 'none' : '1px solid #E9E9E9'};
     font-size: 18px;
     font-weight: 600;

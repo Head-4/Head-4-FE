@@ -31,7 +31,6 @@ export const router = createBrowserRouter([
                         {
                             path: "kakao/callback",
                             element: <KakaoLoading/>,
-                            // loader: tokenLoader,
                         },
                         {
                             path: "register/university",

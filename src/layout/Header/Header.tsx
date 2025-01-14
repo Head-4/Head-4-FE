@@ -5,10 +5,9 @@ import MainHeader from "./components/MainHeader";
 
 interface HeaderProps {
     pageRoute: string;
-    toggleAside: () => void;
 }
 
-export default function Header({pageRoute, toggleAside}: HeaderProps) {
+export default function Header({pageRoute}: HeaderProps) {
     const noHeaderList: string[] = [
         "/login",
         "/register/complete",
@@ -25,7 +24,7 @@ export default function Header({pageRoute, toggleAside}: HeaderProps) {
     return (
         <HeaderWrapper $pageRoute={pageRoute}>
             {pageRoute === '/' ?
-                <MainHeader toggleAside={toggleAside}/>
+                <MainHeader/>
                 :
                 <BackHeader pageName={headerName[pageRoute]}/>
             }

@@ -16,7 +16,7 @@ interface NoticeProps {
 export default function NoticeItem({notice, searchInput = ''}: NoticeProps) {
     return (
         <NoticeLi>
-            <a href="">
+            <a href={notice.url}>
                 <NoticeTitle>{highlightText(notice.title, searchInput, 16)}</NoticeTitle>
                 <NoticeDate>{notice.date}</NoticeDate>
             </a>

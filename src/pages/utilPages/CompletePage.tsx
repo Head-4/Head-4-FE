@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from "styled-components";
-import GlobalButton from "../../components/GlobalButton";
 import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
+import CommonButton from "../../components/CommonButton";
+import {useNavigate} from "react-router-dom";
 
 export default function CompletePage() {
+    const navigate = useNavigate();
+
+    const clickButton = () => {
+        navigate('/');
+    }
+
     return (
         <>
             <CompleteSection>
@@ -11,7 +18,9 @@ export default function CompletePage() {
                 <CompleteH2>이제 필요한 공지만<br/>빠르게 받아볼 수 있어요</CompleteH2>
                 <MainLogo style={{width: '100%'}}/>
             </CompleteSection>
-            <GlobalButton isActive={true}/>
+            <CommonButton onClick={clickButton} isActive={true}>
+                확인
+            </CommonButton>
         </>
     );
 }

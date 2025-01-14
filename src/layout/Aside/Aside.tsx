@@ -3,33 +3,37 @@ import styled from "styled-components";
 import AsideTop from "./components/AsideTop";
 import AsideBottom from "./components/AsideBottom";
 import AsideLogOut from "./components/AsideLogOut";
+import useAsideStore from "../../store/AsideStore";
 
-interface AsideProps {
-    toggleAside: () => void;
-    isAsideOpen: boolean;
-}
+export default function Aside() {
+    const isAsideOpen = useAsideStore((state) => state.isAsideOpen);
+    const toggleAside  = useAsideStore((state) => state.toggleAside);
 
-export default function Aside({toggleAside, isAsideOpen}: AsideProps) {
     return (
         <>
             {isAsideOpen && <Overlay onClick={toggleAside}/>}
             <AsideWrapper $isAsideOpen={isAsideOpen} onClick={(e) => e.stopPropagation()}>
-                <AsideTop toggleAside={toggleAside}/>
-                <AsideBottom toggleAside={toggleAside}/>
-                <AsideLogOut toggleAside={toggleAside}/>
+                <AsideTop />
+                <AsideBottom />
+                <AsideLogOut/>
             </AsideWrapper>
         </>
     );
 }
 
 const Overlay = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     background-color: rgba(51, 54, 63, 0.10);
     z-index: 999;
+
+    @media (min-width: 500px) {
+        left: calc(50vw - 250px);
+        width: 500px
+    }
 `;
 
 const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`

@@ -1,19 +1,24 @@
 import styled from "styled-components";
+import LoadingGif from '../../assets/Common/LoadingGif.gif';
 
 export const LoadingPage = () => {
     return (
         <LoadingWrapper>
-            <div>
-                로딩중 이미지
-            </div>
+            <LoadingImage src={LoadingGif} alt="로딩 이미지"/>
         </LoadingWrapper>
     );
 };
 
-
-const LoadingWrapper = styled.main`
+const LoadingWrapper = styled.div`
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+`;
+
+const LoadingImage = styled.img`
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
 `;

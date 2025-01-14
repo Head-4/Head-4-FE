@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
-import GlobalButton from "../../components/GlobalButton";
 import KeyWord from "./components/KeyWord";
 import AlertBox from "../../components/AlertBox";
 import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import KeyWordInputSection from "./components/KeyWordInputSection";
+import CommonButton from "../../components/CommonButton";
+import {useNavigate} from "react-router-dom";
 
 interface keyWord {
     id: number;
@@ -12,11 +13,13 @@ interface keyWord {
 }
 
 export default function KeyWordEdit() {
+    const navigate = useNavigate();
     const [keyWord, setKeyWord] = useState<string>('');
     const [keyWordList, setKeyWordList] = useState<keyWord[]>([
         {id: 1, content: '장학'},
         {id: 2, content: '학점'},
     ]);
+
     // 캐싱된 서버 데이터와 비교해서 바뀐게 있으면 BUTTON을 ON
     const prevKeyWordList = useRef<keyWord[]>(keyWordList);
     const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -24,7 +27,7 @@ export default function KeyWordEdit() {
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isLogin = true;
+    const isLogin = false;
 
     // 여기는 서버데이터 받아오고 수정이 필요하다
     useEffect(() => {
@@ -52,6 +55,15 @@ export default function KeyWordEdit() {
         setKeyWordList(keyWordList.filter((it) => it.id !== id));
     };
 
+    // api 설정
+    const clickButton = () => {
+        if (isLogin) {
+            showAlert(true);
+        } else {
+            navigate('/register/complete');
+        }
+    }
+
     return (
         <>
             <KeywordSection>
@@ -76,7 +88,10 @@ export default function KeyWordEdit() {
                 </KeyWordWrapper>
             </KeywordSection>
             <AlertBox isAlert={isAlert} status="failure"/>
-            <GlobalButton isActive={isEdit} showAlert={showAlert}/>
+            {/*<GlobalButton isActive={isEdit} showAlert={showAlert}/>*/}
+            <CommonButton onClick={clickButton} isActive={isEdit}>
+                {isLogin ? "저장" : "다음"}
+            </CommonButton>
         </>
     );
 }

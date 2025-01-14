@@ -1,29 +1,34 @@
 import React, {useState} from 'react';
-import GlobalButton from "../../components/GlobalButton";
 import styled from "styled-components";
 import {ReactComponent as FaqIcon} from "../../assets/faq/FaqIcon.svg";
+import CommonButton from "../../components/CommonButton";
 
 export default function Faq() {
     const [faqInput, setFaqInput] = useState<string>('');
 
+    // api 설정
+    const clickButton = () => {
+        setFaqInput('');
+    }
+
     return (
         <>
-
             <FaqInput
                 rows={20}
                 value={faqInput}
                 onChange={(e) => setFaqInput(e.target.value)}
                 placeholder="건의할 내용을 입력해 주세요"
             />
-
             <FaqInfo>
-                <LineDiv></LineDiv>
+                <LineDiv/>
                 <FaqH2><FaqIcon/>알려드려요</FaqH2>
                 <FaqP>· 건의 내용을 자세하게 적어주시면 빠른 답변에 도움돼요</FaqP>
                 <FaqP>· 보내주신 건의의 답변에는 시간이 조금 소요될 수 있어요</FaqP>
                 <FaqP>· 더 편리한 우리의 공지 사용을 위해 모든 건의는 기록으로 남아 보관돼요</FaqP>
             </FaqInfo>
-            <GlobalButton isActive={faqInput.length > 0}/>
+            <CommonButton onClick={clickButton} isActive={faqInput.length > 0}>
+                건의하기
+            </CommonButton>
         </>
     );
 }

@@ -6,10 +6,7 @@ import {ReactComponent as MessageIcon} from "../../../assets/Aside/MessageIcon.s
 import {ReactComponent as ExpandIcon} from "../../../assets/Aside/ExpandIcon.svg";
 import {ReactComponent as BellIcon} from "../../../assets/Aside/BellIcon.svg";
 import {useState} from "react";
-
-interface AsideBottomProps {
-    toggleAside: () => void;
-}
+import useAsideStore from "../../../store/AsideStore";
 
 const AsideItems = [
     {
@@ -29,8 +26,10 @@ const AsideItems = [
     },
 ];
 
-export default function AsideBottom({toggleAside}: AsideBottomProps) {
+export default function AsideBottom() {
+    const toggleAside  = useAsideStore((state) => state.toggleAside);
     const [keyWordToggle, setKeyWordToggle] = useState<boolean>(false);
+
     const clickKeyWordToggle = () => {
         setKeyWordToggle((prev) => !prev);
     };
@@ -69,7 +68,6 @@ const OnOffDiv = styled.div`
 `;
 
 const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
-    opacity: ${({$keyWordToggle}) => $keyWordToggle ? '1' : '0'};
     padding: 0 10px;
     text-align: ${({$keyWordToggle}) => $keyWordToggle ? 'left' : 'right'};
     font-size: 12px;

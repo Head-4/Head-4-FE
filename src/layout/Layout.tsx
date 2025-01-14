@@ -1,21 +1,19 @@
 import styled from "styled-components";
 import {Outlet, useLocation} from "react-router-dom";
-import {useAsideBar} from "../hooks/layout/useAsideBar";
 import Header from "./Header/Header";
 import Aside from "./Aside/Aside";
 
 export default function Layout() {
     const location = useLocation();
     const pageRoute = location.pathname;
-    const {isAsideOpen, toggleAside} = useAsideBar();
 
     return (
         <LayoutWrapper $pageRoute={pageRoute}>
-            <Header pageRoute={pageRoute} toggleAside={toggleAside}/>
+            <Header pageRoute={pageRoute}/>
             <LayoutMain>
                 <Outlet/>
             </LayoutMain>
-            <Aside toggleAside={toggleAside} isAsideOpen={isAsideOpen}/>
+            <Aside/>
         </LayoutWrapper>
     );
 };

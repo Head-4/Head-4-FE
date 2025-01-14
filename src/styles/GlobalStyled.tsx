@@ -15,6 +15,13 @@ export const GlobalStyled = createGlobalStyle`
         line-height: 1.5;
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     body {
