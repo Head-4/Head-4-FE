@@ -69,6 +69,7 @@ const OnOffDiv = styled.div`
 `;
 
 const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
+    opacity: ${({$keyWordToggle}) => $keyWordToggle ? '1' : '0'};
     padding: 0 10px;
     text-align: ${({$keyWordToggle}) => $keyWordToggle ? 'left' : 'right'};
     font-size: 12px;
@@ -80,7 +81,7 @@ const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
     border-radius: 24px;
     border: 1px solid ${({$keyWordToggle}) => $keyWordToggle ? '#BFCFE9' : '#E2E2E2'};
     background-color: ${({$keyWordToggle}) => $keyWordToggle ? '#E4EBF5' : '#F7F7F7'};
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 
     &::after {
         position: absolute;
