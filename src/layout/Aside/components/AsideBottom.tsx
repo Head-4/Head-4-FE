@@ -4,9 +4,10 @@ import {ReactComponent as UniversityIcon} from "../../../assets/Aside/University
 import {ReactComponent as KeywordIcon} from "../../../assets/Aside/KeywordIcon.svg";
 import {ReactComponent as MessageIcon} from "../../../assets/Aside/MessageIcon.svg";
 import {ReactComponent as ExpandIcon} from "../../../assets/Aside/ExpandIcon.svg";
-import {ReactComponent as BellIcon} from "../../../assets/Aside/BellIcon.svg";
+import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import {useState} from "react";
 import useAsideStore from "../../../store/AsideStore";
+import {handleAllowNotification} from "../../../utils/firebaseConfig";
 
 const AsideItems = [
     {
@@ -27,10 +28,14 @@ const AsideItems = [
 ];
 
 export default function AsideBottom() {
-    const toggleAside  = useAsideStore((state) => state.toggleAside);
+    const toggleAside = useAsideStore((state) => state.toggleAside);
     const [keyWordToggle, setKeyWordToggle] = useState<boolean>(false);
 
-    const clickKeyWordToggle = () => {
+    const clickKeyWordToggle = async () => {
+        // 키워드 설정 했는지 안했는지 확인하는 API로 검증하고 결과에 맞춰서 true false
+        if (!keyWordToggle) {
+            await handleAllowNotification();
+        }
         setKeyWordToggle((prev) => !prev);
     };
 

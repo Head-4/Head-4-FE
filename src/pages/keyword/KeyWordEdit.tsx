@@ -6,6 +6,7 @@ import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import KeyWordInputSection from "./components/KeyWordInputSection";
 import CommonButton from "../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
+import NotificationModal from "./components/NotificationModal";
 
 interface keyWord {
     id: number;
@@ -13,7 +14,6 @@ interface keyWord {
 }
 
 export default function KeyWordEdit() {
-    const navigate = useNavigate();
     const [keyWord, setKeyWord] = useState<string>('');
     const [keyWordList, setKeyWordList] = useState<keyWord[]>([
         {id: 1, content: '장학'},
@@ -24,6 +24,7 @@ export default function KeyWordEdit() {
     const prevKeyWordList = useRef<keyWord[]>(keyWordList);
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
@@ -60,12 +61,13 @@ export default function KeyWordEdit() {
         if (isLogin) {
             showAlert(true);
         } else {
-            navigate('/register/complete');
+            setIsModalOpen(true);
         }
     }
 
     return (
         <>
+            <NotificationModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
             <KeywordSection>
                 {isLogin && <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>}
                 <KeyWordInputSection
@@ -88,13 +90,13 @@ export default function KeyWordEdit() {
                 </KeyWordWrapper>
             </KeywordSection>
             <AlertBox isAlert={isAlert} status="failure"/>
-            {/*<GlobalButton isActive={isEdit} showAlert={showAlert}/>*/}
             <CommonButton onClick={clickButton} isActive={isEdit}>
                 {isLogin ? "저장" : "다음"}
             </CommonButton>
         </>
     );
 }
+
 const KeywordSection = styled.section`
     margin-top: 24px;
 `;

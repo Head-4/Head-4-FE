@@ -4,6 +4,7 @@ import AsideTop from "./components/AsideTop";
 import AsideBottom from "./components/AsideBottom";
 import AsideLogOut from "./components/AsideLogOut";
 import useAsideStore from "../../store/AsideStore";
+import Overlay from "../../styles/Common/Overlay";
 
 export default function Aside() {
     const isAsideOpen = useAsideStore((state) => state.isAsideOpen);
@@ -20,21 +21,6 @@ export default function Aside() {
         </>
     );
 }
-
-const Overlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(51, 54, 63, 0.10);
-    z-index: 999;
-
-    @media (min-width: 500px) {
-        left: calc(50vw - 250px);
-        width: 500px
-    }
-`;
 
 const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     z-index: 1000;

@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {FlexCss, HeaderH1} from "../Header.styled";
-import {ReactComponent as BellIcon} from "../../../assets/Layout/Header/BellIcon.svg";
+import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import {ReactComponent as MenuIcon} from "../../../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/Layout/Header/SearchIcon.svg";
 import Row from "../../../styles/Common/Row";
