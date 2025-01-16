@@ -6,18 +6,36 @@ import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import CommonButton from "../../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
 import {handleAllowNotification} from "../../../utils/firebaseConfig";
+import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
+import {useMutation} from "@tanstack/react-query";
 
 interface NotificationModalProps {
     isModalOpen: boolean;
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+
 export default function NotificationModal({isModalOpen, setIsModalOpen}: NotificationModalProps) {
     const navigate = useNavigate();
 
+    const {mutate: patchAllowMutate} = useMutation({
+        mutationFn: (allow: boolean) => patchAllowNotification(allow),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+            // queryClient.invalidateQueries({queryKey: ['']})
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
+
     const clickButton = async (isAllow: boolean) => {
+        // 기본을 false 로 저장해야함
         if (isAllow) {
-            await handleAllowNotification();
+            const {permission} = await handleAllowNotification();
+            if (permission === "granted") {
+                patchAllowMutate(true);
+            }
         }
         navigate('/register/complete');
     }

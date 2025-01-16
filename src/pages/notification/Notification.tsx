@@ -1,33 +1,50 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import NotificationDetail from "./components/NotificationDetail";
 import styled from "styled-components";
-
-// json형식 보고 설정
-const NotificationList: any[] = [
-    {keyword: '학점', content: '[일정변경]상명대학교 샘물시스템 일시 중지 안내', date: '2분전', url: '1'},
-    {keyword: '등록금', content: '[현장실습] 현장실습 성과 발표대회 안내', date: '2분전', url: '2'},
-    {
-        keyword: '장학금',
-        content: '[상명대학교 국제개발평가센터(천안)] KOICA 2025년 상반기 ODA YP(Young Professional) 채용 공고(접수마감: ~1/5일)',
-        date: '2분전',
-        url: '3'
-    },
-];
+import {useInfiniteQuery} from "@tanstack/react-query";
+import getNotifications from "../../apis/notification/getNotifications";
+import {useInView} from "react-intersection-observer";
 
 export default function Notification() {
+    const {ref, inView} = useInView();
 
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+        }
+    }, [inView])
+    
+    // 데이터 들어오면 확인
+    const {
+        data,
+        fetchNextPage,
+        isFetchingNextPage,
+        hasNextPage,
+        isLoading,
+        isError,
+    } = useInfiniteQuery({
+        queryKey: ["notifications"],
+        queryFn: ({pageParam = 0}) => getNotifications(pageParam),
+        getNextPageParam: (lastPage) => {
+            return lastPage?.hasNext ? lastPage.cursor : undefined;
+        },
+        staleTime: 100000,
+        initialPageParam: 0,
+    });
 
     return (
         <>
             <NotificationUl>
-                {NotificationList.map((it) =>
-                    <NotificationDetail
-                        key={it.url}
-                        it={it}
-                    />
+                {data?.pages.map((page) =>
+                    page?.articles.map((it) =>
+                        <NotificationDetail
+                            key={it.url}
+                            it={it}
+                        />
+                    )
                 )}
             </NotificationUl>
-            <NotificationComment>모든 알림은 90일간 보관돼요</NotificationComment>
+            <NotificationComment ref={ref}>모든 알림은 90일간 보관돼요</NotificationComment>
         </>
     );
 }

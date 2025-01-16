@@ -13,8 +13,10 @@ export default function KakaoLoading() {
                 navigate('/login');
                 return;
             }
-            const {accessToken, refreshToken} = result;
 
+            // 서버와 통신 토큰
+            const header = result.headers['authorization'];
+            console.log(header)
             alert('로그인 되었습니다.');
             navigate('/register/university');
         } catch (error) {

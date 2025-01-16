@@ -6,10 +6,14 @@ import {getChoseong} from "es-hangul";
 import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import CommonButton from "../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
+import patchUniversity from "../../apis/university/patchUniversity";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
 export default function UniversityEdit() {
+    const queryClient = useQueryClient();
+
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,6 +25,17 @@ export default function UniversityEdit() {
 
     // 로그인 되어있는지 확인
     const isLogin = false;
+
+    const {mutate: patchUniversityMutate} = useMutation({
+        mutationFn: (university: string) => patchUniversity(university),
+        onSuccess: (data) => {
+            console.log("Success: ", data);
+            // queryClient.invalidateQueries({queryKey: ['keywords']});
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
 
     useEffect(() => {
         if (university === '') {
@@ -57,13 +72,18 @@ export default function UniversityEdit() {
     };
 
     // api 설정
-    const clickButton = () => {
+    const clickButton = async () => {
         if (isLogin) {
             showAlert(true);
             setUniversity('');
             setButtonActive(false);
         } else {
-            navigate('/register/keyword');
+            try {
+                patchUniversityMutate(university);
+                navigate('/register/keyword');
+            } catch (error) {
+                console.error('API 요청 실패:', error);
+            }
         }
     }
 

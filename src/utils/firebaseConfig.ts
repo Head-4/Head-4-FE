@@ -1,5 +1,10 @@
 import {initializeApp} from "firebase/app";
 import {getMessaging, getToken, onMessage, Messaging} from "firebase/messaging";
+import patchFcmToken from "../apis/fcm/patchFcmToken";
+
+interface NotificationResponse {
+    permission: "granted" | "denied" | "default";
+}
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FCM_APIKEY,
@@ -30,28 +35,32 @@ async function fetchFCMToken(messaging: Messaging): Promise<string | undefined> 
     }
 }
 
-export async function handleAllowNotification() {
+export async function handleAllowNotification(): Promise<NotificationResponse> {
     try {
-        const permission = await Notification.requestPermission();
-        // alert(permission);
-        console.log(permission)
+        const permission: "granted" | "denied" | "default" = await Notification.requestPermission();
+
         if (permission === "granted") {
-            getToken(messaging, {
+            const currentToken: string | null = await getToken(messaging, {
                 vapidKey: process.env.REACT_APP_VAPID_KEY
-            }).then((currentToken) => {
-                if (currentToken) {
-                    // setToken(currentToken);
-                    // console.log('토큰: ', currentToken);
-                    //sendTokenToServer(token);// (토큰을 서버로 전송하는 로직)
-                } else {
-                    console.log("토큰 등록이 불가능합니다. 생성하려면 권한을 허용해주세요");
-                }
-            })
+            });
+
+            if (currentToken) {
+                console.log("토큰 등록");
+                await patchFcmToken(currentToken);
+                return {permission};
+            } else {
+                console.log("토큰 등록이 불가능합니다. 생성하려면 권한을 허용해주세요");
+                return {permission};
+            }
         } else if (permission === "denied") {
             console.log("web push 권한이 차단되었습니다. 알림을 사용하시려면 권한을 허용해주세요");
+            return {permission};
+        } else {
+            return {permission};
         }
     } catch (error) {
         console.error("푸시 토큰 가져오는 중에 에러 발생", error);
+        return {permission: "denied"};
     }
 }
 

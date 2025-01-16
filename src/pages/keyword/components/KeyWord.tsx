@@ -1,22 +1,23 @@
 import React from 'react';
 import styled from "styled-components";
 import {ReactComponent as DeleteIcon} from "../../../assets/KeyWord/DeleteIcon.svg";
+import {UseMutationResult} from "@tanstack/react-query";
 
-interface keyWord {
-    id: number;
-    content: string;
+interface Keyword {
+    notifyId: number;
+    keyword: string;
 }
 
 interface KeyWordProps {
-    it: keyWord;
-    deleteKeyWordClick: (id: number) => void;
+    it: Keyword;
+    deleteKeywordMutate: (id: number) => void;
 }
 
-export default function KeyWord({it, deleteKeyWordClick}: KeyWordProps) {
+export default function KeyWord({it, deleteKeywordMutate}: KeyWordProps) {
     return (
         <KeyWordDiv>
-            <KeyWordContent>{it.content}</KeyWordContent>
-            <DeleteButton onClick={() => deleteKeyWordClick(it.id)}>
+            <KeyWordContent>{it.keyword}</KeyWordContent>
+            <DeleteButton onClick={() => deleteKeywordMutate(it.notifyId)}>
                 <DeleteIcon/>
             </DeleteButton>
         </KeyWordDiv>

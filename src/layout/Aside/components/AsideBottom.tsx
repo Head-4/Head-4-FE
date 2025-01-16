@@ -8,6 +8,8 @@ import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import {useState} from "react";
 import useAsideStore from "../../../store/AsideStore";
 import {handleAllowNotification} from "../../../utils/firebaseConfig";
+import {useMutation} from "@tanstack/react-query";
+import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
 
 const AsideItems = [
     {
@@ -29,14 +31,32 @@ const AsideItems = [
 
 export default function AsideBottom() {
     const toggleAside = useAsideStore((state) => state.toggleAside);
+    // 알림 승인했는지 확인하는 api로 변경
     const [keyWordToggle, setKeyWordToggle] = useState<boolean>(false);
 
+    const {mutate: patchAllowMutate} = useMutation({
+        mutationFn: (allow: boolean) => patchAllowNotification(allow),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+            // queryClient.invalidateQueries({queryKey: ['']})
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
+
     const clickKeyWordToggle = async () => {
-        // 키워드 설정 했는지 안했는지 확인하는 API로 검증하고 결과에 맞춰서 true false
-        if (!keyWordToggle) {
-            await handleAllowNotification();
-        }
         setKeyWordToggle((prev) => !prev);
+        if (!keyWordToggle) {
+            console.log('알림 허용')
+            const {permission} = await handleAllowNotification();
+            if (permission === "granted") {
+                patchAllowMutate(true);
+            }
+        } else {
+            console.log('알림 거절')
+            patchAllowMutate(false);
+        }
     };
 
     return (

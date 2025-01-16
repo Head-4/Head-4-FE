@@ -2,39 +2,15 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import NavKeyWord from "./components/NavKeyWord";
 import NoticeItem from "../../components/NoticeItem";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {useInView} from 'react-intersection-observer';
-import axios from "axios";
+import getArticles from "../../apis/main/getArticles";
+import getKeywordList from "../../apis/keyword/getKeywordList";
 
-interface keyWord {
-    id: number;
-    content: string;
+interface Keyword {
+    notifyId: number;
+    keyword: string;
 }
-
-interface NoticeType {
-    id: number;
-    title: string;
-    date: string;
-    url: string;
-}
-
-interface FetchNoticesResponse {
-    articles: NoticeType[];
-    hasNext: boolean;
-    cursor?: number;
-}
-
-// 더미 데이터
-const keyWordList: keyWord[] = [
-    {id: 1, content: '전체'},
-    {id: 2, content: '신입생'},
-    {id: 3, content: '장학금'},
-];
-
-const fetchNotices = async (pageParam: number): Promise<FetchNoticesResponse> => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/article/page/${pageParam}`);
-    return res.data.data;
-};
 
 export default function Main() {
     const [selectedKeyWord, setSelectedKeyWord] = useState<number>(1);
@@ -53,29 +29,36 @@ export default function Main() {
         hasNextPage,
         isLoading,
         isError,
-        error
     } = useInfiniteQuery({
-        queryKey: ["notices"],
-        queryFn: ({pageParam = 0}) => fetchNotices(pageParam),
+        queryKey: ["articles"],
+        queryFn: ({pageParam = 0}) => getArticles(pageParam),
         getNextPageParam: (lastPage) => {
-            return lastPage.hasNext ? lastPage.cursor : undefined;
+            return lastPage?.hasNext ? lastPage.cursor : undefined;
         },
+        staleTime: 100000,
         initialPageParam: 0,
     });
 
-    const clickKeyWord = (id: number) => {
-        setSelectedKeyWord(id);
+    const fallback: string[] = [];
+    const {data: Keywords = fallback} = useQuery({
+        queryKey: ["keywords"],
+        queryFn: getKeywordList,
+        staleTime: 100000,
+    });
+
+    const clickKeyWord = (notifyId: number) => {
+        setSelectedKeyWord(notifyId);
     };
 
     return (
         <>
             <MainNav>
                 <NavUl>
-                    {keyWordList.map((it) =>
+                    {Keywords.data?.map((it: Keyword) =>
                         <NavKeyWord
-                            key={it.id}
+                            key={it.notifyId}
                             it={it}
-                            isSelected={selectedKeyWord === it.id}
+                            isSelected={selectedKeyWord === it.notifyId}
                             clickKeyWord={clickKeyWord}
                         />
                     )}
@@ -87,7 +70,7 @@ export default function Main() {
                     :
                     <MainNoticeUl>
                         {data?.pages.map((page) =>
-                            page.articles.map((notice) =>
+                            page?.articles.map((notice) =>
                                 <NoticeItem
                                     key={notice.id}
                                     notice={notice}

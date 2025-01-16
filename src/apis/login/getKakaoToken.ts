@@ -1,16 +1,9 @@
 import axios from 'axios';
 
-interface KakaoToken {
-    accessToken: string;
-    refreshToken: string;
-}
-
-const getKakaoToken = async (code: string): Promise<KakaoToken | undefined> => {
+const getKakaoToken = async (code: string) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/kakao/login`, {
-            params: {code: code},
-        });
-        return response.data.result;
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/login/kakao/${code}`);
+        return response;
     } catch (error) {
         console.error(error);
     }

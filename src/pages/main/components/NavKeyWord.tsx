@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
 
-interface keyWord {
-    id: number;
-    content: string;
+interface Keyword {
+    notifyId: number;
+    keyword: string;
 }
 
 interface NavKeyWordProps {
-    it: keyWord;
+    it: Keyword;
     isSelected: boolean;
-    clickKeyWord: (id: number) => void;
+    clickKeyWord: (notifyId: number) => void;
 }
 
 export default function NavKeyWord({it, isSelected, clickKeyWord}: NavKeyWordProps) {
     return (
         <li>
             <NavKeyWordButton
-                onClick={() => clickKeyWord(it.id)}
+                onClick={() => clickKeyWord(it.notifyId)}
                 $isSelected={isSelected}
             >
-                {it.content}
+                {it.keyword}
             </NavKeyWordButton>
         </li>
     );

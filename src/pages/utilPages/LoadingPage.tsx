@@ -1,15 +1,29 @@
 import styled from "styled-components";
 import LoadingGif from '../../assets/Common/LoadingGif.gif';
+import {useIsFetching} from "@tanstack/react-query";
 
 export const LoadingPage = () => {
+    const isFetching = useIsFetching();
+    console.log(isFetching)
     return (
-        <LoadingWrapper>
-            <LoadingImage src={LoadingGif} alt="로딩 이미지"/>
-        </LoadingWrapper>
+        <>
+            {isFetching > 0 ?
+                <LoadingWrapper>
+                    <LoadingImage src={LoadingGif} alt="로딩 이미지"/>
+                </LoadingWrapper>
+                :
+                <></>
+            }
+        </>
     );
 };
 
 const LoadingWrapper = styled.div`
+    z-index: 2000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;

@@ -5,24 +5,21 @@ import AlertBox from "../../components/AlertBox";
 import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import KeyWordInputSection from "./components/KeyWordInputSection";
 import CommonButton from "../../components/CommonButton";
-import {useNavigate} from "react-router-dom";
 import NotificationModal from "./components/NotificationModal";
+import postKeyword from "../../apis/keyword/postKeyword";
+import getKeywordList from "../../apis/keyword/getKeywordList";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import deleteKeyword from "../../apis/keyword/deleteKeyword";
 
-interface keyWord {
-    id: number;
-    content: string;
+interface Keyword {
+    notifyId: number;
+    keyword: string;
 }
 
 export default function KeyWordEdit() {
-    const [keyWord, setKeyWord] = useState<string>('');
-    const [keyWordList, setKeyWordList] = useState<keyWord[]>([
-        {id: 1, content: '장학'},
-        {id: 2, content: '학점'},
-    ]);
+    const queryClient = useQueryClient();
 
-    // 캐싱된 서버 데이터와 비교해서 바뀐게 있으면 BUTTON을 ON
-    const prevKeyWordList = useRef<keyWord[]>(keyWordList);
-    const [isEdit, setIsEdit] = useState<boolean>(false);
+    const [keyWord, setKeyWord] = useState<string>('');
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const {isAlert, showAlert} = useAlertBox();
@@ -30,38 +27,50 @@ export default function KeyWordEdit() {
     // 로그인 되어있는지 확인
     const isLogin = false;
 
-    // 여기는 서버데이터 받아오고 수정이 필요하다
-    useEffect(() => {
-        if (prevKeyWordList.current !== keyWordList) {
-            prevKeyWordList.current = keyWordList;
-            setIsEdit(true);
-        } else {
-            setIsEdit(false);
-        }
-    }, [keyWordList, isAlert]);
+    const fallback: string[] = [];
+    const {data: Keywords = fallback} = useQuery({
+        queryKey: ["keywords"],
+        queryFn: getKeywordList,
+        staleTime: 100000,
+    });
+
+    const {mutate: deleteKeywordMutate} = useMutation({
+        mutationFn: (id: number) => deleteKeyword(id),
+        onSuccess: () =>
+            queryClient.invalidateQueries({queryKey: ['keywords']}),
+    });
+
+    const {mutate: postKeywordMutate} = useMutation({
+        mutationFn: (keyWord: string) => postKeyword(keyWord),
+        onSuccess: () =>
+            queryClient.invalidateQueries({queryKey: ['keywords']}),
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
 
     const isAddActive: boolean = keyWord.length > 0;
-    const isMax: boolean = keyWordList.length === 5;
+    const isMax: boolean = Keywords.data?.length === 5;
 
-    const addKeyWordClick = () => {
-        if (keyWordList.some((item) => item.content === keyWord)) {
+    const addKeyWordClick = async () => {
+        if (Keywords.data.some((item: Keyword) => item.keyword === keyWord)) {
             // 에러처리
             return;
         }
-        setKeyWordList([...keyWordList, {id: Date.now(), content: keyWord}]);
+        postKeywordMutate(keyWord);
         setKeyWord('');
     }
 
-    const deleteKeyWordClick = (id: number) => {
-        setKeyWordList(keyWordList.filter((it) => it.id !== id));
-    };
-
     // api 설정
-    const clickButton = () => {
+    const clickButton = async () => {
         if (isLogin) {
             showAlert(true);
         } else {
-            setIsModalOpen(true);
+            try {
+                setIsModalOpen(true);
+            } catch (error) {
+                console.error('API 요청 실패:', error);
+            }
         }
     }
 
@@ -80,17 +89,17 @@ export default function KeyWordEdit() {
                 />
                 <NoticeP $isMax={isMax} $isInputFocused={isInputFocused}>최대 5개까지 추가할 수 있어요</NoticeP>
                 <KeyWordWrapper>
-                    {keyWordList.map((it) =>
+                    {Keywords.data?.map((it: Keyword) =>
                         <KeyWord
-                            key={it.id}
+                            key={it.notifyId}
                             it={it}
-                            deleteKeyWordClick={deleteKeyWordClick}
+                            deleteKeywordMutate={deleteKeywordMutate}
                         />
                     )}
                 </KeyWordWrapper>
             </KeywordSection>
             <AlertBox isAlert={isAlert} status="failure"/>
-            <CommonButton onClick={clickButton} isActive={isEdit}>
+            <CommonButton onClick={clickButton} isActive={true}>
                 {isLogin ? "저장" : "다음"}
             </CommonButton>
         </>
