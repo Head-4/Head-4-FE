@@ -1,19 +1,18 @@
 import styled from "styled-components";
 import LoadingGif from '../../assets/Common/LoadingGif.gif';
-import {useIsFetching} from "@tanstack/react-query";
+import {useIsFetching, useIsMutating} from "@tanstack/react-query";
 
 export const LoadingPage = () => {
     const isFetching = useIsFetching();
-    console.log(isFetching)
+    const isMutating = useIsMutating();
+
     return (
         <>
-            {isFetching > 0 ?
+            {((isFetching > 0) || (isMutating > 0)) && (
                 <LoadingWrapper>
                     <LoadingImage src={LoadingGif} alt="로딩 이미지"/>
                 </LoadingWrapper>
-                :
-                <></>
-            }
+            )}
         </>
     );
 };
