@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {highlightText} from "../utils/highlightText";
+import {formatDate} from "../utils/dateFormatting";
 
 interface NoticeType {
     title: string;
@@ -18,7 +19,7 @@ export default function NoticeItem({notice, searchInput = ''}: NoticeProps) {
         <NoticeLi>
             <a href={notice.url}>
                 <NoticeTitle>{highlightText(notice.title, searchInput, 16)}</NoticeTitle>
-                <NoticeDate>{notice.date}</NoticeDate>
+                <NoticeDate>{formatDate(notice.date)}</NoticeDate>
             </a>
         </NoticeLi>
     );

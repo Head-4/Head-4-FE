@@ -1,19 +1,20 @@
 import axios from 'axios';
 
-interface NoticeType {
-    id: number;
+interface NotificationType {
+    createdDate: string;
+    keyword: string;
+    pushId: number;
     title: string;
-    date: string;
     url: string;
 }
 
-interface GetMainArticlesResponse {
-    articles: NoticeType[];
+interface GetNotificationResponse {
+    pushLogs: NotificationType[];
     hasNext: boolean;
     cursor: number;
 }
 
-const getNotifications = async (cursor: number): Promise<GetMainArticlesResponse | undefined> => {
+const getNotifications = async (cursor: number): Promise<GetNotificationResponse | undefined> => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/notify/page/${cursor}`);
         return response.data.data;

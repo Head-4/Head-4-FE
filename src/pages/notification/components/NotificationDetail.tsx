@@ -1,26 +1,34 @@
 import React from 'react';
 import styled from "styled-components";
+import {dateAgo} from "../../../utils/dateFormatting";
 
-// 타입 맞추기
+interface NotificationType {
+    createdDate: string;
+    keyword: string;
+    pushId: number;
+    title: string;
+    url: string;
+}
+
 interface NotificationDetailProps {
-    it: any;
+    it: NotificationType;
 }
 
 export default function NotificationDetail({it}: NotificationDetailProps) {
     return (
         <DetailLi>
-            <a href="">
+            <a href={it.url}>
                 <DetailHead>
-                    <DetailTitle>
+                    <DetailKeyword>
                         '{it.keyword}' 새로운 공지
-                    </DetailTitle>
+                    </DetailKeyword>
                     <DetailTime>
-                        {it.date}
+                        {dateAgo(it.createdDate)}
                     </DetailTime>
                 </DetailHead>
-                <DetailContent>
-                    {it.content}
-                </DetailContent>
+                <DetailTitle>
+                    {it.title}
+                </DetailTitle>
             </a>
         </DetailLi>
     );
@@ -37,7 +45,7 @@ const DetailHead = styled.div`
     margin-bottom: 4px;
 `;
 
-const DetailTitle = styled.div`
+const DetailKeyword = styled.div`
     color: ${({theme}) => theme.colors.primary};
     flex: 1;
     white-space: nowrap;
@@ -52,7 +60,7 @@ const DetailTime = styled.span`
     font-weight: 500;
 `;
 
-const DetailContent = styled.p`
+const DetailTitle = styled.p`
     color: #707070;
     font-weight: 500;
 `;

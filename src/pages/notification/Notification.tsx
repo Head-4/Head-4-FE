@@ -36,9 +36,9 @@ export default function Notification() {
         <>
             <NotificationUl>
                 {data?.pages.map((page) =>
-                    page?.articles.map((it) =>
+                    page?.pushLogs.map((it) =>
                         <NotificationDetail
-                            key={it.url}
+                            key={it.pushId}
                             it={it}
                         />
                     )

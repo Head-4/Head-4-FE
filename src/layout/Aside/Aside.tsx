@@ -10,6 +10,12 @@ export default function Aside() {
     const isAsideOpen = useAsideStore((state) => state.isAsideOpen);
     const toggleAside  = useAsideStore((state) => state.toggleAside);
 
+    if (isAsideOpen) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = 'auto';
+    }
+
     return (
         <>
             {isAsideOpen && <Overlay onClick={toggleAside}/>}
