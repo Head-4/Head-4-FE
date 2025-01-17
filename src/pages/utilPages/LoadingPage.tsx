@@ -1,16 +1,17 @@
 import styled from "styled-components";
-import LoadingGif from '../../assets/Common/LoadingGif.gif';
+import LoadingGif2 from '../../assets/Common/LoadingGif2.gif';
 import {useIsFetching, useIsMutating} from "@tanstack/react-query";
 
 export const LoadingPage = () => {
     const isFetching = useIsFetching();
     const isMutating = useIsMutating();
-
+    
+    // 로딩 이미지 2개중에 고민해보기
     return (
         <>
             {((isFetching > 0) || (isMutating > 0)) && (
                 <LoadingWrapper>
-                    <LoadingImage src={LoadingGif} alt="로딩 이미지"/>
+                    <LoadingImage src={LoadingGif2} alt="로딩 이미지"/>
                 </LoadingWrapper>
             )}
         </>
@@ -27,7 +28,7 @@ const LoadingWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
+    //background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const LoadingImage = styled.img`

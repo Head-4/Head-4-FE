@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 interface NotificationType {
     createdDate: string;
@@ -16,7 +16,7 @@ interface GetNotificationResponse {
 
 const getNotifications = async (cursor: number): Promise<GetNotificationResponse | undefined> => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/user/notify/page/${cursor}`);
+        const response = await axiosInstance.get(`/api/v1/user/notify/page/${cursor}`);
         return response.data.data;
     } catch (error) {
         console.error(error);

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 const patchAllowNotification = async (allow: boolean) => {
     try {
-        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/api/v1/user/notify/${allow}`);
+        const response = await axiosInstance.patch(`/api/v1/user/notify/${allow}`);
         return response;
     } catch (error) {
         console.error(error);

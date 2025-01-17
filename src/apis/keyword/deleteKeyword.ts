@@ -1,8 +1,8 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 const deleteKeyword = async (notifyId: number) => {
     try {
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/user/delete/keyword/${notifyId}`);
+        const response = await axiosInstance.delete(`/api/v1/user/delete/keyword/${notifyId}`);
         return response;
     } catch (error) {
         console.error(error);

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 const patchUniversity = async (name: string) => {
     try {
-        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/api/v1/user/univ/${name}`);
+        const response = await axiosInstance.patch(`/api/v1/user/univ/${name}`);
         return response;
     } catch (error) {
         console.error(error);

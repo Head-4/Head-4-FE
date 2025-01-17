@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 interface NoticeType {
     id: number;
@@ -15,7 +15,7 @@ interface GetMainArticlesResponse {
 
 const getArticles = async (cursor: number): Promise<GetMainArticlesResponse | undefined> => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/article/page/${cursor}`);
+        const response = await axiosInstance.get(`/api/v1/article/page/${cursor}`);
         return response.data.data;
     } catch (error) {
         console.error(error);

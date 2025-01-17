@@ -1,8 +1,8 @@
-import axios from 'axios';
+import {axiosInstance} from "../index";
 
 const patchFcmToken = async (token: string) => {
     try {
-        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/api/v1/user/fcm/${token}`);
+        const response = await axiosInstance.patch(`/api/v1/user/fcm/${token}`);
         return response;
     } catch (error) {
         console.error(error);
