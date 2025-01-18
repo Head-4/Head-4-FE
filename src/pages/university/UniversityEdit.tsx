@@ -24,7 +24,7 @@ export default function UniversityEdit() {
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isLogin = false;
+    const isLogin = true;
 
     const {mutate: patchUniversityMutate} = useMutation({
         mutationFn: (university: string) => patchUniversity(university),
