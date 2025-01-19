@@ -13,7 +13,7 @@ interface Keyword {
 }
 
 export default function Main() {
-    const [selectedKeyWord, setSelectedKeyWord] = useState<number>(1);
+    const [selectedKeyWord, setSelectedKeyWord] = useState<string>("null");
     const {ref, inView} = useInView();
 
     useEffect(() => {
@@ -27,11 +27,9 @@ export default function Main() {
         fetchNextPage,
         isFetchingNextPage,
         hasNextPage,
-        isLoading,
-        isError,
     } = useInfiniteQuery({
-        queryKey: ["articles"],
-        queryFn: ({pageParam = 0}) => getArticles(pageParam),
+        queryKey: ["articles", selectedKeyWord],
+        queryFn: ({pageParam = 0}) => getArticles(pageParam, selectedKeyWord),
         getNextPageParam: (lastPage) => {
             return lastPage?.hasNext ? lastPage.cursor : undefined;
         },
@@ -46,26 +44,36 @@ export default function Main() {
         staleTime: 100000,
     });
 
-    const clickKeyWord = (notifyId: number) => {
-        setSelectedKeyWord(notifyId);
+    const clickKeyWord = (keyword: string) => {
+        setSelectedKeyWord(keyword);
     };
 
     return (
         <>
             <MainNav>
                 <NavUl>
+                    <NavKeyWord
+                        key="all"
+                        it={{notifyId: -1, keyword: "null"}}
+                        isSelected={selectedKeyWord === "null"}
+                        clickKeyWord={clickKeyWord}
+                    >
+                        전체
+                    </NavKeyWord>
                     {Keywords.data?.map((it: Keyword) =>
                         <NavKeyWord
                             key={it.notifyId}
                             it={it}
-                            isSelected={selectedKeyWord === it.notifyId}
+                            isSelected={selectedKeyWord === it.keyword}
                             clickKeyWord={clickKeyWord}
-                        />
+                        >
+                            {it.keyword}
+                        </NavKeyWord>
                     )}
                 </NavUl>
             </MainNav>
             <MainSection>
-                {isLoading ?
+                {data?.pages[0]?.articles.length === 0 ?
                     <NoNoticeData>곧 새로운 공지를<br/>가져올게요!</NoNoticeData>
                     :
                     <MainNoticeUl>
@@ -101,7 +109,9 @@ const MainSection = styled.section`
     flex: 1;
 `;
 
-const MainNoticeUl = styled.ul``;
+const MainNoticeUl = styled.ul`
+    width: 100%;
+`;
 
 const NoNoticeData = styled.div`
     color: #B2B2B2;

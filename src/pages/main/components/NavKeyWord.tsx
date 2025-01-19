@@ -9,17 +9,18 @@ interface Keyword {
 interface NavKeyWordProps {
     it: Keyword;
     isSelected: boolean;
-    clickKeyWord: (notifyId: number) => void;
+    clickKeyWord: (keyword: string) => void;
+    children: string;
 }
 
-export default function NavKeyWord({it, isSelected, clickKeyWord}: NavKeyWordProps) {
+export default function NavKeyWord({it, isSelected, clickKeyWord, children}: NavKeyWordProps) {
     return (
         <li>
             <NavKeyWordButton
-                onClick={() => clickKeyWord(it.notifyId)}
+                onClick={() => clickKeyWord(it.keyword)}
                 $isSelected={isSelected}
             >
-                {it.keyword}
+                {children}
             </NavKeyWordButton>
         </li>
     );
