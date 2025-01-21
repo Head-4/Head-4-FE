@@ -21,10 +21,10 @@ export default function UniversityEdit() {
     const [hasText, setHasText] = useState<boolean>(false);
     const [options, setOptions] = useState<string[]>(universityList);
     const [buttonActive, setButtonActive] = useState<boolean>(false);
-    const {isAlert, showAlert} = useAlertBox();
+    const {isAlert, showAlert, result} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isFirst = true;
+    const isFirst = false;
 
     const {mutate: patchUniversityMutate} = useMutation({
         mutationFn: (university: string) => patchUniversity(university),
@@ -33,7 +33,7 @@ export default function UniversityEdit() {
             if (isFirst) {
                 navigate('/register/keyword');
             } else {
-                showAlert(true);
+                showAlert(true,data?.data.success);
             }
             // queryClient.invalidateQueries({queryKey: ['university']});
         },
@@ -76,12 +76,7 @@ export default function UniversityEdit() {
         setHasText(false);
     };
 
-    // api 설정
     const clickButton = async () => {
-        if (!university) {
-            console.warn("대학교를 선택하세요.");
-            return;
-        }
         setUniversity('');
         setButtonActive(false);
         patchUniversityMutate(university);
@@ -106,7 +101,8 @@ export default function UniversityEdit() {
                                value={university}
                                onChange={InputUniversityChange}
                                $showDropDown={showDropDown}
-                               placeholder='학교명 검색'/>
+                               placeholder='학교명 검색'
+                    />
 
                     {showDropDown && (
                         <DropDown
@@ -116,7 +112,7 @@ export default function UniversityEdit() {
                     )}
                 </div>
             </UniversitySection>
-            <AlertBox isAlert={isAlert} status={true}/>
+            <AlertBox isAlert={isAlert} status={result}/>
             <CommonButton onClick={clickButton} isActive={buttonActive}>
                 {isFirst ? "다음" : "저장"}
             </CommonButton>

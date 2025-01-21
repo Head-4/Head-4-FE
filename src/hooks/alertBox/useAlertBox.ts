@@ -2,9 +2,11 @@ import {useEffect, useState} from "react";
 
 export const useAlertBox = () => {
     const [isAlert, setIsAlert] = useState<boolean>(false);
+    const [result, setResult] = useState<boolean>(true);
 
-    const showAlert = (isAlert: boolean) => {
+    const showAlert = (isAlert: boolean, result: boolean) => {
         setIsAlert(isAlert);
+        setResult(result);
     }
 
     useEffect(() => {
@@ -19,6 +21,7 @@ export const useAlertBox = () => {
 
     return {
         isAlert,
-        showAlert
+        showAlert,
+        result,
     }
 }
