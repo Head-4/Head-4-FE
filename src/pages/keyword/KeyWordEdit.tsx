@@ -20,13 +20,11 @@ export default function KeyWordEdit() {
     const queryClient = useQueryClient();
 
     const [keyWord, setKeyWord] = useState<string>('');
-    const [keywordList, setKeywordList] = useState<string[]>([]);
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isFirst = true;
+    const isFirst = false;
 
     const fallback: string[] = [];
     const {data: Keywords = fallback} = useQuery({
@@ -42,14 +40,9 @@ export default function KeyWordEdit() {
     });
 
     const {mutate: postKeywordMutate} = useMutation({
-        mutationFn: (keywords: string[]) => postKeyword(keywords),
+        mutationFn: (keyword: string) => postKeyword(keyword),
         onSuccess: (data) => {
             console.log("Success: ", data);
-            if (isFirst) {
-                setIsModalOpen(true)
-            } else {
-                showAlert(true);
-            }
             queryClient.invalidateQueries({queryKey: ['keywords']});
         },
         onError: (error) => {
@@ -60,19 +53,17 @@ export default function KeyWordEdit() {
     const isAddActive: boolean = keyWord.length > 0;
     const isMax: boolean = Keywords.data?.length === 5;
 
-    const addKeyWordClick = (keyword: string) => {
+    const addKeyWordClick = async (keyword: string) => {
         if (Keywords.data?.some((item: Keyword) => item.keyword === keyword)) {
             // 에러처리
             return;
         }
-        setKeywordList((prev) => [...prev, keyword]);
         setKeyWord('');
+        postKeywordMutate(keyword);
     }
 
-    // api 설정
-    const clickButton = async () => {
-        postKeywordMutate(keywordList);
-
+    const clickButton = () => {
+        setIsModalOpen(true)
     }
 
     return (
@@ -90,19 +81,20 @@ export default function KeyWordEdit() {
                 />
                 <NoticeP $isMax={isMax} $isInputFocused={isInputFocused}>최대 5개까지 추가할 수 있어요</NoticeP>
                 <KeyWordWrapper>
-                    {/*{keywordList?.map((it: Keyword) =>*/}
-                    {/*    <KeyWord*/}
-                    {/*        key={it.notifyId}*/}
-                    {/*        it={it}*/}
-                    {/*        deleteKeywordMutate={deleteKeywordMutate}*/}
-                    {/*    />*/}
-                    {/*)}*/}
+                    {Keywords.data?.map((it: Keyword) =>
+                        <KeyWord
+                            key={it.notifyId}
+                            it={it}
+                            deleteKeywordMutate={deleteKeywordMutate}
+                        />
+                    )}
                 </KeyWordWrapper>
             </KeywordSection>
-            <AlertBox isAlert={isAlert} status={true}/>
-            <CommonButton onClick={clickButton} isActive={true}>
-                {isFirst ? "다음" : "저장"}
-            </CommonButton>
+            {isFirst && (
+                <CommonButton onClick={clickButton} isActive={true}>
+                    다음
+                </CommonButton>
+            )}
         </>
     );
 }

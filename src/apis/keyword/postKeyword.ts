@@ -1,10 +1,8 @@
 import {axiosInstance, getTokenHeader} from "../index";
 
-const postKeyword = async (keywords: string[]) => {
+const postKeyword = async (keyword: string) => {
     try {
-        const response = await axiosInstance.post(`/api/v1/notify/add/keywords`, {
-                keywords: keywords,
-            }, {
+        const response = await axiosInstance.post(`/api/v1/user/add/keyword/${keyword}`, null, {
                 headers: getTokenHeader()
             }
         );
