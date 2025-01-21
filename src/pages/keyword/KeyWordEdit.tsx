@@ -20,12 +20,13 @@ export default function KeyWordEdit() {
     const queryClient = useQueryClient();
 
     const [keyWord, setKeyWord] = useState<string>('');
+    const [keywordList, setKeywordList] = useState<string[]>([]);
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isLogin = false;
+    const isFirst = true;
 
     const fallback: string[] = [];
     const {data: Keywords = fallback} = useQuery({
@@ -35,15 +36,22 @@ export default function KeyWordEdit() {
     });
 
     const {mutate: deleteKeywordMutate} = useMutation({
-        mutationFn: (id: number) => deleteKeyword(id),
+        mutationFn: (notifyId: number) => deleteKeyword(notifyId),
         onSuccess: () =>
             queryClient.invalidateQueries({queryKey: ['keywords']}),
     });
 
     const {mutate: postKeywordMutate} = useMutation({
-        mutationFn: (keyWord: string) => postKeyword(keyWord),
-        onSuccess: () =>
-            queryClient.invalidateQueries({queryKey: ['keywords']}),
+        mutationFn: (keywords: string[]) => postKeyword(keywords),
+        onSuccess: (data) => {
+            console.log("Success: ", data);
+            if (isFirst) {
+                setIsModalOpen(true)
+            } else {
+                showAlert(true);
+            }
+            queryClient.invalidateQueries({queryKey: ['keywords']});
+        },
         onError: (error) => {
             console.error("Error: ", error);
         },
@@ -52,33 +60,26 @@ export default function KeyWordEdit() {
     const isAddActive: boolean = keyWord.length > 0;
     const isMax: boolean = Keywords.data?.length === 5;
 
-    const addKeyWordClick = async () => {
-        if (Keywords.data.some((item: Keyword) => item.keyword === keyWord)) {
+    const addKeyWordClick = (keyword: string) => {
+        if (Keywords.data?.some((item: Keyword) => item.keyword === keyword)) {
             // 에러처리
             return;
         }
-        postKeywordMutate(keyWord);
+        setKeywordList((prev) => [...prev, keyword]);
         setKeyWord('');
     }
 
     // api 설정
     const clickButton = async () => {
-        if (isLogin) {
-            showAlert(true);
-        } else {
-            try {
-                setIsModalOpen(true);
-            } catch (error) {
-                console.error('API 요청 실패:', error);
-            }
-        }
+        postKeywordMutate(keywordList);
+
     }
 
     return (
         <>
             <NotificationModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
             <KeywordSection>
-                {isLogin && <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>}
+                {isFirst && <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>}
                 <KeyWordInputSection
                     keyWord={keyWord}
                     setKeyWord={setKeyWord}
@@ -89,18 +90,18 @@ export default function KeyWordEdit() {
                 />
                 <NoticeP $isMax={isMax} $isInputFocused={isInputFocused}>최대 5개까지 추가할 수 있어요</NoticeP>
                 <KeyWordWrapper>
-                    {Keywords.data?.map((it: Keyword) =>
-                        <KeyWord
-                            key={it.notifyId}
-                            it={it}
-                            deleteKeywordMutate={deleteKeywordMutate}
-                        />
-                    )}
+                    {/*{keywordList?.map((it: Keyword) =>*/}
+                    {/*    <KeyWord*/}
+                    {/*        key={it.notifyId}*/}
+                    {/*        it={it}*/}
+                    {/*        deleteKeywordMutate={deleteKeywordMutate}*/}
+                    {/*    />*/}
+                    {/*)}*/}
                 </KeyWordWrapper>
             </KeywordSection>
-            <AlertBox isAlert={isAlert} status="failure"/>
+            <AlertBox isAlert={isAlert} status={true}/>
             <CommonButton onClick={clickButton} isActive={true}>
-                {isLogin ? "저장" : "다음"}
+                {isFirst ? "다음" : "저장"}
             </CommonButton>
         </>
     );

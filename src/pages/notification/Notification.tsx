@@ -20,15 +20,12 @@ export default function Notification() {
         fetchNextPage,
         isFetchingNextPage,
         hasNextPage,
-        isLoading,
-        isError,
     } = useInfiniteQuery({
         queryKey: ["notifications"],
         queryFn: ({pageParam = 0}) => getNotifications(pageParam),
         getNextPageParam: (lastPage) => {
             return lastPage?.hasNext ? lastPage.cursor : undefined;
         },
-        staleTime: 100000,
         initialPageParam: 0,
     });
 

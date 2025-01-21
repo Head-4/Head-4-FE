@@ -1,6 +1,6 @@
 import {axiosInstance} from "../index";
 
-const getKakaoToken = async (code: string) => {
+const postKakaoToken = async (code: string) => {
     try {
         const response = await axiosInstance.post(`/api/v1/login/kakao/${code}`);
         return response;
@@ -9,4 +9,4 @@ const getKakaoToken = async (code: string) => {
     }
 };
 
-export default getKakaoToken;
+export default postKakaoToken;

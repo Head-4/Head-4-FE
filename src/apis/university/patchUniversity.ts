@@ -1,8 +1,10 @@
-import {axiosInstance} from "../index";
+import {axiosInstance, getTokenHeader} from "../index";
 
 const patchUniversity = async (name: string) => {
     try {
-        const response = await axiosInstance.patch(`/api/v1/user/univ/${name}`);
+        const response = await axiosInstance.patch(`/api/v1/user/univ/${name}`, null, {
+            headers: getTokenHeader()
+        });
         return response;
     } catch (error) {
         console.error(error);

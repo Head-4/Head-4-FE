@@ -10,7 +10,7 @@ interface Keyword {
 
 interface KeyWordProps {
     it: Keyword;
-    deleteKeywordMutate: (id: number) => void;
+    deleteKeywordMutate: (notifyId: number) => void;
 }
 
 export default function KeyWord({it, deleteKeywordMutate}: KeyWordProps) {

@@ -4,7 +4,7 @@ import {createPortal} from "react-dom";
 
 interface AlertBoxProps {
     isAlert: boolean;
-    status: "success" | "failure";
+    status: boolean;
 }
 
 // 서버 API 여부에 맞춰 메시지 표시
@@ -12,7 +12,7 @@ export default function AlertBox({isAlert, status}: AlertBoxProps) {
     const toastRoot = document.getElementById('toast');
 
     const message =
-        status === "success"
+        status
             ? "성공적으로 변경되었어요!"
             : "잠시 후에 다시 시도해 주세요";
 
@@ -25,7 +25,7 @@ export default function AlertBox({isAlert, status}: AlertBoxProps) {
     );
 }
 
-const AlertBoxWrapper = styled.div<{ $isAlert: boolean; $status: "success" | "failure" }>`
+const AlertBoxWrapper = styled.div<{ $isAlert: boolean; $status: boolean }>`
     position: fixed;
     left: 50%;
     bottom: 0;
@@ -35,8 +35,8 @@ const AlertBoxWrapper = styled.div<{ $isAlert: boolean; $status: "success" | "fa
     z-index: 10;
     padding: 18px 0;
     opacity: ${({$isAlert}) => $isAlert ? '1' : '0'};
-    color: ${({$status}) => $status === "success" ? '#528B5D' : '#BD0000'};
-    background-color: ${({$status}) => $status === "success" ? '#F0FAF2' : '#FFEFF0'};
+    color: ${({$status}) => $status ? '#528B5D' : '#BD0000'};
+    background-color: ${({$status}) => $status ? '#F0FAF2' : '#FFEFF0'};
     font-size: 16px;
     font-weight: 600;
     border-radius: 12px;

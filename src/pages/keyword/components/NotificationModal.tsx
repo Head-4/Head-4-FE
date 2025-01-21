@@ -14,7 +14,6 @@ interface NotificationModalProps {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 export default function NotificationModal({isModalOpen, setIsModalOpen}: NotificationModalProps) {
     const navigate = useNavigate();
 
@@ -30,7 +29,6 @@ export default function NotificationModal({isModalOpen, setIsModalOpen}: Notific
     });
 
     const clickButton = async (isAllow: boolean) => {
-        // 기본을 false 로 저장해야함
         if (isAllow) {
             const {permission} = await handleAllowNotification();
             if (permission === "granted") {

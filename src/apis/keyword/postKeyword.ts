@@ -1,9 +1,11 @@
-import {axiosInstance} from "../index";
+import {axiosInstance, getTokenHeader} from "../index";
 
-const postKeyword = async (keyword: string) => {
+const postKeyword = async (keywords: string[]) => {
     try {
         const response = await axiosInstance.post(`/api/v1/notify/add/keywords`, {
-                keywords: [keyword],
+                keywords: keywords,
+            }, {
+                headers: getTokenHeader()
             }
         );
 

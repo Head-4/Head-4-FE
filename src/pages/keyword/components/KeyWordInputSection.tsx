@@ -3,6 +3,10 @@ import Row from "../../../styles/Common/Row";
 import styled from "styled-components";
 import {ReactComponent as AddIcon} from "../../../assets/KeyWord/AddIcon.svg";
 
+interface Keyword {
+    notifyId: number;
+    keyword: string;
+}
 
 interface KeyWordInputSectionProps {
     keyWord: string;
@@ -10,7 +14,7 @@ interface KeyWordInputSectionProps {
     isAddActive: boolean;
     isMax: boolean;
     setIsInputFocused: React.Dispatch<React.SetStateAction<boolean>>;
-    addKeyWordClick: () => void;
+    addKeyWordClick: (keyWord: string) => void;
 }
 
 export default function KeyWordInputSection({
@@ -30,7 +34,7 @@ export default function KeyWordInputSection({
                 onBlur={() => setIsInputFocused(false)}
             />
             <AddButton
-                onClick={addKeyWordClick}
+                onClick={() => addKeyWordClick(keyWord)}
                 disabled={!isAddActive}
                 $isAddActive={isAddActive}
             >

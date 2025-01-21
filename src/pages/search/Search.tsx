@@ -1,38 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NoticeItem from "../../components/NoticeItem";
 import styled from "styled-components";
 import {ReactComponent as SearchIcon} from "../../assets/Search/SearchIcon.svg";
 import {getChoseong} from "es-hangul";
-
-interface NoticeType {
-    title: string;
-    date: string;
-    url: string;
-}
-
-// 더미데이터
-const NoticeList: NoticeType[] = [
-    {title: '[일정변경]상명대학교 샘물시스템 일시 중지 안내', date: '2025.05.26', url: '1'},
-    {title: '[현장실습] 현장실습 성과 발표대회 안내', date: '2025.05.26', url: '2'},
-    {
-        title: '[상명대학교 국제개발평가센터(천안)] KOICA 2025년 상반기 ODA YP(Young Professional) 채용 공고(접수마감: ~1/5일)',
-        date: '2025.05.26',
-        url: '3'
-    },
-];
+import {useInView} from "react-intersection-observer";
+import {useInfiniteQuery} from "@tanstack/react-query";
+import getArticles from "../../apis/main/getArticles";
 
 export default function Search() {
-    const [searchList, setSearchList] = useState<NoticeType[]>(NoticeList);
     const [searchInput, setSearchInput] = useState<string>('');
+    const {ref, inView} = useInView();
+
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage && searchInput) {
+            fetchNextPage();
+        }
+    }, [inView])
+
+    const {
+        data,
+        fetchNextPage,
+        isFetchingNextPage,
+        hasNextPage,
+    } = useInfiniteQuery({
+        queryKey: ["articles", searchInput],
+        queryFn: ({pageParam = 0}) => getArticles(pageParam, searchInput),
+        getNextPageParam: (lastPage) => {
+            return lastPage?.hasNext ? lastPage.cursor : undefined;
+        },
+        staleTime: 100000,
+        initialPageParam: 0,
+        enabled: searchInput !== '',
+    });
 
     const inputSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const input = e.target.value;
-        setSearchInput(input);
-
-        const filteredList = NoticeList.filter((it) =>
-            getChoseong(it.title).includes(getChoseong(input))
-        );
-        setSearchList(filteredList);
+        setSearchInput(e.target.value);
     };
 
     return (
@@ -52,20 +54,23 @@ export default function Search() {
             <SearchListSection>
                 {searchInput === '' ? (
                     <></>
-                ) : searchList.length === 0 ? (
+                ) : data?.pages[0]?.articles.length === 0 ? (
                     <NoSearchData>검색 결과를 찾을 수 없어요</NoSearchData>
                 ) : (
                     <ul>
-                        {searchList.map((notice) => (
-                            <NoticeItem
-                                searchInput={searchInput}
-                                key={notice.url}
-                                notice={notice}
-                            />
-                        ))}
+                        {data?.pages.map((page) =>
+                            page?.articles.map((notice) =>
+                                <NoticeItem
+                                    key={notice.id}
+                                    searchInput={searchInput}
+                                    notice={notice}
+                                />
+                            )
+                        )}
                     </ul>
                 )}
             </SearchListSection>
+            <div ref={ref}></div>
         </>
     );
 }

@@ -24,13 +24,18 @@ export default function UniversityEdit() {
     const {isAlert, showAlert} = useAlertBox();
 
     // 로그인 되어있는지 확인
-    const isLogin = true;
+    const isFirst = true;
 
     const {mutate: patchUniversityMutate} = useMutation({
         mutationFn: (university: string) => patchUniversity(university),
         onSuccess: (data) => {
             console.log("Success: ", data);
-            // queryClient.invalidateQueries({queryKey: ['keywords']});
+            if (isFirst) {
+                navigate('/register/keyword');
+            } else {
+                showAlert(true);
+            }
+            // queryClient.invalidateQueries({queryKey: ['university']});
         },
         onError: (error) => {
             console.error("Error: ", error);
@@ -73,18 +78,13 @@ export default function UniversityEdit() {
 
     // api 설정
     const clickButton = async () => {
-        if (isLogin) {
-            showAlert(true);
-            setUniversity('');
-            setButtonActive(false);
-        } else {
-            try {
-                patchUniversityMutate(university);
-                navigate('/register/keyword');
-            } catch (error) {
-                console.error('API 요청 실패:', error);
-            }
+        if (!university) {
+            console.warn("대학교를 선택하세요.");
+            return;
         }
+        setUniversity('');
+        setButtonActive(false);
+        patchUniversityMutate(university);
     }
 
     const showDropDown = options.length > 0 && hasText;
@@ -92,13 +92,13 @@ export default function UniversityEdit() {
     return (
         <>
             <UniversitySection>
-                {isLogin ?
+                {isFirst ?
+                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
+                    :
                     <UniversityCurrent>
                         <span>현재 학교</span>
                         <span>상명대학교 천안캠퍼스</span>
                     </UniversityCurrent>
-                    :
-                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
                 }
                 <div ref={inputRef}>
                     <UnivInput type="text"
@@ -116,9 +116,9 @@ export default function UniversityEdit() {
                     )}
                 </div>
             </UniversitySection>
-            <AlertBox isAlert={isAlert} status="success"/>
+            <AlertBox isAlert={isAlert} status={true}/>
             <CommonButton onClick={clickButton} isActive={buttonActive}>
-                {isLogin ? "저장" : "다음"}
+                {isFirst ? "다음" : "저장"}
             </CommonButton>
         </>
     );
