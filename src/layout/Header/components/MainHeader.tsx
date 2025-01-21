@@ -6,14 +6,21 @@ import {ReactComponent as MenuIcon} from "../../../assets/Layout/Header/MenuIcon
 import {ReactComponent as SearchIcon} from "../../../assets/Layout/Header/SearchIcon.svg";
 import Row from "../../../styles/Common/Row";
 import useAsideStore from "../../../store/AsideStore";
+import {useQuery} from "@tanstack/react-query";
+import getUniversity from "../../../apis/university/getUniversity";
 
 // isNew : 새로온 알림 있는지 확인 API
 export default function MainHeader() {
     const toggleAside  = useAsideStore((state) => state.toggleAside);
+    const {data:university} = useQuery({
+        queryKey: ["university"],
+        queryFn: getUniversity,
+        staleTime: 100000,
+    });
 
     return (
         <>
-            <HeaderH1>한양대학교 ERICA캠퍼스</HeaderH1>
+            <HeaderH1>{university?.data}</HeaderH1>
             <Row $gap={12}>
                 <Link to='/search'>
                     <Row>

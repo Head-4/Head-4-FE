@@ -7,7 +7,8 @@ import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import CommonButton from "../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
 import patchUniversity from "../../apis/university/patchUniversity";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import getUniversity from "../../apis/university/getUniversity";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
@@ -25,17 +26,22 @@ export default function UniversityEdit() {
 
     // 로그인 되어있는지 확인
     const isFirst = false;
+    const {data} = useQuery({
+        queryKey: ["university"],
+        queryFn: getUniversity,
+        staleTime: 100000,
+    });
 
     const {mutate: patchUniversityMutate} = useMutation({
         mutationFn: (university: string) => patchUniversity(university),
         onSuccess: (data) => {
             console.log("Success: ", data);
+            queryClient.invalidateQueries({queryKey: ['university']});
             if (isFirst) {
                 navigate('/register/keyword');
             } else {
-                showAlert(true,data?.data.success);
+                showAlert(true, data?.data.success);
             }
-            // queryClient.invalidateQueries({queryKey: ['university']});
         },
         onError: (error) => {
             console.error("Error: ", error);
@@ -92,7 +98,7 @@ export default function UniversityEdit() {
                     :
                     <UniversityCurrent>
                         <span>현재 학교</span>
-                        <span>상명대학교 천안캠퍼스</span>
+                        <span>{data?.data}</span>
                     </UniversityCurrent>
                 }
                 <div ref={inputRef}>

@@ -8,8 +8,9 @@ import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import {useState} from "react";
 import useAsideStore from "../../../store/AsideStore";
 import {handleAllowNotification} from "../../../utils/firebaseConfig";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
+import getNotificationAllow from "../../../apis/fcm/getNotificationAllow";
 
 const AsideItems = [
     {
@@ -30,15 +31,20 @@ const AsideItems = [
 ];
 
 export default function AsideBottom() {
+    const queryClient = useQueryClient();
     const toggleAside = useAsideStore((state) => state.toggleAside);
-    // 알림 승인했는지 확인하는 api로 변경
-    const [keyWordToggle, setKeyWordToggle] = useState<boolean>(false);
+
+    const {data: notificationAllow} = useQuery({
+        queryKey: ["notificationAllow"],
+        queryFn: getNotificationAllow,
+        staleTime: 100000,
+    });
 
     const {mutate: patchAllowMutate} = useMutation({
         mutationFn: (allow: boolean) => patchAllowNotification(allow),
         onSuccess: (data) => {
             console.log('success: ', data);
-            // queryClient.invalidateQueries({queryKey: ['']})
+            queryClient.invalidateQueries({queryKey: ['notificationAllow']})
         },
         onError: (error) => {
             console.error("Error: ", error);
@@ -46,8 +52,7 @@ export default function AsideBottom() {
     });
 
     const clickKeyWordToggle = async () => {
-        setKeyWordToggle((prev) => !prev);
-        if (!keyWordToggle) {
+        if (!notificationAllow?.data) {
             console.log('알림 허용')
             const {permission} = await handleAllowNotification();
             if (permission === "granted") {
@@ -64,8 +69,8 @@ export default function AsideBottom() {
             <OnOffDiv>
                 <BellIcon/>
                 <AsideSetting>키워드 알림</AsideSetting>
-                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={keyWordToggle}>
-                    {keyWordToggle ? "ON" : "OFF"}
+                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow?.data}>
+                    {notificationAllow?.data ? "ON" : "OFF"}
                 </KeyWordOnOffButton>
             </OnOffDiv>
             <ul>

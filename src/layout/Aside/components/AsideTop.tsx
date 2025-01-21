@@ -2,14 +2,22 @@ import styled from "styled-components";
 import {ReactComponent as CloseIcon} from "../../../assets/Aside/CloseIcon.svg";
 import {ReactComponent as MiniKakaoIcon} from "../../../assets/Aside/MiniKakaoIcon.svg";
 import useAsideStore from "../../../store/AsideStore";
+import {useQuery} from "@tanstack/react-query";
+import getUserEmail from "../../../apis/login/getUserEmail";
 
 export default function AsideTop() {
-    const toggleAside  = useAsideStore((state) => state.toggleAside);
+    const toggleAside = useAsideStore((state) => state.toggleAside);
+
+    const {data: email} = useQuery({
+        queryKey: ["email"],
+        queryFn: getUserEmail,
+        staleTime: 1000000,
+    });
 
     return (
         <AsideTopSection>
             <MiniKakaoIcon/>
-            <AsideUserName>eunjin@naver.com</AsideUserName>
+            <AsideUserName>{email?.data}</AsideUserName>
             <AsideCloseButton onClick={toggleAside}>
                 <CloseIcon/>
             </AsideCloseButton>
