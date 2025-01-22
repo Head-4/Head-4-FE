@@ -93,13 +93,13 @@ export default function UniversityEdit() {
     return (
         <>
             <UniversitySection>
-                {isFirst ?
-                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
-                    :
+                {data?.data ?
                     <UniversityCurrent>
                         <span>현재 학교</span>
                         <span>{data?.data}</span>
                     </UniversityCurrent>
+                    :
+                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
                 }
                 <div ref={inputRef}>
                     <UnivInput type="text"
