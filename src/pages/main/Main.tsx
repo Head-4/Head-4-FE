@@ -13,6 +13,7 @@ interface Keyword {
 }
 
 export default function Main() {
+    // 로그인 했는지ㅣ 안했는지 확인
     const [selectedKeyWord, setSelectedKeyWord] = useState<string>("null");
     const {ref, inView} = useInView();
 

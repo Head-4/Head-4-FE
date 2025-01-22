@@ -21,7 +21,6 @@ export default function NotificationModal({isModalOpen, setIsModalOpen}: Notific
         mutationFn: (allow: boolean) => patchAllowNotification(allow),
         onSuccess: (data) => {
             console.log('success: ', data);
-            // queryClient.invalidateQueries({queryKey: ['']})
         },
         onError: (error) => {
             console.error("Error: ", error);

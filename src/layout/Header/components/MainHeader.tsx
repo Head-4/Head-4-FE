@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import {FlexCss, HeaderH1} from "../Header.styled";
 import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
@@ -8,15 +8,21 @@ import Row from "../../../styles/Common/Row";
 import useAsideStore from "../../../store/AsideStore";
 import {useQuery} from "@tanstack/react-query";
 import getUniversity from "../../../apis/university/getUniversity";
+import {useEffect} from "react";
 
-// isNew : 새로온 알림 있는지 확인 API
 export default function MainHeader() {
-    const toggleAside  = useAsideStore((state) => state.toggleAside);
-    const {data:university} = useQuery({
+    const navigate = useNavigate();
+
+    const toggleAside = useAsideStore((state) => state.toggleAside);
+    const {data: university, isError, isLoading} = useQuery({
         queryKey: ["university"],
         queryFn: getUniversity,
         staleTime: 100000,
     });
+
+    if (!isLoading && (!university?.data || isError)) {
+        navigate("/setting/university");
+    }
 
     return (
         <>
@@ -28,7 +34,7 @@ export default function MainHeader() {
                     </Row>
                 </Link>
                 <Link to='/notification'>
-                    <AfterRedPoint $isNew={true}>
+                    <AfterRedPoint $isNew={false}>
                         <BellIcon/>
                     </AfterRedPoint>
                 </Link>

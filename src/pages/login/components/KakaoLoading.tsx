@@ -13,10 +13,13 @@ export default function KakaoLoading() {
                 navigate('/login');
                 return;
             }
-            // 임시 저장
-            localStorage.setItem('userId',result.data.data);
-            // 첫로그인인지 아닌지에 따른 navigate
-            navigate('/register/university');
+
+            localStorage.setItem('isFirst',result.data.data);
+            if (result.data.data) {
+                navigate('/register/university');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             console.log(error);
         }

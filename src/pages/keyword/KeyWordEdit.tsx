@@ -22,9 +22,9 @@ export default function KeyWordEdit() {
     const [keyWord, setKeyWord] = useState<string>('');
     const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('최대 5개까지 추가할 수 있어요');
 
-    // 로그인 되어있는지 확인
-    const isFirst = false;
+    const isFirst = JSON.parse(localStorage.getItem('isFirst') || 'false');
 
     const fallback: string[] = [];
     const {data: Keywords = fallback} = useQuery({
@@ -51,14 +51,15 @@ export default function KeyWordEdit() {
     });
 
     const isAddActive: boolean = keyWord.length > 0;
-    const isMax: boolean = Keywords.data?.length === 5;
+    const isMax: boolean = Keywords.data?.length >= 5;
 
     const addKeyWordClick = async (keyword: string) => {
         if (Keywords.data?.some((item: Keyword) => item.keyword === keyword)) {
-            // 에러처리
+            setErrorMessage('같은 키워드는 추가할 수 없어요');
             return;
         }
         setKeyWord('');
+        setErrorMessage('최대 5개까지 추가할 수 있어요');
         postKeywordMutate(keyword);
     }
 
@@ -79,7 +80,13 @@ export default function KeyWordEdit() {
                     setIsInputFocused={setIsInputFocused}
                     addKeyWordClick={addKeyWordClick}
                 />
-                <NoticeP $isMax={isMax} $isInputFocused={isInputFocused}>최대 5개까지 추가할 수 있어요</NoticeP>
+                <NoticeP
+                    $isMax={isMax}
+                    $isInputFocused={isInputFocused}
+                    $isError={errorMessage === '같은 키워드는 추가할 수 없어요'}
+                >
+                    {errorMessage}
+                </NoticeP>
                 <KeyWordWrapper>
                     {Keywords.data?.map((it: Keyword) =>
                         <KeyWord
@@ -111,13 +118,13 @@ const KeyWordH1 = styled.h1`
     margin-bottom: 32px;
 `;
 
-const NoticeP = styled.p<{ $isMax: boolean; $isInputFocused: boolean }>`
+const NoticeP = styled.p<{ $isMax: boolean; $isInputFocused: boolean; $isError: boolean }>`
     margin-top: 12px;
-    color: ${({$isMax, $isInputFocused}) => $isMax && $isInputFocused ? '#BD0000' : '#ADADAD'};
+    color: ${({$isError, $isMax, $isInputFocused}) =>
+            $isError ? '#BD0000' : $isMax && $isInputFocused ? '#BD0000' : '#ADADAD'};
     font-size: 14px;
     font-weight: 500;
 `;
-
 
 const KeyWordWrapper = styled.div`
     margin-top: 36px;

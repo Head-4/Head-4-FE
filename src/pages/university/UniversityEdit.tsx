@@ -24,8 +24,8 @@ export default function UniversityEdit() {
     const [buttonActive, setButtonActive] = useState<boolean>(false);
     const {isAlert, showAlert, result} = useAlertBox();
 
-    // 로그인 되어있는지 확인
-    const isFirst = false;
+    const isFirst = JSON.parse(localStorage.getItem('isFirst') || 'false');
+
     const {data} = useQuery({
         queryKey: ["university"],
         queryFn: getUniversity,
