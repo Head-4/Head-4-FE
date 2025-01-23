@@ -13,7 +13,7 @@ export default function Layout() {
             <LayoutMain>
                 <Outlet/>
             </LayoutMain>
-            <Aside/>
+            <Aside pageRoute={pageRoute}/>
         </LayoutWrapper>
     );
 };

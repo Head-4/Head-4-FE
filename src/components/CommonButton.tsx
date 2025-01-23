@@ -18,7 +18,7 @@ export default function CommonButton({onClick, children, isActive}: CommonButton
 const CommonButtonWrapper = styled.button<{ $isActive: boolean }>`
     margin-top: 36px;
     width: 100%;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
     color: ${({$isActive}) => $isActive ? '#FAFAFA' : '#B7B7B7'};
     border-radius: 12px;

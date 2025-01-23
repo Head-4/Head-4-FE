@@ -6,9 +6,18 @@ import AsideLogOut from "./components/AsideLogOut";
 import useAsideStore from "../../store/AsideStore";
 import Overlay from "../../styles/Common/Overlay";
 
-export default function Aside() {
+interface AsideProps {
+    pageRoute: string;
+}
+
+export default function Aside({pageRoute}: AsideProps) {
     const isAsideOpen = useAsideStore((state) => state.isAsideOpen);
-    const toggleAside  = useAsideStore((state) => state.toggleAside);
+    const toggleAside = useAsideStore((state) => state.toggleAside);
+
+    const noAsideList: string[] = [
+        "/login",
+        "/register",
+    ];
 
     if (isAsideOpen) {
         document.body.style.overflow = 'hidden';
@@ -16,12 +25,13 @@ export default function Aside() {
         document.body.style.overflow = 'auto';
     }
 
+    if (noAsideList.some(route => pageRoute.includes(route))) return null;
     return (
         <>
             {isAsideOpen && <Overlay onClick={toggleAside}/>}
             <AsideWrapper $isAsideOpen={isAsideOpen} onClick={(e) => e.stopPropagation()}>
-                <AsideTop />
-                <AsideBottom />
+                <AsideTop/>
+                <AsideBottom/>
                 <AsideLogOut/>
             </AsideWrapper>
         </>

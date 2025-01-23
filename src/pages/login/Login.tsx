@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {ReactComponent as KakaoIcon} from "../../assets/Login/KakaoIcon.svg";
 import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
 import Column from "../../styles/Common/Column";
+import PwaInstallModal from "../utilPages/PWAInstallModal";
 
 export default function Login() {
     const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
@@ -11,7 +12,8 @@ export default function Login() {
     }
 
     return (
-        <Column $gap={164} $verticalAlign="center" style={{margin: 'auto 0'}}>
+        <Column $gap={164} $verticalAlign="center" style={{margin: 'auto 0', position: 'relative'}}>
+            <PwaInstallModal/>
             <LoginLogoSection>
                 <MainLogo width='100%'/>
                 <LoginH1>나에게 필요한 공지만<br/>빠르게 받아볼 수 있어요</LoginH1>

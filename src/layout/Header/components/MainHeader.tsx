@@ -21,7 +21,7 @@ export default function MainHeader() {
     });
 
     if (!isLoading && (!university?.data || isError)) {
-        navigate("/setting/university");
+        navigate("/login");
     }
 
     return (
