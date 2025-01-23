@@ -1,14 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {dateAgo} from "../../../utils/dateFormatting";
-
-interface NotificationType {
-    createdDate: string;
-    keyword: string;
-    pushId: number;
-    title: string;
-    url: string;
-}
+import {NotificationType} from "../../../types";
 
 interface NotificationDetailProps {
     it: NotificationType;

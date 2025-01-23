@@ -6,11 +6,7 @@ import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {useInView} from 'react-intersection-observer';
 import getArticles from "../../apis/main/getArticles";
 import getKeywordList from "../../apis/keyword/getKeywordList";
-
-interface Keyword {
-    notifyId: number;
-    keyword: string;
-}
+import {Keyword} from "../../types";
 
 export default function Main() {
     // 로그인 했는지ㅣ 안했는지 확인

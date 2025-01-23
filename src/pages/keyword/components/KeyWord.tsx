@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {ReactComponent as DeleteIcon} from "../../../assets/KeyWord/DeleteIcon.svg";
-import {UseMutationResult} from "@tanstack/react-query";
-
-interface Keyword {
-    notifyId: number;
-    keyword: string;
-}
+import {Keyword} from "../../../types";
 
 interface KeyWordProps {
     it: Keyword;

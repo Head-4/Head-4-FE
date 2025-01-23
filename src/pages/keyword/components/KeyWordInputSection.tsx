@@ -3,11 +3,6 @@ import Row from "../../../styles/Common/Row";
 import styled from "styled-components";
 import {ReactComponent as AddIcon} from "../../../assets/KeyWord/AddIcon.svg";
 
-interface Keyword {
-    notifyId: number;
-    keyword: string;
-}
-
 interface KeyWordInputSectionProps {
     keyWord: string;
     setKeyWord: React.Dispatch<React.SetStateAction<string>>;

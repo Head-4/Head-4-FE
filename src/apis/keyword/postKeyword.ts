@@ -1,12 +1,8 @@
-import {axiosInstance, getTokenHeader} from "../index";
+import {axiosInstance} from "../index";
 
 const postKeyword = async (keyword: string) => {
     try {
-        const response = await axiosInstance.post(`/api/v1/user/add/keyword/${keyword}`, null, {
-                headers: getTokenHeader()
-            }
-        );
-
+        const response = await axiosInstance.post(`/api/v1/user/add/keyword/${keyword}`);
         return response;
     } catch (error) {
         console.error(error);

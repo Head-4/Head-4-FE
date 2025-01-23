@@ -1,10 +1,8 @@
-import {axiosInstance, getTokenHeader} from "../index";
+import {axiosInstance} from "../index";
 
 const patchFcmToken = async (token: string) => {
     try {
-        const response = await axiosInstance.patch(`/api/v1/user/fcm/${token}`, null, {
-            headers: getTokenHeader()
-        });
+        const response = await axiosInstance.patch(`/api/v1/user/fcm/${token}`);
 
         return response;
     } catch (error) {

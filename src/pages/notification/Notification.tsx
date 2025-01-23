@@ -14,7 +14,6 @@ export default function Notification() {
         }
     }, [inView])
     
-    // 데이터 들어오면 확인
     const {
         data,
         fetchNextPage,

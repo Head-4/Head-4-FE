@@ -1,12 +1,5 @@
-import {axiosInstance, getTokenHeader} from "../index";
-
-interface NotificationType {
-    createdDate: string;
-    keyword: string;
-    pushId: number;
-    title: string;
-    url: string;
-}
+import {axiosInstance} from "../index";
+import {NotificationType} from "../../types";
 
 interface GetNotificationResponse {
     pushLogs: NotificationType[];
@@ -16,9 +9,7 @@ interface GetNotificationResponse {
 
 const getNotifications = async (cursor: number): Promise<GetNotificationResponse | undefined> => {
     try {
-        const response = await axiosInstance.get(`/api/v1/user/notify/page/${cursor}`,{
-            headers: getTokenHeader()
-        });
+        const response = await axiosInstance.get(`/api/v1/user/notify/page/${cursor}`);
         return response.data.data;
     } catch (error) {
         console.error(error);

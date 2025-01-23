@@ -168,9 +168,3 @@ const UnivInput = styled.input<{ $showDropDown: boolean }>`
         color: #ADADAD;
     }
 `;
-
-const HighlightSpan = styled.span`
-    color: ${({theme}) => theme.colors.primary};
-    font-weight: 700;
-    font-size: 18px;
-`;

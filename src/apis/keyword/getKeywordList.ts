@@ -1,10 +1,8 @@
-import {axiosInstance, getTokenHeader} from "../index";
+import {axiosInstance} from "../index";
 
 const getKeywordList = async () => {
     try {
-        const response = await axiosInstance.get(`api/v1/user/keywords`, {
-            headers: getTokenHeader()
-        });
+        const response = await axiosInstance.get(`api/v1/user/keywords`);
         return response.data;
     } catch (error) {
         console.error(error);

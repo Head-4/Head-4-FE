@@ -1,8 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import KeyWord from "./components/KeyWord";
-import AlertBox from "../../components/AlertBox";
-import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import KeyWordInputSection from "./components/KeyWordInputSection";
 import CommonButton from "../../components/CommonButton";
 import NotificationModal from "./components/NotificationModal";
@@ -10,11 +8,7 @@ import postKeyword from "../../apis/keyword/postKeyword";
 import getKeywordList from "../../apis/keyword/getKeywordList";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import deleteKeyword from "../../apis/keyword/deleteKeyword";
-
-interface Keyword {
-    notifyId: number;
-    keyword: string;
-}
+import {Keyword} from "../../types";
 
 export default function KeyWordEdit() {
     const queryClient = useQueryClient();

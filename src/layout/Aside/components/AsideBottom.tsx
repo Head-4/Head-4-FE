@@ -5,7 +5,6 @@ import {ReactComponent as KeywordIcon} from "../../../assets/Aside/KeywordIcon.s
 import {ReactComponent as MessageIcon} from "../../../assets/Aside/MessageIcon.svg";
 import {ReactComponent as ExpandIcon} from "../../../assets/Aside/ExpandIcon.svg";
 import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
-import {useState} from "react";
 import useAsideStore from "../../../store/AsideStore";
 import {handleAllowNotification} from "../../../utils/firebaseConfig";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";

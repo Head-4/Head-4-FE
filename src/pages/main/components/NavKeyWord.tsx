@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-
-interface Keyword {
-    notifyId: number;
-    keyword: string;
-}
+import {Keyword} from "../../../types";
 
 interface NavKeyWordProps {
     it: Keyword;

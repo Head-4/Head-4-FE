@@ -6,7 +6,6 @@ export const LoadingPage = () => {
     const isFetching = useIsFetching();
     const isMutating = useIsMutating();
     
-    // 로딩 이미지 2개중에 고민해보기
     return (
         <>
             {((isFetching > 0) || (isMutating > 0)) && (

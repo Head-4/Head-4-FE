@@ -4,7 +4,7 @@ const escapeRegExp = (string: string) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
-const highlightText = (text: string, input: string, size: number) => {
+export const highlightText = (text: string, input: string, size: number) => {
     if (!input) return text;
     const escapedInput = escapeRegExp(input);
     const parts = text.split(new RegExp(`(${escapedInput})`, 'gi'));
@@ -20,5 +20,3 @@ const HighlightSpan = styled.span<{ $size: number }>`
     font-weight: ${({$size}) => $size === 16 ? '600' : '700'};
     font-size: ${({$size}) => $size === 16 ? '16' : '18'};
 `;
-
-export {highlightText};

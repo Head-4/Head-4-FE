@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import NoticeItem from "../../components/NoticeItem";
 import styled from "styled-components";
 import {ReactComponent as SearchIcon} from "../../assets/Search/SearchIcon.svg";
-import {getChoseong} from "es-hangul";
 import {useInView} from "react-intersection-observer";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import getArticles from "../../apis/main/getArticles";
@@ -127,10 +126,4 @@ const NoSearchData = styled.div`
     font-weight: 600;
     text-align: center;
     margin: 24px auto 0;
-`;
-
-const HighlightSpan = styled.span`
-    color: ${({theme}) => theme.colors.primary};
-    font-weight: 600;
-    font-size: 16px;
 `;

@@ -2,12 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import {highlightText} from "../utils/highlightText";
 import {formatDate} from "../utils/dateFormatting";
-
-interface NoticeType {
-    title: string;
-    date: string;
-    url: string;
-}
+import {NoticeType} from "../types";
 
 interface NoticeProps {
     notice: NoticeType;
