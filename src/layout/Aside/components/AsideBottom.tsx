@@ -10,6 +10,8 @@ import {handleAllowNotification} from "../../../utils/firebaseConfig";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
 import getNotificationAllow from "../../../apis/fcm/getNotificationAllow";
+import Typography from "../../../components/Typography";
+import {TextOverflow} from "../../../styles/Common/TextOverflow";
 
 const AsideItems = [
     {
@@ -67,7 +69,7 @@ export default function AsideBottom() {
         <>
             <OnOffDiv>
                 <BellIcon/>
-                <AsideSetting>키워드 알림</AsideSetting>
+                <AsideSetting typoSize="B1_semibold" color="Black">키워드 알림</AsideSetting>
                 <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow?.data}>
                     {notificationAllow?.data ? "ON" : "OFF"}
                 </KeyWordOnOffButton>
@@ -77,7 +79,7 @@ export default function AsideBottom() {
                     <li key={index}>
                         <AsideLink to={to} onClick={toggleAside}>
                             <Icon/>
-                            <AsideSetting>{label}</AsideSetting>
+                            <AsideSetting typoSize="B1_semibold" color="Black">{label}</AsideSetting>
                             <ExpandIcon/>
                         </AsideLink>
                     </li>
@@ -101,13 +103,13 @@ const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
     text-align: ${({$keyWordToggle}) => $keyWordToggle ? 'left' : 'right'};
     font-size: 12px;
     font-weight: 600;
-    color: ${({$keyWordToggle, theme}) => $keyWordToggle ? theme.colors.primary : '#B7B7B7'};
+    color: ${({$keyWordToggle, theme}) => $keyWordToggle ? theme.Blue : theme.Gray400};
     position: relative;
     width: 64px;
     height: 32px;
     border-radius: 24px;
-    border: 1px solid ${({$keyWordToggle}) => $keyWordToggle ? '#BFCFE9' : '#E2E2E2'};
-    background-color: ${({$keyWordToggle}) => $keyWordToggle ? '#E4EBF5' : '#F7F7F7'};
+    border: 1px solid ${({$keyWordToggle,theme}) => $keyWordToggle ? '#BFCFE9' : theme.Gray200};
+    background-color: ${({$keyWordToggle, theme}) => $keyWordToggle ? '#E4EBF5' : theme.Gray50};
     transition: all 0.2s;
 
     &::after {
@@ -118,7 +120,7 @@ const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
         transform: translateY(-50%);
         width: 20px;
         height: 20px;
-        background-color: ${({$keyWordToggle, theme}) => $keyWordToggle ? theme.colors.primary : '#D0D0D0'};
+        background-color: ${({$keyWordToggle, theme}) => $keyWordToggle ? theme.Blue : theme.Gray300};
         border-radius: 50%;
         transition: all 0.2s;
     }
@@ -136,11 +138,6 @@ const AsideLink = styled(Link)`
     }
 `;
 
-const AsideSetting = styled.div`
-    color: ${({theme}) => theme.colors.mainFont};
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
+const AsideSetting = styled(Typography)`
+    ${TextOverflow}
 `;

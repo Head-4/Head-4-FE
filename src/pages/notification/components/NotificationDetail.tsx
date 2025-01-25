@@ -2,6 +2,8 @@ import React from 'react';
 import styled from "styled-components";
 import {dateAgo} from "../../../utils/dateFormatting";
 import {NotificationType} from "../../../types";
+import {TextOverflow} from "../../../styles/Common/TextOverflow";
+import Typography from "../../../components/Typography";
 
 interface NotificationDetailProps {
     it: NotificationType;
@@ -12,16 +14,16 @@ export default function NotificationDetail({it}: NotificationDetailProps) {
         <DetailLi>
             <a href={it.url}>
                 <DetailHead>
-                    <DetailKeyword>
+                    <DetailKeyword typoSize="B1_semibold" color="Blue">
                         '{it.keyword}' 새로운 공지
                     </DetailKeyword>
                     <DetailTime>
                         {dateAgo(it.createdDate)}
                     </DetailTime>
                 </DetailHead>
-                <DetailTitle>
+                <Typography typoSize="B1_medium" color="Gray600">
                     {it.title}
-                </DetailTitle>
+                </Typography>
             </a>
         </DetailLi>
     );
@@ -38,22 +40,12 @@ const DetailHead = styled.div`
     margin-bottom: 4px;
 `;
 
-const DetailKeyword = styled.div`
-    color: ${({theme}) => theme.colors.primary};
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
+const DetailKeyword = styled(Typography)`
+    ${TextOverflow}
 `;
 
 const DetailTime = styled.span`
     color: #C0C0C0;
     font-size: 12px;
-    font-weight: 500;
-`;
-
-const DetailTitle = styled.p`
-    color: #707070;
     font-weight: 500;
 `;

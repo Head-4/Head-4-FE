@@ -1,6 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import {FlexCss, HeaderH1} from "../Header.styled";
 import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import {ReactComponent as MenuIcon} from "../../../assets/Layout/Header/MenuIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/Layout/Header/SearchIcon.svg";
@@ -8,7 +7,8 @@ import Row from "../../../styles/Common/Row";
 import useAsideStore from "../../../store/AsideStore";
 import {useQuery} from "@tanstack/react-query";
 import getUniversity from "../../../apis/university/getUniversity";
-import {useEffect} from "react";
+import Typography from "../../../components/Typography";
+import {TextOverflow} from "../../../styles/Common/TextOverflow";
 
 export default function MainHeader() {
     const navigate = useNavigate();
@@ -20,13 +20,13 @@ export default function MainHeader() {
         staleTime: 100000,
     });
 
-    if (!isLoading && (!university?.data || isError)) {
-        navigate("/register/university");
-    }
+    // if (!isLoading && (!university?.data || isError)) {
+    //     navigate("/register/university");
+    // }
 
     return (
         <>
-            <HeaderH1>{university?.data}</HeaderH1>
+            <HeaderH4 typoSize="H4" color="Black">{university?.data}</HeaderH4>
             <Row $gap={12}>
                 <Link to='/search'>
                     <Row>
@@ -38,9 +38,9 @@ export default function MainHeader() {
                         <BellIcon/>
                     </AfterRedPoint>
                 </Link>
-                <MenuButton onClick={toggleAside}>
+                <button onClick={toggleAside} style={{display: 'flex'}}>
                     <MenuIcon/>
-                </MenuButton>
+                </button>
             </Row>
         </>
     );
@@ -63,6 +63,6 @@ const AfterRedPoint = styled.div<{ $isNew: boolean }>`
     }
 `;
 
-const MenuButton = styled.button`
-    ${FlexCss}
+const HeaderH4 = styled(Typography)`
+    ${TextOverflow}
 `;

@@ -25,9 +25,9 @@ export default function NavKeyWord({it, isSelected, clickKeyWord, children}: Nav
 const NavKeyWordButton = styled.button<{ $isSelected: boolean }>`
     padding: 8px 18px 8px 18px;
     border-radius: 20px;
-    border: 1px solid ${({theme}) => theme.colors.lightGray};
+    border: 1px solid ${({theme}) => theme.LightGray};
     font-size: 14px;
     font-weight: 600;
-    color: ${({$isSelected}) => $isSelected ? '#FFFFFF' : '#707070'};
-    background-color: ${({$isSelected}) => $isSelected ? ({theme}) => theme.colors.primary : ({theme}) => theme.colors.backgroundWhite};
+    color: ${({$isSelected, theme}) => $isSelected ? theme.White : theme.Gray600};
+    background-color: ${({$isSelected, theme}) => $isSelected ? theme.Blue : theme.White};
 `;

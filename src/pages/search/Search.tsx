@@ -5,6 +5,7 @@ import {ReactComponent as SearchIcon} from "../../assets/Search/SearchIcon.svg";
 import {useInView} from "react-intersection-observer";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import getArticles from "../../apis/main/getArticles";
+import Typography from "../../components/Typography";
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState<string>('');
@@ -39,8 +40,8 @@ export default function Search() {
     return (
         <>
             <SearchTopDiv>
-                <SearchH1>무엇을<br/>찾고 계신가요?</SearchH1>
-                <SearchH2>내가 설정한 키워드가 포함된 공지만 검색돼요</SearchH2>
+                <Typography typoSize="H3" color="Black" style={{marginBottom: "12px"}}>무엇을<br/>찾고 계신가요?</Typography>
+                <Typography typoSize="B2_medium" color="Gray600">내가 설정한 키워드가 포함된 공지만 검색돼요</Typography>
                 <SearchInputDiv>
                     <SearchIcon/>
                     <SearchInput type="text"
@@ -54,7 +55,8 @@ export default function Search() {
                 {searchInput === '' ? (
                     <></>
                 ) : data?.pages[0]?.articles.length === 0 ? (
-                    <NoSearchData>검색 결과를 찾을 수 없어요</NoSearchData>
+                    <Typography typoSize="B1_semibold" color="Black" textAlign="center" style={{margin: "24px auto 0"}}>
+                        검색 결과를 찾을 수 없어요</Typography>
                 ) : (
                     <ul>
                         {data?.pages.map((page) =>
@@ -76,22 +78,9 @@ export default function Search() {
 
 const SearchTopDiv = styled.div`
     padding: 12px 20px 28px;
-    background-color: #FFFFFF;
+    background-color: ${({theme}) => theme.White};
     width: calc(100% + 40px);
     transform: translateX(-20px);
-`;
-
-const SearchH1 = styled.h1`
-    font-size: 24px;
-    font-weight: 700;
-    color: ${({theme}) => theme.colors.mainFont};
-    margin-bottom: 12px;
-`;
-
-const SearchH2 = styled.h2`
-    font-size: 14px;
-    font-weight: 500;
-    color: #707070;
 `;
 
 const SearchInputDiv = styled.div`
@@ -99,7 +88,7 @@ const SearchInputDiv = styled.div`
     gap: 8px;
     width: 100%;
     padding: 16px 20px;
-    border: 1px solid ${({theme}) => theme.colors.lightGray};
+    border: 1px solid ${({theme}) => theme.LightGray};
     border-radius: 12px;
     margin-top: 28px;
 `;
@@ -108,7 +97,7 @@ const SearchInput = styled.input`
     font-size: 18px;
     font-weight: 600;
     width: 100%;
-    color: ${({theme}) => theme.colors.mainFont};
+    color: ${({theme}) => theme.Black};
 
     &::placeholder {
         color: #ADADAD;
@@ -118,12 +107,4 @@ const SearchInput = styled.input`
 const SearchListSection = styled.section`
     padding-top: 20px;
     flex: 1;
-`;
-
-const NoSearchData = styled.div`
-    color: ${({theme}) => theme.colors.mainFont};
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
-    margin: 24px auto 0;
 `;

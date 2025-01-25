@@ -7,6 +7,7 @@ import {useInView} from 'react-intersection-observer';
 import getArticles from "../../apis/main/getArticles";
 import getKeywordList from "../../apis/keyword/getKeywordList";
 import {Keyword} from "../../types";
+import Typography from "../../components/Typography";
 
 export default function Main() {
     // 로그인 했는지ㅣ 안했는지 확인
@@ -71,7 +72,8 @@ export default function Main() {
             </MainNav>
             <MainSection>
                 {data?.pages[0]?.articles.length === 0 ?
-                    <NoNoticeData>곧 새로운 공지를<br/>가져올게요!</NoNoticeData>
+                    <Typography typoSize="T1" textAlign="center" style={{color: "#B2B2B2", margin: "auto"}}>
+                        곧 새로운 공지를<br/>가져올게요!</Typography>
                     :
                     <MainNoticeUl>
                         {data?.pages.map((page) =>
@@ -108,12 +110,4 @@ const MainSection = styled.section`
 
 const MainNoticeUl = styled.ul`
     width: 100%;
-`;
-
-const NoNoticeData = styled.div`
-    color: #B2B2B2;
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin: auto auto;
 `;

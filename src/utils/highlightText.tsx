@@ -16,7 +16,7 @@ export const highlightText = (text: string, input: string, size: number) => {
 };
 
 const HighlightSpan = styled.span<{ $size: number }>`
-    color: ${({theme}) => theme.colors.primary};
+    color: ${({theme}) => theme.Blue};
     font-weight: ${({$size}) => $size === 16 ? '600' : '700'};
-    font-size: ${({$size}) => $size === 16 ? '16' : '18'};
+    font-size: ${({$size}) => $size === 16 ? '16px' : '18px'};
 `;

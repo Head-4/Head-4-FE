@@ -27,7 +27,6 @@ const LoadingWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    //background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const LoadingImage = styled.img`

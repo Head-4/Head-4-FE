@@ -2,6 +2,7 @@ import React from 'react';
 import Row from "../../../styles/Common/Row";
 import styled from "styled-components";
 import {ReactComponent as AddIcon} from "../../../assets/KeyWord/AddIcon.svg";
+import Typography from "../../../components/Typography";
 
 interface KeyWordInputSectionProps {
     keyWord: string;
@@ -34,7 +35,7 @@ export default function KeyWordInputSection({
                 $isAddActive={isAddActive}
             >
                 <AddIcon/>
-                <AddLabel>추가하기</AddLabel>
+                <Typography typoSize="B3_medium" style={{marginTop:"4px"}}>추가하기</Typography>
             </AddButton>
         </Row>
     );
@@ -44,13 +45,13 @@ const KeyWordInput = styled.input<{ $isMax: boolean }>`
     width: calc(100% - 55px);
     padding: 20px;
     border-radius: 12px;
-    border: 1px solid #E9E9E9;
+    border: 1px solid ${({theme}) => theme.LightGray};
     font-size: 18px;
     font-weight: 600;
-    color: ${({theme}) => theme.colors.mainFont};
+    color: ${({theme}) => theme.Black};
 
     &:focus {
-        border-color: ${({$isMax}) => $isMax ? '#BD0000' : ({theme}) => theme.colors.primary};
+        border-color: ${({$isMax, theme}) => $isMax ? '#BD0000' : theme.Blue};
     }
 
     &::placeholder {
@@ -59,11 +60,5 @@ const KeyWordInput = styled.input<{ $isMax: boolean }>`
 `;
 
 const AddButton = styled.button<{ $isAddActive: boolean }>`
-    color: ${({$isAddActive}) => $isAddActive ? ({theme}) => theme.colors.primary : '#DBDBDB'};
-`;
-
-const AddLabel = styled.div`
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 500;
+    color: ${({$isAddActive, theme}) => $isAddActive ? theme.Blue : '#DBDBDB'};
 `;

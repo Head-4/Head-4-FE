@@ -22,14 +22,14 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     position: relative;
     min-height: 100vh;
     padding: 52px 20px 86px;
-    background-color: ${({$pageRoute}) => {
+    background-color: ${({$pageRoute,theme}) => {
         switch ($pageRoute) {
             case "/":
-                return "#FAFAFA";
+                return theme.Background;
             case "/search":
-                return "#FAFAFA";
+                return theme.Background;
             default:
-                return "#FFFFFF;";
+                return theme.White;
         }
     }};
     background: ${({$pageRoute}) => $pageRoute === '/login' ? 'linear-gradient(180deg, rgba(36, 106, 210, 0.20) -20.26%, rgba(36, 106, 210, 0.00) 38.63%), #FFF' : ''};

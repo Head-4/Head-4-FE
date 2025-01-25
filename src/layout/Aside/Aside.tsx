@@ -44,7 +44,7 @@ const AsideWrapper = styled.aside<{ $isAsideOpen: boolean }>`
     top: 0;
     right: 0;
     height: 100vh;
-    background-color: ${({theme}) => theme.colors.backgroundWhite};
+    background-color: ${({theme}) => theme.White};
     width: ${({$isAsideOpen}) => $isAsideOpen ? '80%' : '0'};
     opacity: ${({$isAsideOpen}) => $isAsideOpen ? '1' : '0'};
     transition: all 0.2s ease-in-out;

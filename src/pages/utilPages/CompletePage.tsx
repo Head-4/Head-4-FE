@@ -3,6 +3,8 @@ import styled from "styled-components";
 import CommonButton from "../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
 import CompleteLogo from "../../assets/Logo/CompleteLogo.png";
+import Typography from "../../components/Typography";
+import {T3_medium} from "../../styles/Common/Typography.styled";
 
 export default function CompletePage() {
     const navigate = useNavigate();
@@ -14,8 +16,8 @@ export default function CompletePage() {
     return (
         <>
             <CompleteSection>
-                <CompleteH1>환영합니다!</CompleteH1>
-                <CompleteH2>이제 필요한 공지만<br/>빠르게 받아볼 수 있어요</CompleteH2>
+                <Typography typoSize="H1" color="Black" style={{marginBottom: "24px"}}>환영합니다!</Typography>
+                <Typography typoSize="T3_medium" color="Gray600" style={{marginBottom:"62px"}}>이제 필요한 공지만<br/>빠르게 받아볼 수 있어요</Typography>
                 <CompleteLogoImg src={CompleteLogo} alt="complete logo"/>
             </CompleteSection>
             <CommonButton onClick={clickButton} isActive={true}>
@@ -30,20 +32,7 @@ const CompleteSection = styled.section`
     text-align: center;
 `;
 
-const CompleteH1 = styled.h1`
-    font-size: 32px;
-    font-weight: 700;
-    color: ${({theme}) => theme.colors.mainFont};
-    margin-bottom: 24px;
-`;
-
-const CompleteH2 = styled.h2`
-    font-size: 18px;
-    font-weight: 500;
-    color: #707070;
-    margin-bottom: 62px;
-`;
-
 const CompleteLogoImg = styled.img`
-    width: 80%;
+    width: 100%;
+    max-width: 280px;
 `;

@@ -20,8 +20,8 @@ const CommonButtonWrapper = styled.button<{ $isActive: boolean }>`
     width: 100%;
     font-weight: 600;
     font-size: 18px;
-    color: ${({$isActive}) => $isActive ? '#FAFAFA' : '#B7B7B7'};
+    color: ${({$isActive,theme}) => $isActive ? theme.Background : theme.Gray400};
     border-radius: 12px;
-    background-color: ${({$isActive, theme}) => $isActive ? theme.colors.primary : '#F7F7F7'};
+    background-color: ${({$isActive, theme}) => $isActive ? theme.Blue : theme.Gray50};
     padding: 18px 0;
 `;

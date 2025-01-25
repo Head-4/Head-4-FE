@@ -26,11 +26,11 @@ const KeyWordDiv = styled.div`
     gap: 9px;
     padding: 8px 12px 8px 18px;
     border-radius: 20px;
-    border: 1px solid #E9E9E9;
+    border: 1px solid ${({theme}) => theme.LightGray};
 `;
 
 const KeyWordContent = styled.span`
-    color: #707070;
+    color: ${({theme}) => theme.Gray600};
     font-weight: 600;
 `;
 
@@ -39,6 +39,6 @@ const DeleteButton = styled.button`
     color: #D2D2D2;
 
     &:active {
-        color: ${({theme}) => theme.colors.primary};
+        color: ${({theme}) => theme.Blue};
     }
 `;

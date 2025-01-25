@@ -22,7 +22,7 @@ export default function DropDown({options, DropDownClick, searchInput = ''}: Dro
 
 const DropDownUl = styled.ul`
     position: relative;
-    border: 1px solid ${({theme}) => theme.colors.primary};
+    border: 1px solid ${({theme}) => theme.Blue};
     border-top: none;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
@@ -40,18 +40,18 @@ const DropDownUl = styled.ul`
         width: 90%;  
         height: 1px;
         transform: translateX(-50%);
-        background-color: #E9E9E9; 
+        background-color: ${({theme}) => theme.LightGray};
     }
 `;
 
 const DropDownLi = styled.li`
-    color: ${({theme}) => theme.colors.mainFont};
-    background-color: ${({theme}) => theme.colors.backgroundWhite};
+    color: ${({theme}) => theme.Black};
+    background-color: ${({theme}) => theme.White};
     padding: 20px;
     font-size: 18px;
     font-weight: 500;
-    
-    &:active{
+
+    &:active {
         background-color: rgba(233, 233, 233, 0.25);;
     }
 `;

@@ -9,6 +9,7 @@ import getKeywordList from "../../apis/keyword/getKeywordList";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import deleteKeyword from "../../apis/keyword/deleteKeyword";
 import {Keyword} from "../../types";
+import Typography from "../../components/Typography";
 
 export default function KeyWordEdit() {
     const queryClient = useQueryClient();
@@ -65,7 +66,9 @@ export default function KeyWordEdit() {
         <>
             <NotificationModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
             <KeywordSection>
-                {isFirst && <KeyWordH1>보고 싶은 공지의<br/>키워드를 입력해 주세요</KeyWordH1>}
+                {isFirst &&
+                    <Typography typoSize="H3" color="Black" style={{marginBottom: "32px"}}>
+                        보고 싶은 공지의<br/>키워드를 입력해 주세요</Typography>}
                 <KeyWordInputSection
                     keyWord={keyWord}
                     setKeyWord={setKeyWord}
@@ -102,14 +105,6 @@ export default function KeyWordEdit() {
 
 const KeywordSection = styled.section`
     margin-top: 24px;
-`;
-
-
-const KeyWordH1 = styled.h1`
-    font-size: 24px;
-    font-weight: 700;
-    color: ${({theme}) => theme.colors.mainFont};
-    margin-bottom: 32px;
 `;
 
 const NoticeP = styled.p<{ $isMax: boolean; $isInputFocused: boolean; $isError: boolean }>`

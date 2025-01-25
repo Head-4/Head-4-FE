@@ -7,7 +7,6 @@ interface AlertBoxProps {
     status: boolean;
 }
 
-// 서버 API 여부에 맞춰 메시지 표시
 export default function AlertBox({isAlert, status}: AlertBoxProps) {
     const toastRoot = document.getElementById('toast');
 

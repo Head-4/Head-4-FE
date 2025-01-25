@@ -43,8 +43,8 @@ const HeaderWrapper = styled.header<{ $pageRoute: string }>`
     align-items: center;
     justify-content: space-between;
     column-gap: 14px;
-    color: ${({theme}) => theme.colors.mainFont};
-    background-color: ${({$pageRoute}) => $pageRoute === '/search' ? "#FFFFFF" : 'inherit'};
+    color: ${({theme}) => theme.Black};
+    background-color: ${({$pageRoute,theme}) => $pageRoute === '/search' ? theme.White : 'inherit'};
     z-index: 500;
 
     @media (min-width: 500px) {

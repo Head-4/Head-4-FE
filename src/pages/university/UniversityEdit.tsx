@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import patchUniversity from "../../apis/university/patchUniversity";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import getUniversity from "../../apis/university/getUniversity";
+import Typography from "../../components/Typography";
 
 const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
 
@@ -99,7 +100,8 @@ export default function UniversityEdit() {
                         <span>{data?.data}</span>
                     </UniversityCurrent>
                     :
-                    <UniversityH2>공지를 받아 볼<br/>학교를 선택해 주세요</UniversityH2>
+                    <Typography typoSize="H3" color="Black" style={{marginBottom: "32px"}}>
+                        공지를 받아 볼<br/>학교를 선택해 주세요</Typography>
                 }
                 <div ref={inputRef}>
                     <UnivInput type="text"
@@ -139,29 +141,22 @@ const UniversityCurrent = styled.h2`
     span:last-of-type {
         margin-left: 12px;
         font-weight: 600;
-        color: ${({theme}) => theme.colors.primary};
+        color: ${({theme}) => theme.Black};
     }
-`;
-
-const UniversityH2 = styled.h2`
-    font-size: 24px;
-    font-weight: 700;
-    color: ${({theme}) => theme.colors.mainFont};
-    margin-bottom: 32px;
 `;
 
 const UnivInput = styled.input<{ $showDropDown: boolean }>`
     width: 100%;
     padding: 20px;
     border-radius: ${({$showDropDown}) => $showDropDown ? '12px 12px 0 0' : '12px'};
-    border: 1px solid ${({theme}) => theme.colors.lightGray};
+    border: 1px solid ${({theme}) => theme.LightGray};
     border-bottom: ${({$showDropDown}) => $showDropDown ? 'none' : '1px solid #E9E9E9'};
     font-size: 18px;
     font-weight: 600;
-    color: ${({theme}) => theme.colors.mainFont};
+    color: ${({theme}) => theme.Black};
 
     &:focus {
-        border-color: ${({theme}) => theme.colors.primary};
+        border-color: ${({theme}) => theme.Blue};
     }
 
     &::placeholder {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import getNotifications from "../../apis/notification/getNotifications";
 import {useInView} from "react-intersection-observer";
+import {NotificationType} from "../../types";
 
 export default function Notification() {
     const {ref, inView} = useInView();
@@ -13,7 +14,7 @@ export default function Notification() {
             fetchNextPage();
         }
     }, [inView])
-    
+
     const {
         data,
         fetchNextPage,
@@ -32,7 +33,7 @@ export default function Notification() {
         <>
             <NotificationUl>
                 {data?.pages.map((page) =>
-                    page?.pushLogs.map((it) =>
+                    page?.pushLogs.map((it: NotificationType) =>
                         <NotificationDetail
                             key={it.pushId}
                             it={it}
@@ -52,7 +53,7 @@ const NotificationUl = styled.ul`
 const NotificationComment = styled.div`
     text-align: center;
     margin-top: 48px;
-    color: #B7B7B7;
+    color: ${({theme}) => theme.Gray400};
     font-size: 14px;
     font-weight: 500;
     flex: 1;

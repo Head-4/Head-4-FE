@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Overlay from "../../styles/Common/Overlay";
 import CommonButton from "../../components/CommonButton";
 import styled from "styled-components";
 import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
+import Typography from "../../components/Typography";
 
 export default function PwaInstallModal() {
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -50,9 +51,9 @@ export default function PwaInstallModal() {
             <Overlay onClick={closeModal}/>
             <PWAModalDiv>
                 <StyledMainLogo/>
-                <PWAModalMSG>
+                <Typography typoSize="T1" color="Black" textAlign="center" style={{margin: "44px 0 4px"}}>
                     터치 한 번으로<br/>바로 시작해 보세요!
-                </PWAModalMSG>
+                </Typography>
                 <CommonButton isActive={true} onClick={installPWA}>
                     앱 내려받기
                 </CommonButton>
@@ -63,7 +64,7 @@ export default function PwaInstallModal() {
 
 const PWAModalDiv = styled.div`
     text-align: center;
-    background-color: ${({theme}) => theme.colors.backgroundWhite};
+    background-color: ${({theme}) => theme.White};
     z-index: 1000;
     position: absolute;
     bottom: 20%;
@@ -71,13 +72,6 @@ const PWAModalDiv = styled.div`
     width: 95%;
     border-radius: 20px;
     padding: 40px 24px 28px;
-`;
-
-const PWAModalMSG = styled.div`
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin: 44px 0 4px;
 `;
 
 const StyledMainLogo = styled(MainLogo)`

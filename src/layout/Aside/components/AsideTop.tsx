@@ -4,6 +4,8 @@ import {ReactComponent as MiniKakaoIcon} from "../../../assets/Aside/MiniKakaoIc
 import useAsideStore from "../../../store/AsideStore";
 import {useQuery} from "@tanstack/react-query";
 import getUserEmail from "../../../apis/login/getUserEmail";
+import Typography from "../../../components/Typography";
+import {TextOverflow} from "../../../styles/Common/TextOverflow";
 
 export default function AsideTop() {
     const toggleAside = useAsideStore((state) => state.toggleAside);
@@ -17,10 +19,10 @@ export default function AsideTop() {
     return (
         <AsideTopSection>
             <MiniKakaoIcon/>
-            <AsideUserName>{email?.data}</AsideUserName>
-            <AsideCloseButton onClick={toggleAside}>
+            <AsideUserName typoSize="T4_semibold" color="Black">{email?.data}</AsideUserName>
+            <button onClick={toggleAside} style={{display: "flex"}}>
                 <CloseIcon/>
-            </AsideCloseButton>
+            </button>
         </AsideTopSection>
     );
 }
@@ -34,15 +36,6 @@ const AsideTopSection = styled.section`
     padding: 0 20px;
 `;
 
-const AsideUserName = styled.span`
-    color: ${({theme}) => theme.colors.mainFont};
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-`;
-
-const AsideCloseButton = styled.button`
-    display: flex;
+const AsideUserName = styled(Typography)`
+    ${TextOverflow}
 `;

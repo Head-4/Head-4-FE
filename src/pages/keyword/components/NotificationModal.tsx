@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {handleAllowNotification} from "../../../utils/firebaseConfig";
 import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
 import {useMutation} from "@tanstack/react-query";
+import Typography from "../../../components/Typography";
 
 interface NotificationModalProps {
     isModalOpen: boolean;
@@ -45,8 +46,9 @@ export default function NotificationModal({isModalOpen, setIsModalOpen}: Notific
                     <BellIconDiv>
                         <BellIcon color="#246AD2" width={32} height={32}/>
                     </BellIconDiv>
-                    <NotificationModalH2>알림을 받을까요?</NotificationModalH2>
-                    <NotificationModalH3>알림 받기를 수락하셔야 등록된 키워드가<br/>포함된 공지의 알림을 받을 수 있어요</NotificationModalH3>
+                    <Typography typoSize="H3" color="Black" style={{marginBottom: "8px"}}>알림을 받을까요?</Typography>
+                    <Typography typoSize="B1_medium" textAlign="center" style={{color: "#6E6E6E"}}>알림 받기를 수락하셔야 등록된 키워드가<br/>포함된
+                        공지의 알림을 받을 수 있어요</Typography>
                 </Column>
                 <ButtonDiv>
                     <CommonButton isActive={true} onClick={() => {
@@ -67,7 +69,7 @@ const NotificationModalDiv = styled.div<{ $isModalOpen: boolean }>`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: ${({theme}) => theme.colors.backgroundWhite};
+    background-color: ${({theme}) => theme.White};
     z-index: 1000;
     position: absolute;
     bottom: 0;
@@ -90,20 +92,6 @@ const BellIconDiv = styled.div`
     margin-bottom: 18px;
 `;
 
-const NotificationModalH2 = styled.h2`
-    color: ${({theme}) => theme.colors.mainFont};
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
-`;
-
-const NotificationModalH3 = styled.h3`
-    color: #6E6E6E;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-`;
-
 const ButtonDiv = styled.div`
     width: 100%;
 `;
@@ -114,7 +102,7 @@ const LaterButton = styled.button`
     font-size: 18px;
     color: #686868;
     border-radius: 12px;
-    background-color: ${({theme}) => theme.colors.backgroundWhite};
+    background-color: ${({theme}) => theme.White};
     padding: 18px 0;
     border: 1px solid #DDD;
     margin-top: 12px;

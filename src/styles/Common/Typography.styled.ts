@@ -60,6 +60,12 @@ export const T4_bold = styled.div`
     line-height: 24px;
 `;
 
+export const T4_semibold = styled.div`
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+`;
+
 export const T4_medium = styled.div`
     font-size: 16px;
     font-weight: 500;
@@ -69,6 +75,12 @@ export const T4_medium = styled.div`
 export const B1_bold = styled.div`
     font-size: 16px;
     font-weight: 700;
+    line-height: 24px;
+`;
+
+export const B1_semibold = styled.div`
+    font-size: 16px;
+    font-weight: 600;
     line-height: 24px;
 `;
 

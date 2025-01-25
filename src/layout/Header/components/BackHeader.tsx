@@ -1,7 +1,8 @@
 import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
 import {ReactComponent as BackIcon} from "../../../assets/Layout/Header/BackIcon.svg";
-import {FlexCss, HeaderH1} from "../Header.styled";
+import styled from "styled-components";
+import {TextOverflow} from "../../../styles/Common/TextOverflow";
+import Typography from "../../../components/Typography";
 
 interface BackHeaderProps {
     pageName: string;
@@ -16,16 +17,16 @@ export default function BackHeader({pageName}: BackHeaderProps) {
 
     return (
         <>
-            <BackButton onClick={BackClick}>
+            <button onClick={BackClick} style={{display: 'flex'}}>
                 <BackIcon/>
-            </BackButton>
-            <HeaderH1>
+            </button>
+            <HeaderH4 typoSize="H4" color="Black">
                 {pageName}
-            </HeaderH1>
+            </HeaderH4>
         </>
     );
 }
 
-const BackButton = styled.button`
-    ${FlexCss}
+const HeaderH4 = styled(Typography)`
+    ${TextOverflow}
 `;

@@ -26,7 +26,7 @@ export const GlobalStyled = createGlobalStyle`
 
     body {
         font-family: "Pretendard Variable", system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-        background-color: ${({theme}) => theme.colors.backgroundWhite};
+        background-color: ${({theme}) => theme.White};
         line-height: 1.5;
     }
 
