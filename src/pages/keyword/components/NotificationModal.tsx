@@ -18,8 +18,18 @@ interface NotificationModalProps {
 export default function NotificationModal({isModalOpen, setIsModalOpen}: NotificationModalProps) {
     const navigate = useNavigate();
 
-    const {mutate: patchAllowMutate} = useMutation({
+    const {mutateAsync: patchAllowMutate} = useMutation({
         mutationFn: (allow: boolean) => patchAllowNotification(allow),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
+
+    const {mutateAsync: patchFcmTokenMutate} = useMutation({
+        mutationFn: () => handleAllowNotification(),
         onSuccess: (data) => {
             console.log('success: ', data);
         },
@@ -30,9 +40,9 @@ export default function NotificationModal({isModalOpen, setIsModalOpen}: Notific
 
     const clickButton = async (isAllow: boolean) => {
         if (isAllow) {
-            const {permission} = await handleAllowNotification();
+            const {permission} = await patchFcmTokenMutate();
             if (permission === "granted") {
-                patchAllowMutate(true);
+                await patchAllowMutate(true);
             }
         }
         navigate('/register/complete');
