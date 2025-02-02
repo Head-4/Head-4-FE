@@ -10,8 +10,7 @@ import patchUniversity from "../../apis/university/patchUniversity";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import getUniversity from "../../apis/university/getUniversity";
 import Typography from "../../components/Typography";
-
-const universityList: string[] = ["상명대학교 서울캠퍼스", "상명대학교 천안캠퍼스", "단국대학교", "백석대학교"];
+import {UNIVERSITY_LIST} from "../../utils/const";
 
 export default function UniversityEdit() {
     const queryClient = useQueryClient();
@@ -21,7 +20,7 @@ export default function UniversityEdit() {
 
     const [university, setUniversity] = useState<string>('');
     const [hasText, setHasText] = useState<boolean>(false);
-    const [options, setOptions] = useState<string[]>(universityList);
+    const [options, setOptions] = useState<string[]>(UNIVERSITY_LIST);
     const [buttonActive, setButtonActive] = useState<boolean>(false);
     const {isAlert, showAlert, result} = useAlertBox();
 
@@ -54,8 +53,8 @@ export default function UniversityEdit() {
             setHasText(false);
             setOptions([]);
         } else {
-            setOptions(universityList.filter((it) => getChoseong(it).includes(getChoseong(university))));
-            setButtonActive(universityList.some((it) => it === university));
+            setOptions(UNIVERSITY_LIST.filter((it) => getChoseong(it).includes(getChoseong(university))));
+            setButtonActive(UNIVERSITY_LIST.some((it) => it === university));
         }
     }, [university]);
 
