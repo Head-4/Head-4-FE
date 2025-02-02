@@ -7,9 +7,8 @@ export default function AsideLogOut() {
     const toggleAside  = useAsideStore((state) => state.toggleAside);
 
     const clickLogOut = () => {
-        // 로그아웃 설정
         toggleAside();
-        navigate('/login');
+        navigate('/');
     }
 
     return (

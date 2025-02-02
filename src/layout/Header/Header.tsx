@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export default function Header({pageRoute}: HeaderProps) {
     const noHeaderList: string[] = [
-        "/login",
+        "/",
         "/register/complete",
     ];
 
@@ -23,7 +23,7 @@ export default function Header({pageRoute}: HeaderProps) {
     if (noHeaderList.includes(pageRoute)) return null;
     return (
         <HeaderWrapper $pageRoute={pageRoute}>
-            {pageRoute === '/' ?
+            {pageRoute === '/main' ?
                 <MainHeader/>
                 :
                 <BackHeader pageName={headerName[pageRoute]}/>

@@ -24,7 +24,7 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
     padding: 52px 20px 86px;
     background-color: ${({$pageRoute,theme}) => {
         switch ($pageRoute) {
-            case "/":
+            case "/main":
                 return theme.Background;
             case "/search":
                 return theme.Background;
@@ -32,7 +32,7 @@ const LayoutWrapper = styled.div<{ $pageRoute: string }>`
                 return theme.White;
         }
     }};
-    background: ${({$pageRoute}) => $pageRoute === '/login' ? 'linear-gradient(180deg, rgba(36, 106, 210, 0.20) -20.26%, rgba(36, 106, 210, 0.00) 38.63%), #FFF' : ''};
+    background: ${({$pageRoute}) => $pageRoute === '/' ? 'linear-gradient(180deg, rgba(36, 106, 210, 0.20) -20.26%, rgba(36, 106, 210, 0.00) 38.63%), #FFF' : ''};
 `;
 
 const LayoutMain = styled.main`

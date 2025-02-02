@@ -15,7 +15,7 @@ export default function Aside({pageRoute}: AsideProps) {
     const toggleAside = useAsideStore((state) => state.toggleAside);
 
     const noAsideList: string[] = [
-        "/login",
+        "/",
         "/register",
     ];
 
@@ -25,7 +25,7 @@ export default function Aside({pageRoute}: AsideProps) {
         document.body.style.overflow = 'auto';
     }
 
-    if (noAsideList.some(route => pageRoute.includes(route))) return null;
+    if (noAsideList.some(route => route === pageRoute)) return null;
     return (
         <>
             {isAsideOpen && <Overlay onClick={toggleAside}/>}

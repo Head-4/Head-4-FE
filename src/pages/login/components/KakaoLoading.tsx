@@ -10,7 +10,7 @@ export default function KakaoLoading() {
             const result = await postKakaoToken(code);
             if (!result) {
                 alert('토큰을 받아올 수 없습니다.');
-                navigate('/login');
+                navigate('/');
                 return;
             }
 
@@ -18,7 +18,7 @@ export default function KakaoLoading() {
             if (result.data.data) {
                 navigate('/register/university');
             } else {
-                navigate('/');
+                navigate('/main');
             }
         } catch (error) {
             console.log(error);

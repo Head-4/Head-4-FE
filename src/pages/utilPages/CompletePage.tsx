@@ -10,7 +10,7 @@ export default function CompletePage() {
     const navigate = useNavigate();
 
     const clickButton = () => {
-        navigate('/');
+        navigate('/main');
     }
 
     return (

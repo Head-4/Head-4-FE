@@ -23,10 +23,10 @@ export const router = createBrowserRouter([
                 {
                     errorElement: <ErrorPage/>,
                     children: [
-                        {index: true, element: <Main/>},
+                        {index: true, element: <Login/>},
                         {
-                            path: "login",
-                            element: <Login/>,
+                            path: "main",
+                            element: <Main/>,
                         },
                         {
                             path: "kakao/callback",
