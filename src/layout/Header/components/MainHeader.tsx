@@ -17,7 +17,7 @@ export default function MainHeader() {
     const {data: university, isError, isLoading} = useQuery({
         queryKey: ["university"],
         queryFn: getUniversity,
-        staleTime: 100000,
+        staleTime: 10000,
     });
 
     // if (!isLoading && (!university?.data || isError)) {

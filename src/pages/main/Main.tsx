@@ -31,7 +31,7 @@ export default function Main() {
         getNextPageParam: (lastPage) => {
             return lastPage?.hasNext ? lastPage.cursor : undefined;
         },
-        staleTime: 100000,
+        staleTime: 10000,
         initialPageParam: 0,
     });
 
@@ -39,7 +39,7 @@ export default function Main() {
     const {data: Keywords = fallback} = useQuery({
         queryKey: ["keywords"],
         queryFn: getKeywordList,
-        staleTime: 100000,
+        staleTime: 10000,
     });
 
     const clickKeyWord = (keyword: string) => {

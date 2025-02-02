@@ -37,6 +37,7 @@ export default function UniversityEdit() {
         onSuccess: (data) => {
             console.log("Success: ", data);
             queryClient.invalidateQueries({queryKey: ['university']});
+            queryClient.invalidateQueries({queryKey: ['articles']});
             if (isFirst) {
                 navigate('/register/keyword');
             } else {
