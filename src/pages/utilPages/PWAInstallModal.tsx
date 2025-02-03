@@ -1,63 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Overlay from "../../styles/Common/Overlay";
 import CommonButton from "../../components/CommonButton";
 import styled from "styled-components";
 import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
 import Typography from "../../components/Typography";
+import {usePWAInstall} from 'react-use-pwa-install'
 
 export default function PwaInstallModal() {
-    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-    const [showModal, setShowModal] = useState(false);
-
-    useEffect(() => {
-        const handleBeforeInstallPrompt = (e: any) => {
-            e.preventDefault();
-            setDeferredPrompt(e);
-            setShowModal(true);
-        };
-
-        window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-        return () => {
-            window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-        };
-    }, []);
-
-    const installPWA = async () => {
-        if (!deferredPrompt) return;
-
-        deferredPrompt.prompt();
-        const choiceResult = await deferredPrompt.userChoice;
-
-        if (choiceResult.outcome === "accepted") {
-            console.log("PWA 설치 완료!");
-        } else {
-            console.log("PWA 설치 취소");
-        }
-
-        setDeferredPrompt(null);
-        setShowModal(false);
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-        setDeferredPrompt(null);
-    };
-
-    if (!showModal) return null;
+    const install = usePWAInstall()
+    const [isModalVisible, setIsModalVisible] = useState(true);
 
     return (
         <>
-            <Overlay onClick={closeModal}/>
-            <PWAModalDiv>
-                <StyledMainLogo/>
-                <Typography typoSize="T1" color="Black" textAlign="center" style={{margin: "44px 0 4px"}}>
-                    터치 한 번으로<br/>바로 시작해 보세요!
-                </Typography>
-                <CommonButton isActive={true} onClick={installPWA}>
-                    앱 내려받기
-                </CommonButton>
-            </PWAModalDiv>
+            {isModalVisible && install &&
+                <>
+                    <Overlay onClick={() => setIsModalVisible(false)}/>
+                    <PWAModalDiv>
+                        <StyledMainLogo/>
+                        <Typography typoSize="T1" color="Black" textAlign="center" style={{margin: "44px 0 4px"}}>
+                            터치 한 번으로<br/>바로 시작해 보세요!
+                        </Typography>
+                        <CommonButton isActive={true} onClick={install}>
+                            앱 내려받기
+                        </CommonButton>
+                    </PWAModalDiv>
+                </>
+            }
         </>
     );
 }
