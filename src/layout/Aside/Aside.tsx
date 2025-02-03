@@ -14,26 +14,24 @@ export default function Aside({pageRoute}: AsideProps) {
     const isAsideOpen = useAsideStore((state) => state.isAsideOpen);
     const toggleAside = useAsideStore((state) => state.toggleAside);
 
-    const noAsideList: string[] = [
-        "/",
-        "/register",
-    ];
-
     if (isAsideOpen) {
         document.body.style.overflow = 'hidden';
     } else {
         document.body.style.overflow = 'auto';
     }
 
-    if (noAsideList.some(route => route === pageRoute)) return null;
     return (
         <>
-            {isAsideOpen && <Overlay onClick={toggleAside}/>}
-            <AsideWrapper $isAsideOpen={isAsideOpen} onClick={(e) => e.stopPropagation()}>
-                <AsideTop/>
-                <AsideBottom/>
-                <AsideLogOut/>
-            </AsideWrapper>
+            {pageRoute === "/main" && (
+                <>
+                    {isAsideOpen && <Overlay onClick={toggleAside}/>}
+                    <AsideWrapper $isAsideOpen={isAsideOpen} onClick={(e) => e.stopPropagation()}>
+                        <AsideTop/>
+                        <AsideBottom/>
+                        <AsideLogOut/>
+                    </AsideWrapper>
+                </>
+            )}
         </>
     );
 }
