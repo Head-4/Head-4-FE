@@ -141,7 +141,7 @@ const UniversityCurrent = styled.h2`
     span:last-of-type {
         margin-left: 12px;
         font-weight: 600;
-        color: ${({theme}) => theme.Black};
+        color: ${({theme}) => theme.Blue};
     }
 `;
 
