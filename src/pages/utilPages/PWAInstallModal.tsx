@@ -1,18 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Overlay from "../../styles/Common/Overlay";
 import CommonButton from "../../components/CommonButton";
 import styled from "styled-components";
 import {ReactComponent as MainLogo} from "../../assets/Logo/MainLogo.svg";
 import Typography from "../../components/Typography";
 import {usePWAInstall} from 'react-use-pwa-install'
+import iOSInstallGuide from "../../assets/Login/iOSInstallGuide.png";
 
 export default function PwaInstallModal() {
     const install = usePWAInstall()
     const [isModalVisible, setIsModalVisible] = useState(true);
+    const [isIOS, setIsIOS] = useState(false);
+
+    useEffect(() => {
+        const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+        setIsIOS(isDeviceIOS);
+    }, []);
 
     return (
         <>
-            {isModalVisible && install &&
+            {isModalVisible && (isIOS ? (
+                <>
+                    <Overlay onClick={() => setIsModalVisible(false)}/>
+                    <PWAModalDiv>
+                        <StyledMainLogo/>
+                        <Typography typoSize="T1" color="Black" textAlign="center" style={{margin: "44px 0 4px"}}>
+                            iOS에서 설치하기
+                        </Typography>
+                        <GuideImage src={iOSInstallGuide} alt="iOS 설치 가이드" />
+                    </PWAModalDiv>
+                </>
+            ) : install && (
                 <>
                     <Overlay onClick={() => setIsModalVisible(false)}/>
                     <PWAModalDiv>
@@ -25,7 +43,7 @@ export default function PwaInstallModal() {
                         </CommonButton>
                     </PWAModalDiv>
                 </>
-            }
+            ))}
         </>
     );
 }
@@ -45,4 +63,10 @@ const PWAModalDiv = styled.div`
 const StyledMainLogo = styled(MainLogo)`
     width: 100%;
     max-width: 170px;
+`;
+
+const GuideImage = styled.img`
+    width: 100%;
+    max-width: 280px;
+    margin: 20px 0;
 `;
