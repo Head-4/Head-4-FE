@@ -52,10 +52,20 @@ export default function AsideBottom() {
         },
     });
 
+    const {mutateAsync: patchFcmTokenMutate} = useMutation({
+        mutationFn: () => handleAllowNotification(),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
+
     const clickKeyWordToggle = async () => {
         if (!notificationAllow?.data) {
             console.log('알림 허용')
-            const {permission} = await handleAllowNotification();
+            const {permission} = await patchFcmTokenMutate();
             if (permission === "granted") {
                 patchAllowMutate(true);
             }
