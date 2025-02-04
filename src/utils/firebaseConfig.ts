@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {getMessaging, getToken, onMessage, Messaging} from "firebase/messaging";
+import {getMessaging, getToken, Messaging} from "firebase/messaging";
 import patchFcmToken from "../apis/fcm/patchFcmToken";
 
 interface NotificationResponse {
@@ -17,23 +17,6 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const messaging: Messaging = getMessaging(app);
-
-// FCM 토큰 받기
-async function fetchFCMToken(messaging: Messaging): Promise<string | undefined> {
-    try {
-        const token = await getToken(messaging, {
-            vapidKey: process.env.REACT_APP_VAPID_KEY,
-        });
-        if (token) {
-            console.log("FCM 등록 토큰:", token);
-            return token;
-        } else {
-            console.log("등록 토큰을 가져올 수 없습니다. 권한이 필요합니다.");
-        }
-    } catch (error) {
-        console.error("FCM 토큰 가져오기 실패:", error);
-    }
-}
 
 export async function handleAllowNotification(): Promise<NotificationResponse> {
     try {
@@ -63,19 +46,3 @@ export async function handleAllowNotification(): Promise<NotificationResponse> {
         return {permission: "denied"};
     }
 }
-
-onMessage(messaging, (payload) => {
-    console.log("알림 도착", payload);
-
-    if (payload.notification) {
-        const notificationTitle = payload.notification.title || "알림 제목 없음";
-        const notificationOptions: NotificationOptions = {
-            body: payload.notification.body || "알림 내용 없음",
-        };
-
-        if (Notification.permission === "granted") {
-            console.log(notificationTitle);
-            new Notification(notificationTitle, notificationOptions);
-        }
-    }
-});
