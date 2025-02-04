@@ -6,13 +6,24 @@ import {useInView} from "react-intersection-observer";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import getArticles from "../../apis/main/getArticles";
 import Typography from "../../components/Typography";
+import debounce from 'lodash/debounce';
 
 export default function Search() {
     const [searchInput, setSearchInput] = useState<string>('');
+    const [debouncedSearch, setDebouncedSearch] = useState<string>('');
     const {ref, inView} = useInView();
 
     useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage && searchInput) {
+        const debouncedUpdate = debounce(() => {
+            setDebouncedSearch(searchInput);
+        }, 300);
+
+        debouncedUpdate();
+        return () => debouncedUpdate.cancel();
+    }, [searchInput]);
+
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage && debouncedSearch) {
             fetchNextPage();
         }
     }, [inView])
@@ -23,14 +34,14 @@ export default function Search() {
         isFetchingNextPage,
         hasNextPage,
     } = useInfiniteQuery({
-        queryKey: ["articles", searchInput],
-        queryFn: ({pageParam = 0}) => getArticles(pageParam, searchInput),
+        queryKey: ["articles", debouncedSearch],
+        queryFn: ({pageParam = 0}) => getArticles(pageParam, debouncedSearch),
         getNextPageParam: (lastPage) => {
             return lastPage?.hasNext ? lastPage.cursor : undefined;
         },
         staleTime: 100000,
         initialPageParam: 0,
-        enabled: searchInput !== '',
+        enabled: debouncedSearch !== '',
     });
 
     const inputSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
