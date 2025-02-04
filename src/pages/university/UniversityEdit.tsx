@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import DropDown from "./components/DropDown";
 import AlertBox from "../../components/AlertBox";
-import {getChoseong} from "es-hangul";
 import {useAlertBox} from "../../hooks/alertBox/useAlertBox";
 import CommonButton from "../../components/CommonButton";
 import {useNavigate} from "react-router-dom";
@@ -54,7 +53,7 @@ export default function UniversityEdit() {
             setHasText(false);
             setOptions([]);
         } else {
-            setOptions(UNIVERSITY_LIST.filter((it) => getChoseong(it).includes(getChoseong(university))));
+            setOptions(UNIVERSITY_LIST.filter((it) => it.includes(university)));
             setButtonActive(UNIVERSITY_LIST.some((it) => it === university));
         }
     }, [university]);
