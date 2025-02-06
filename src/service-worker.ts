@@ -77,4 +77,54 @@ self.addEventListener('message', (event) => {
     }
 });
 
-// Any other custom service worker logic can go here.
+// 테스트
+// 캐시 이름 정의
+const CACHE_NAME = 'campus-noti-cache-v1';
+
+// 캐시할 리소스 목록
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/static/js/main.chunk.js',
+  '/static/css/main.chunk.css'
+];
+
+// 캐시 설치
+self.addEventListener('install', (event: any) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+// 네트워크 요청 가로채기
+self.addEventListener('fetch', (event: any) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // 캐시에 있으면 캐시된 응답 반환
+        if (response) {
+          return response;
+        }
+        
+        // 캐시에 없으면 네트워크 요청
+        return fetch(event.request).then(
+          response => {
+            // 유효한 응답이 아니면 그대로 반환
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // 응답을 복제하여 캐시에 저장
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
+  );
+});

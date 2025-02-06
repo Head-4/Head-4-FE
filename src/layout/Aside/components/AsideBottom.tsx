@@ -6,12 +6,9 @@ import {ReactComponent as MessageIcon} from "../../../assets/Aside/MessageIcon.s
 import {ReactComponent as ExpandIcon} from "../../../assets/Aside/ExpandIcon.svg";
 import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import useAsideStore from "../../../store/AsideStore";
-import {handleAllowNotification} from "../../../utils/firebaseConfig";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
-import getNotificationAllow from "../../../apis/fcm/getNotificationAllow";
 import Typography from "../../../components/Typography";
 import {TextOverflow} from "../../../styles/Common/TextOverflow";
+import { useAside } from '../../../hooks/queries/useAside';
 
 const AsideItems = [
     {
@@ -32,46 +29,23 @@ const AsideItems = [
 ];
 
 export default function AsideBottom() {
-    const queryClient = useQueryClient();
     const toggleAside = useAsideStore((state) => state.toggleAside);
-
-    const {data: notificationAllow} = useQuery({
-        queryKey: ["notificationAllow"],
-        queryFn: getNotificationAllow,
-        staleTime: 100000,
-    });
-
-    const {mutate: patchAllowMutate} = useMutation({
-        mutationFn: (allow: boolean) => patchAllowNotification(allow),
-        onSuccess: (data) => {
-            console.log('success: ', data);
-            queryClient.invalidateQueries({queryKey: ['notificationAllow']})
-        },
-        onError: (error) => {
-            console.error("Error: ", error);
-        },
-    });
-
-    const {mutateAsync: patchFcmTokenMutate} = useMutation({
-        mutationFn: () => handleAllowNotification(),
-        onSuccess: (data) => {
-            console.log('success: ', data);
-        },
-        onError: (error) => {
-            console.error("Error: ", error);
-        },
-    });
+    const { 
+        notificationAllow, 
+        updateNotification, 
+        patchFcmToken 
+    } = useAside();
 
     const clickKeyWordToggle = async () => {
-        if (!notificationAllow?.data) {
+        if (!notificationAllow) {
             console.log('알림 허용')
-            const {permission} = await patchFcmTokenMutate();
+            const { permission } = await patchFcmToken();
             if (permission === "granted") {
-                patchAllowMutate(true);
+                updateNotification(true);
             }
         } else {
             console.log('알림 거절')
-            patchAllowMutate(false);
+            updateNotification(false);
         }
     };
 
@@ -80,8 +54,8 @@ export default function AsideBottom() {
             <OnOffDiv>
                 <BellIcon/>
                 <AsideSetting typoSize="B1_semibold" color="Black">키워드 알림</AsideSetting>
-                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow?.data}>
-                    {notificationAllow?.data ? "ON" : "OFF"}
+                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow}>
+                    {notificationAllow ? "ON" : "OFF"}
                 </KeyWordOnOffButton>
             </OnOffDiv>
             <ul>
