@@ -40,8 +40,8 @@ export default function NotificationModal({isModalOpen, setIsModalOpen}: Notific
 
     const clickButton = async (isAllow: boolean) => {
         if (isAllow) {
-            const {permission} = await patchFcmTokenMutate();
-            if (permission === "granted") {
+            const {result} = await patchFcmTokenMutate();
+            if (result === "success") {
                 await patchAllowMutate(true);
             }
         }

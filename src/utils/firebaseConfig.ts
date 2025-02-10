@@ -3,7 +3,7 @@ import {getMessaging, getToken, Messaging} from "firebase/messaging";
 import patchFcmToken from "../apis/fcm/patchFcmToken";
 
 interface NotificationResponse {
-    permission: "granted" | "denied" | "default";
+    result: "success" | "fail";
 }
 
 const firebaseConfig = {
@@ -30,19 +30,17 @@ export async function handleAllowNotification(): Promise<NotificationResponse> {
             if (currentToken) {
                 console.log("토큰 등록");
                 await patchFcmToken(currentToken);
-                return {permission};
+                return {result: "success"};
             } else {
-                console.log("토큰 등록이 불가능합니다. 생성하려면 권한을 허용해주세요");
-                return {permission};
+                console.log("권한 허용했는데 토큰은 못받음");
+                return {result: "fail"};
             }
-        } else if (permission === "denied") {
-            console.log("web push 권한이 차단되었습니다. 알림을 사용하시려면 권한을 허용해주세요");
-            return {permission};
         } else {
-            return {permission};
+            console.log("web push 권한이 차단되었습니다. 알림을 사용하시려면 권한을 허용해주세요");
+            return {result: "fail"};
         }
     } catch (error) {
         console.error("푸시 토큰 가져오는 중에 에러 발생", error);
-        return {permission: "denied"};
+        return {result: "fail"};
     }
 }

@@ -8,7 +8,10 @@ import {ReactComponent as BellIcon} from "../../../assets/Common/BellIcon.svg";
 import useAsideStore from "../../../store/AsideStore";
 import Typography from "../../../components/Typography";
 import {TextOverflow} from "../../../styles/Common/TextOverflow";
-import { useAside } from '../../../hooks/queries/useAside';
+import {handleAllowNotification} from "../../../utils/firebaseConfig";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import patchAllowNotification from "../../../apis/fcm/patchAllowNotification";
+import getNotificationAllow from "../../../apis/fcm/getNotificationAllow";
 
 const AsideItems = [
     {
@@ -29,23 +32,51 @@ const AsideItems = [
 ];
 
 export default function AsideBottom() {
+    const queryClient = useQueryClient();
     const toggleAside = useAsideStore((state) => state.toggleAside);
-    const { 
-        notificationAllow, 
-        updateNotification, 
-        patchFcmToken 
-    } = useAside();
+
+    const {data: notificationAllow} = useQuery({
+        queryKey: ["notificationAllow"],
+        queryFn: getNotificationAllow,
+        staleTime: 100000,
+    });
+
+    const {mutate: patchAllowMutate} = useMutation({
+        mutationFn: (allow: boolean) => patchAllowNotification(allow),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+            queryClient.invalidateQueries({queryKey: ['notificationAllow']})
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
+
+    const {mutateAsync: patchFcmTokenMutate} = useMutation({
+        mutationFn: () => handleAllowNotification(),
+        onSuccess: (data) => {
+            console.log('success: ', data);
+        },
+        onError: (error) => {
+            console.error("Error: ", error);
+        },
+    });
 
     const clickKeyWordToggle = async () => {
-        if (!notificationAllow) {
+        if (!notificationAllow?.data) {
             console.log('알림 허용')
-            const { permission } = await patchFcmToken();
-            if (permission === "granted") {
-                updateNotification(true);
-            }
+
+            // if (토큰 있는지 확인하는 API 결과){
+            //     updateNotification(true);
+            // }else{
+            //     const {result} = await patchFcmTokenMutate();
+            //     if (result === "success") {
+            //         patchAllowMutate(true);
+            //     }
+            // }
         } else {
             console.log('알림 거절')
-            updateNotification(false);
+            patchAllowMutate(false);
         }
     };
 
@@ -54,8 +85,8 @@ export default function AsideBottom() {
             <OnOffDiv>
                 <BellIcon/>
                 <AsideSetting typoSize="B1_semibold" color="Black">키워드 알림</AsideSetting>
-                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow}>
-                    {notificationAllow ? "ON" : "OFF"}
+                <KeyWordOnOffButton onClick={clickKeyWordToggle} $keyWordToggle={notificationAllow?.data}>
+                    {notificationAllow?.data ? "ON" : "OFF"}
                 </KeyWordOnOffButton>
             </OnOffDiv>
             <ul>
@@ -92,7 +123,7 @@ const KeyWordOnOffButton = styled.button<{ $keyWordToggle: boolean }>`
     width: 64px;
     height: 32px;
     border-radius: 24px;
-    border: 1px solid ${({$keyWordToggle,theme}) => $keyWordToggle ? '#BFCFE9' : theme.Gray200};
+    border: 1px solid ${({$keyWordToggle, theme}) => $keyWordToggle ? '#BFCFE9' : theme.Gray200};
     background-color: ${({$keyWordToggle, theme}) => $keyWordToggle ? '#E4EBF5' : theme.Gray50};
     transition: all 0.2s;
 
