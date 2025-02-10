@@ -13,17 +13,14 @@ import {UNIVERSITY_LIST} from "../../utils/const";
 
 export default function UniversityEdit() {
     const queryClient = useQueryClient();
-
     const navigate = useNavigate();
-    const inputRef = useRef<HTMLInputElement>(null);
 
     const [university, setUniversity] = useState<string>('');
-    const [hasText, setHasText] = useState<boolean>(false);
-    const [options, setOptions] = useState<string[]>(UNIVERSITY_LIST);
-    const [buttonActive, setButtonActive] = useState<boolean>(false);
+    const [options, setOptions] = useState<string[]>([]);
     const {isAlert, showAlert, result} = useAlertBox();
 
     const isFirst = JSON.parse(localStorage.getItem('isFirst') || 'false');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const {data} = useQuery({
         queryKey: ["university"],
@@ -48,47 +45,34 @@ export default function UniversityEdit() {
         },
     });
 
-    useEffect(() => {
-        if (university === '') {
-            setHasText(false);
-            setOptions([]);
-        } else {
-            setOptions(UNIVERSITY_LIST.filter((it) => it.includes(university)));
-            setButtonActive(UNIVERSITY_LIST.some((it) => it === university));
-        }
-    }, [university]);
-
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (
-                inputRef.current && !inputRef.current.contains(e.target as Node)
-            ) {
-                setHasText(false);
-            }
-        };
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
-
     const InputUniversityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUniversity(e.target.value);
-        setHasText(true);
+        setOptions(UNIVERSITY_LIST.filter((it) => it.includes(e.target.value)));
     };
 
     const DropDownClick = (clickedUniversity: string) => {
         setUniversity(clickedUniversity);
-        setHasText(false);
+        setOptions([]);
     };
 
     const clickButton = async () => {
         setUniversity('');
-        setButtonActive(false);
         patchUniversityMutate(university);
     }
 
-    const showDropDown = options.length > 0 && hasText;
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (inputRef.current && !inputRef.current.contains(event.target as Node) ) {
+                setOptions([]);
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
 
     return (
         <>
@@ -104,14 +88,13 @@ export default function UniversityEdit() {
                 }
                 <div ref={inputRef}>
                     <UnivInput type="text"
-                               list="search-university"
                                value={university}
                                onChange={InputUniversityChange}
-                               $showDropDown={showDropDown}
+                               $showDropDown={options.length > 0}
                                placeholder='학교명 검색'
                     />
 
-                    {showDropDown && (
+                    {options.length > 0 && (
                         <DropDown
                             options={options}
                             DropDownClick={DropDownClick}
@@ -120,7 +103,7 @@ export default function UniversityEdit() {
                 </div>
             </UniversitySection>
             <AlertBox isAlert={isAlert} status={result}/>
-            <CommonButton onClick={clickButton} isActive={buttonActive}>
+            <CommonButton onClick={clickButton} isActive={UNIVERSITY_LIST.some((it) => it === university)}>
                 {isFirst ? "다음" : "저장"}
             </CommonButton>
         </>

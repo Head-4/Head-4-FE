@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from "styled-components";
 import {highlightText} from "../../../utils/highlightText";
 
@@ -25,7 +24,7 @@ export default function DropDown({options, DropDownClick, searchInput = ''}: Dro
 const ScrollDiv = styled.div`
     max-height: 192px;
     overflow-y: auto;
-    
+
     &::-webkit-scrollbar {
         width: 4px;
     }
