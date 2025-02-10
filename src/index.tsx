@@ -9,7 +9,15 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: 0,
+        },
+    },
+});
 root.render(
     <QueryClientProvider client={queryClient}>
         <App/>
